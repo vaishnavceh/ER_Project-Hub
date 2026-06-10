@@ -53,7 +53,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \lhead{\textcolor{hubgray}{Electrical \& Computer Project Repository Hub}}
-\rhead{\textcolor{hubgray}{Version 1.3.0 Nightly}}
+\rhead{\textcolor{hubgray}{Version 1.4.0 Nightly}}
 \cfoot{\thepage}
 
 \setstretch{1.18}
@@ -69,7 +69,7 @@
     \vspace{0.35cm}
     {\Large Technical Documentation and Deployment Guide\par}
     \vspace{0.8cm}
-    {\large Version 1.3.0 Nightly Build\par}
+    {\large Version 1.4.0 Nightly Build\par}
     \vfill
     \begin{tabular}{rl}
         \textbf{Domain:} & Electrical and Computer project submissions \\
@@ -94,9 +94,9 @@ The system is designed for department-level use. It separates website source cod
 
 \subsection{Current Version}
 
-This document describes \textbf{version 1.3.0 nightly build}. This version focuses on deployment readiness, safer public documentation, official storage repository migration, improved upload validation, and clearer student/admin guidance.
+This document describes \textbf{version 1.4.0 nightly build}. This version focuses on deployment readiness, safe project overwrites, cleaner generated README files, official storage repository operation, and clearer student/admin guidance.
 
-\section{Version 1.3.0 Nightly Update}
+\section{Version 1.4.0 Nightly Update}
 
 \subsection{Issues Solved}
 
@@ -115,7 +115,9 @@ This document describes \textbf{version 1.3.0 nightly build}. This version focus
 \subsection{New Updates}
 
 \begin{itemize}[leftmargin=*]
-    \item Application version updated to \texttt{1.3.0 nightly build}.
+    \item Application version updated to \texttt{1.4.0 nightly build}.
+    \item Existing project uploads can replace previous folder contents through a new pull request.
+    \item Generated README files use form input, readable report PDF sections, and safe fallback text.
     \item Know More page includes solved issues and current nightly update notes.
     \item Upload page includes a Git command window for users familiar with Git.
     \item Admin Pane includes frontend and backend status checks behind a passkey.
@@ -559,6 +561,6 @@ Admin Pane login fails & Confirm \texttt{VITE\_ADMIN\_PASSKEY} or \texttt{VITE\_
 
 \section{Conclusion}
 
-The Electrical \& Computer Project Repository Hub provides a structured and safer workflow for collecting department project submissions. Version 1.3.0 nightly build improves validation, documentation, official repository configuration, generated README flexibility, and deployment readiness. The system is now better prepared for frontend hosting, backend production use, and official storage repository testing.
+The Electrical \& Computer Project Repository Hub provides a structured and safer workflow for collecting department project submissions. Version 1.4.0 nightly build improves validation, documentation, official repository configuration, generated README flexibility, overwrite handling, and deployment readiness. The system is now better prepared for frontend hosting, backend production use, and official storage repository testing.
 
 \end{document}

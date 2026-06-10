@@ -30,11 +30,11 @@ const solvedIssues = [
 ];
 
 const latestUpdates = [
-  "Version bumped to 1.3.0 nightly build.",
-  "Upload form now gives immediate team-number guidance.",
-  "Optional README detail fields now fall back to Not available when left blank.",
-  "Successful upload status now reports when an existing project folder was overwritten.",
-  "README and documentation were refreshed with solved issues and deployment notes.",
+  "Version bumped to 1.4.0 nightly build.",
+  "Existing project uploads now replace previous folder contents through a new pull request.",
+  "Generated README files use form input, readable report PDF sections, and clean fallback text.",
+  "Successful upload status reports when an existing project folder was overwritten.",
+  "Documentation was refreshed with overwrite, README fallback, and deployment notes.",
   "Git command window uses the configured official storage repository URL."
 ];
 
@@ -42,7 +42,7 @@ export default function KnowMore() {
   return (
     <div>
       <PageHeader eyebrow="Know More" title="About this platform">
-        This project is in 1.3.0 nightly testing for Electrical and Computer project submissions, with automated GitHub upload and merge support enabled.
+        This project is in 1.4.0 nightly testing for Electrical and Computer project submissions, with automated GitHub upload and merge support enabled.
       </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -89,7 +89,7 @@ export default function KnowMore() {
       </section>
 
       <section className="mt-6 grid gap-4 lg:grid-cols-2">
-        <InfoCard icon={Rocket} title="1.3.0 Nightly Updates" accent="teal">
+        <InfoCard icon={Rocket} title="1.4.0 Nightly Updates" accent="teal">
           <ul className="grid gap-2">
             {latestUpdates.map((item) => (
               <li key={item} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">

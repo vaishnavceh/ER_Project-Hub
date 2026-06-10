@@ -1,6 +1,6 @@
 # Electrical & Computer Project Repository Hub
 
-Version: `1.3.0 nightly build`
+Version: `1.4.0 nightly build`
 
 A full-stack project submission hub for Electrical and Computer course work. Students upload project files through the website, the backend creates a GitHub branch and pull request, and the automated workflow can merge and pull accepted submissions after checks pass.
 
@@ -12,7 +12,7 @@ A full-stack project submission hub for Electrical and Computer course work. Stu
 - Git users can use the upload page Git window to clone, fetch, and pull accepted projects.
 - Contact the admin for failed uploads, duplicate submissions, incorrect folders, or access concerns.
 
-## 1.3.0 Nightly Update
+## 1.4.0 Nightly Update
 
 ### Issues Solved
 
@@ -25,12 +25,11 @@ A full-stack project submission hub for Electrical and Computer course work. Stu
 
 ### New Updates
 
-- Version bumped to `1.3.0 nightly build`.
-- Upload form now gives immediate team-number guidance.
-- Optional README detail fields now fall back to `Not available.` when left blank.
-- README generation attempts form input first, readable report PDF sections second, and safe fallbacks after that.
+- Version bumped to `1.4.0 nightly build`.
+- Existing project uploads now replace previous folder contents through a new pull request.
+- Generated README files use form input, readable report PDF sections, and clean fallback text.
 - Upload success status reports when an existing project folder was overwritten.
-- Know More and documentation pages now show solved issues and current workflow notes.
+- Know More and documentation pages now show overwrite, README fallback, and deployment notes.
 - Git command window uses the configured official storage repository URL.
 
 ## Repositories
