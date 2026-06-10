@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 
 import { createProjectPullRequest, getPullRequestStatus } from "../services/githubService.js";
-import { generateProjectReadme } from "../services/readmeService.js";
+import { extractTextFromPdfBuffer, generateProjectReadme } from "../services/readmeService.js";
 import { buildProjectPath, validateProjectSubmission } from "../services/validation.js";
 
 export async function uploadProject(req, res, next) {
@@ -11,7 +11,8 @@ export async function uploadProject(req, res, next) {
   try {
     const data = validateProjectSubmission(req.body, req.files);
     const projectPath = buildProjectPath(data);
-    const readmeContent = generateProjectReadme(data, { hasReportPdf: Boolean(reportFile) });
+    const reportText = reportFile ? await readReportText(reportFile.path) : "";
+    const readmeContent = generateProjectReadme(data, { hasReportPdf: Boolean(reportFile), reportText });
 
     const result = await createProjectPullRequest({
       data,
@@ -31,6 +32,15 @@ export async function uploadProject(req, res, next) {
     next(error);
   } finally {
     await cleanupTemporaryFiles([...projectFiles, ...(reportFile ? [reportFile] : [])]);
+  }
+}
+
+async function readReportText(filePath) {
+  try {
+    const buffer = await fs.readFile(filePath);
+    return extractTextFromPdfBuffer(buffer);
+  } catch {
+    return "";
   }
 }
 

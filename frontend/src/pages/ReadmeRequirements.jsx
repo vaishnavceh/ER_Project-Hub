@@ -8,18 +8,18 @@ const requirements = [
   "Team name and members",
   "Batch, semester, and subject",
   "Project description",
-  "Problem statement",
+  "Problem statement, entered or derived from project description",
   "Tools used for creation",
   "Technologies used",
   "Sources or references used for coding, circuit design, learning, or implementation",
-  "Installation/setup instructions",
-  "Steps to run or test the project",
-  "Screenshots/photos/demo output",
+  "Installation/setup instructions, or Not available",
+  "Steps to run or test the project, or Not available",
+  "Screenshots/photos/demo output, or Not available",
   "Project report PDF, if available",
   "Google Drive report link if the report PDF is too large",
   "Additional README comments, if any",
-  "Presentation details, if available",
-  "Future improvements, if any"
+  "Presentation details, or Not available",
+  "Future improvements, or Not available"
 ];
 
 export default function ReadmeRequirements() {
@@ -40,7 +40,7 @@ export default function ReadmeRequirements() {
       </InfoCard>
 
       <section className="mt-6 rounded-lg border border-slate-200 bg-white p-5 text-sm leading-6 text-slate-600 shadow-soft">
-        Report, seminar, and course-material templates are being prepared in the deployment and testing area. For now, upload clean documentation and clear run/testing steps.
+        Generated README files no longer use unfinished placeholder text. Optional details use form input first, readable report PDF sections second, and Not available when no detail is found.
       </section>
     </div>
   );

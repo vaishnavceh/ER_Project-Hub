@@ -27,9 +27,15 @@ const initialForm = {
   projectName: "",
   teamMembers: "",
   projectDescription: "",
+  problemStatement: "",
   toolsUsed: "",
   technologiesUsed: "",
   sourcesUsed: "",
+  setupInstructions: "",
+  runTestSteps: "",
+  demoOutput: "",
+  presentationDetails: "",
+  futureImprovements: "",
   additionalReadmeComments: "",
   projectType: "Software Project",
   googleDriveReportLink: "",
@@ -256,6 +262,14 @@ export default function UploadProject() {
               required
             />
             <TextArea
+              label="Problem statement"
+              name="problemStatement"
+              value={form.problemStatement}
+              onChange={handleChange}
+              placeholder="Optional. If empty, the README will derive this from the project description"
+              rows={3}
+            />
+            <TextArea
               label="Tools used"
               name="toolsUsed"
               value={form.toolsUsed}
@@ -281,6 +295,49 @@ export default function UploadProject() {
             placeholder="Documentation, tutorials, books, sample circuits, papers, or learning references"
             required
           />
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <TextArea
+              label="Installation or setup instructions"
+              name="setupInstructions"
+              value={form.setupInstructions}
+              onChange={handleChange}
+              placeholder="Optional. Example: import database.sql, update config.php, run on XAMPP"
+              rows={3}
+            />
+            <TextArea
+              label="Steps to run or test"
+              name="runTestSteps"
+              value={form.runTestSteps}
+              onChange={handleChange}
+              placeholder="Optional. Example: start Apache/MySQL, open localhost path, login, test main flow"
+              rows={3}
+            />
+            <TextArea
+              label="Screenshots, photos, or demo output"
+              name="demoOutput"
+              value={form.demoOutput}
+              onChange={handleChange}
+              placeholder="Optional. Mention uploaded screenshots, hardware photos, simulation output, or demo evidence"
+              rows={3}
+            />
+            <TextArea
+              label="Presentation details"
+              name="presentationDetails"
+              value={form.presentationDetails}
+              onChange={handleChange}
+              placeholder="Optional. Mention slides, seminar notes, or presentation status"
+              rows={3}
+            />
+            <TextArea
+              label="Future improvements"
+              name="futureImprovements"
+              value={form.futureImprovements}
+              onChange={handleChange}
+              placeholder="Optional. Add planned improvements, limitations, or next features"
+              rows={3}
+            />
+          </div>
 
           <TextArea
             label="Additional README comments"

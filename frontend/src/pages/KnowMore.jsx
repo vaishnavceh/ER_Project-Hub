@@ -23,6 +23,7 @@ const testChecklist = [
 const solvedIssues = [
   "Team number validation now supports team-01 through team-100.",
   "Optional README comments now appear in generated README.md files when provided.",
+  "Generated README files no longer contain unfinished placeholder instructions.",
   "Storage repository configuration now targets the official Electrical and Computer project repository.",
   "Auto-merge workflow guidance is documented for upload branches."
 ];
@@ -30,6 +31,7 @@ const solvedIssues = [
 const latestUpdates = [
   "Version bumped to 1.3.0 nightly build.",
   "Upload form now gives immediate team-number guidance.",
+  "Optional README detail fields now fall back to Not available when left blank.",
   "README and documentation were refreshed with solved issues and deployment notes.",
   "Git command window uses the configured official storage repository URL."
 ];

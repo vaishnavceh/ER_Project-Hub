@@ -1,3 +1,5 @@
+import { inflateSync } from "node:zlib";
+
 function titleFromSlug(slug) {
   return slug
     .split("-")
@@ -14,8 +16,42 @@ function optionalSection(title, value) {
   return value ? `\n## ${title}\n${value}\n` : "";
 }
 
-export function generateProjectReadme(data, { hasReportPdf }) {
+function valueOrNotAvailable(value) {
+  return value ? value : "Not available.";
+}
+
+function firstAvailable(...values) {
+  return values.find((value) => typeof value === "string" && value.trim())?.trim() || "";
+}
+
+function derivedProblemStatement(data) {
+  if (data.problemStatement) {
+    return data.problemStatement;
+  }
+
+  const description = (data.projectDescription || "").trim();
+  if (!description) {
+    return "Not available.";
+  }
+
+  const sentences = description
+    .replace(/\s+/g, " ")
+    .split(/(?<=[.!?])\s+/)
+    .filter(Boolean);
+  const summary = sentences.slice(0, 2).join(" ") || description;
+
+  return summary.length > 700 ? `${summary.slice(0, 697).trim()}...` : summary;
+}
+
+export function generateProjectReadme(data, { hasReportPdf, reportText = "" }) {
   const projectTitle = titleFromSlug(data.projectName);
+  const reportSections = extractReportSections(reportText);
+  const problemStatement = firstAvailable(data.problemStatement, reportSections.problemStatement) || derivedProblemStatement(data);
+  const setupInstructions = valueOrNotAvailable(firstAvailable(data.setupInstructions, reportSections.setupInstructions));
+  const runTestSteps = valueOrNotAvailable(firstAvailable(data.runTestSteps, reportSections.runTestSteps));
+  const demoOutput = valueOrNotAvailable(firstAvailable(data.demoOutput, reportSections.demoOutput));
+  const presentationDetails = valueOrNotAvailable(firstAvailable(data.presentationDetails, reportSections.presentationDetails));
+  const futureImprovements = valueOrNotAvailable(firstAvailable(data.futureImprovements, reportSections.futureImprovements));
 
   return `# ${projectTitle}
 
@@ -33,7 +69,7 @@ ${data.teamMembers}
 ${data.projectDescription}
 
 ## Problem Statement
-Add the problem statement for this project.
+${problemStatement}
 
 ## Tools Used for Creation
 ${data.toolsUsed}
@@ -48,13 +84,13 @@ ${data.sourcesUsed}
 Uploaded project files are stored in the \`project-files/\` folder.
 
 ## Installation or Setup Instructions
-Add setup instructions for this project.
+${setupInstructions}
 
 ## Steps to Run or Test
-Add steps to run, simulate, build, or test this project.
+${runTestSteps}
 
 ## Screenshots, Photos, or Demo Output
-Add screenshots, hardware photos, demo output, or simulation results if available.
+${demoOutput}
 
 ## Project Report
 - Report PDF uploaded: ${hasReportPdf ? "Yes, see `reports/project-report.pdf`." : "No PDF report uploaded."}
@@ -65,11 +101,138 @@ ${optionalLink("Working video link", data.workingVideoLink)}
 ${optionalSection("Additional Comments", data.additionalReadmeComments)}
 
 ## Presentation Details
-Add presentation details if available.
+${presentationDetails}
 
 ## Future Improvements
-Add future improvements if any.
+${futureImprovements}
 `;
+}
+
+export function extractTextFromPdfBuffer(buffer) {
+  if (!buffer?.length) {
+    return "";
+  }
+
+  const source = buffer.toString("binary");
+  const chunks = [];
+  const streamPattern = /(\d+\s+\d+\s+obj[\s\S]*?)stream\r?\n?([\s\S]*?)\r?\n?endstream/g;
+  let match;
+
+  while ((match = streamPattern.exec(source))) {
+    const objectHeader = match[1];
+    let streamBuffer = Buffer.from(match[2], "binary");
+
+    if (objectHeader.includes("/FlateDecode")) {
+      try {
+        streamBuffer = inflateSync(streamBuffer);
+      } catch {
+        continue;
+      }
+    }
+
+    const extracted = extractTextFromPdfContent(streamBuffer.toString("latin1"));
+    if (extracted) {
+      chunks.push(extracted);
+    }
+  }
+
+  if (chunks.length === 0) {
+    return extractTextFromPdfContent(source);
+  }
+
+  return normalizeExtractedText(chunks.join("\n"));
+}
+
+function extractTextFromPdfContent(content) {
+  const pieces = [];
+  const textPattern = /\((?:\\.|[^\\)])*\)\s*Tj|\[(.*?)\]\s*TJ/gs;
+  let match;
+
+  while ((match = textPattern.exec(content))) {
+    const token = match[0];
+    if (token.endsWith("Tj")) {
+      pieces.push(decodePdfString(token.replace(/\s*Tj$/, "")));
+      continue;
+    }
+
+    const arrayContent = match[1] || "";
+    const arrayStringPattern = /\((?:\\.|[^\\)])*\)/g;
+    let arrayMatch;
+
+    while ((arrayMatch = arrayStringPattern.exec(arrayContent))) {
+      pieces.push(decodePdfString(arrayMatch[0]));
+    }
+  }
+
+  return normalizeExtractedText(pieces.join(" "));
+}
+
+function decodePdfString(value) {
+  const raw = value.replace(/^\(/, "").replace(/\)$/, "");
+
+  return raw.replace(/\\([nrtbf()\\]|[0-7]{1,3}|\r?\n)/g, (match, escape) => {
+    if (/^[0-7]/.test(escape)) {
+      return String.fromCharCode(Number.parseInt(escape, 8));
+    }
+
+    const replacements = {
+      n: "\n",
+      r: "\r",
+      t: "\t",
+      b: "\b",
+      f: "\f",
+      "(": "(",
+      ")": ")",
+      "\\": "\\"
+    };
+
+    return replacements[escape] ?? "";
+  });
+}
+
+function normalizeExtractedText(value) {
+  return value
+    .replace(/\r/g, "\n")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function extractReportSections(reportText) {
+  const normalized = normalizeExtractedText(reportText || "");
+  if (!normalized) {
+    return {};
+  }
+
+  return {
+    problemStatement: extractSection(normalized, ["problem statement", "problem definition"]),
+    setupInstructions: extractSection(normalized, ["installation or setup instructions", "installation", "setup instructions", "system setup"]),
+    runTestSteps: extractSection(normalized, ["steps to run or test", "steps to run", "testing", "test procedure", "execution"]),
+    demoOutput: extractSection(normalized, ["screenshots, photos, or demo output", "screenshots", "demo output", "results", "output"]),
+    presentationDetails: extractSection(normalized, ["presentation details", "presentation"]),
+    futureImprovements: extractSection(normalized, ["future improvements", "future scope", "future work", "scope for future"])
+  };
+}
+
+function extractSection(text, headings) {
+  const escapedHeadings = headings.map((heading) => escapeRegExp(heading).replace(/\s+/g, "\\s+"));
+  const headingPattern = new RegExp(`(?:^|\\n|\\b)\\s*(?:${escapedHeadings.join("|")})\\s*:?\\s+`, "i");
+  const match = headingPattern.exec(text);
+
+  if (!match) {
+    return "";
+  }
+
+  const start = match.index + match[0].length;
+  const afterHeading = text.slice(start);
+  const nextHeading = /(?:\n|\b)\s*(?:abstract|introduction|objectives?|methodology|requirements?|implementation|architecture|database|results?|conclusion|references?|appendix|problem statement|installation|setup instructions|steps to run|testing|screenshots|demo output|presentation details|future improvements|future scope|future work)\s*:?\s+/i.exec(afterHeading);
+  const sectionText = (nextHeading ? afterHeading.slice(0, nextHeading.index) : afterHeading).trim();
+
+  return sectionText.length > 1200 ? `${sectionText.slice(0, 1197).trim()}...` : sectionText;
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 export function generateReportLinkMarkdown(data) {
@@ -146,6 +309,10 @@ export function generatePullRequestBody(data, { hasReportPdf }) {
 - Report PDF uploaded: ${hasReportPdf ? "yes" : "no"}
 - Google Drive report link: ${data.googleDriveReportLink ? "yes" : "no"}
 - Working video link: ${data.workingVideoLink ? "yes" : "no"}
+- Problem statement: ${data.problemStatement ? "provided" : "derived from description"}
+- Setup instructions: ${data.setupInstructions ? "provided" : "not available"}
+- Run/test steps: ${data.runTestSteps ? "provided" : "not available"}
+- Demo output details: ${data.demoOutput ? "provided" : "not available"}
 - Additional README comments: ${data.additionalReadmeComments ? "yes" : "no"}
 - Confirmation: The submitter confirmed that no passwords, API keys, tokens, or private data were intentionally uploaded.
 

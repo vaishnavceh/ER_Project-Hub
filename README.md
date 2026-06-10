@@ -18,6 +18,7 @@ A full-stack project submission hub for Electrical and Computer course work. Stu
 
 - Team number validation now supports `team-01` through `team-100`.
 - Optional README comments can be entered during upload and are added to generated `README.md` files.
+- Generated README files no longer contain unfinished placeholder instructions.
 - Storage repository configuration has been updated for the official Electrical and Computer project repository.
 - Auto-merge workflow setup is documented for upload pull requests.
 
@@ -25,6 +26,8 @@ A full-stack project submission hub for Electrical and Computer course work. Stu
 
 - Version bumped to `1.3.0 nightly build`.
 - Upload form now gives immediate team-number guidance.
+- Optional README detail fields now fall back to `Not available.` when left blank.
+- README generation attempts form input first, readable report PDF sections second, and safe fallbacks after that.
 - Know More and documentation pages now show solved issues and current workflow notes.
 - Git command window uses the configured official storage repository URL.
 
@@ -116,7 +119,8 @@ The GitHub token must never be placed in the frontend or committed to Git.
 - Use Google Drive links only for large reports or demo videos.
 - Contact the admin when an upload succeeds but the project does not appear after the automated workflow finishes.
 - Team numbers must use `team-01` through `team-100`.
-- Use the optional additional README comments field for known issues, setup warnings, hardware notes, or extra project context.
+- Use optional README detail fields for problem statement, setup steps, run/test steps, demo evidence, presentation notes, future improvements, and extra comments.
+- Missing optional README details are read from matching report PDF sections when possible, then written as `Not available.` instead of unfinished placeholder text.
 
 ## Local Testing
 
