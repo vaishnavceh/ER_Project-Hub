@@ -7,7 +7,9 @@ import {
   FolderTree,
   Home,
   Info,
+  Moon,
   ShieldCheck,
+  Sun,
   UploadCloud,
   FolderOpen
 } from "lucide-react";
@@ -43,8 +45,14 @@ const pages = [
 export default function App() {
   const [activePage, setActivePage] = useState("home");
   const [isAppReady, setIsAppReady] = useState(false);
+  const [theme, setTheme] = useState(() => window.localStorage.getItem("project-hub-theme") || "light");
   const ActiveComponent = pages.find((page) => page.id === activePage)?.component || HomePage;
   const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || deployedBackendUrl).replace(/\/$/, "");
+
+  useEffect(() => {
+    window.localStorage.setItem("project-hub-theme", theme);
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   useEffect(() => {
     let ignore = false;
@@ -70,7 +78,7 @@ export default function App() {
   }, [apiBaseUrl]);
 
   return (
-    <div className="min-h-screen text-slate-900">
+    <div className={`min-h-screen text-slate-900 ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
       <AppLoadingScreen ready={isAppReady} />
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
@@ -88,9 +96,35 @@ export default function App() {
                 <span className="block text-sm text-slate-500">GitHub submissions, review, and repository browsing</span>
               </span>
             </button>
-            <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-800">
-              <CheckCircle2 size={17} aria-hidden="true" />
-              <span>{appVersion}</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-800">
+                <CheckCircle2 size={17} aria-hidden="true" />
+                <span>{appVersion}</span>
+              </div>
+              <div className="flex rounded-lg border border-slate-200 bg-slate-50 p-1" aria-label="Theme mode">
+                <button
+                  type="button"
+                  onClick={() => setTheme("light")}
+                  aria-label="Use light mode"
+                  title="Light mode"
+                  className={`grid h-9 w-9 place-items-center rounded-md transition ${
+                    theme === "light" ? "bg-white text-slate-950 shadow-sm" : "text-slate-500 hover:bg-white hover:text-slate-900"
+                  }`}
+                >
+                  <Sun size={17} aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTheme("dark")}
+                  aria-label="Use dark mode"
+                  title="Dark mode"
+                  className={`grid h-9 w-9 place-items-center rounded-md transition ${
+                    theme === "dark" ? "bg-slate-900 text-white shadow-sm" : "text-slate-500 hover:bg-white hover:text-slate-900"
+                  }`}
+                >
+                  <Moon size={17} aria-hidden="true" />
+                </button>
+              </div>
             </div>
           </div>
           <Navigation pages={pages} activePage={activePage} onChange={setActivePage} />
