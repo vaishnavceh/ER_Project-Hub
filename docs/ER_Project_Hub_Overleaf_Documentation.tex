@@ -1,0 +1,370 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{caption}
+
+\definecolor{hubteal}{HTML}{0F766E}
+\definecolor{hubslate}{HTML}{0F172A}
+\definecolor{hubgray}{HTML}{475569}
+\definecolor{hublight}{HTML}{F8FAFC}
+\definecolor{hubcode}{HTML}{F1F5F9}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=hubteal,
+    urlcolor=hubteal,
+    citecolor=hubteal
+}
+
+\lstdefinestyle{projectcode}{
+    backgroundcolor=\color{hubcode},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    framerule=0pt,
+    rulecolor=\color{hubcode},
+    xleftmargin=8pt,
+    xrightmargin=8pt,
+    aboveskip=10pt,
+    belowskip=10pt
+}
+
+\lstset{style=projectcode}
+
+\titleformat{\section}
+  {\Large\bfseries\color{hubslate}}
+  {\thesection}{0.8em}{}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{hubteal}}
+  {\thesubsection}{0.8em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{hubgray}{Electrical \& Computer Project Repository Hub}}
+\rhead{\textcolor{hubgray}{Documentation}}
+\cfoot{\thepage}
+
+\setstretch{1.18}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{1.5cm}
+    {\Huge\bfseries Electrical \& Computer Project Repository Hub\par}
+    \vspace{0.4cm}
+    {\Large Website Documentation\par}
+    \vspace{0.8cm}
+    {\large Version 1.2.0 Nightly Build\par}
+    \vfill
+    \begin{tabular}{rl}
+        \textbf{Project Type:} & Full-stack project submission and repository browsing platform \\
+        \textbf{Frontend:} & React, Vite, Tailwind CSS \\
+        \textbf{Backend:} & Node.js and Express.js \\
+        \textbf{Repository Workflow:} & GitHub branch, pull request, auto-merge, and auto-pull \\
+        \textbf{Prepared For:} & Electrical and Computer project submissions \\
+    \end{tabular}
+    \vfill
+    {\large Prepared by: Vaishnav Ceh\par}
+    \vspace{0.4cm}
+    {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+The Electrical \& Computer Project Repository Hub is a web platform built to manage student project submissions in a structured and trackable way. Instead of asking students to manually use Git commands, the website provides an upload form that sends project files to a backend service. The backend creates a GitHub branch, uploads the files, opens a pull request, and allows the automated repository workflow to merge and pull accepted submissions after checks pass.
+
+The platform is designed for department-level use, where project files must remain organized by batch, semester, subject, team number, and project name. It also includes repository browsing, upload guidelines, hardware project guidance, README requirements, rules, templates/resources, and an admin-only status section.
+
+\subsection{Current Build Status}
+
+This documentation describes version \textbf{1.2.0 nightly build}. The platform is in deployment and testing, with the frontend intended for Vercel deployment and the backend intended for a Node web service deployment. Public pages do not display backend deployment endpoints. Runtime service URLs are configured through environment variables.
+
+\section{Project Objectives}
+
+\begin{itemize}[leftmargin=*]
+    \item Provide a simple web interface for student project submission.
+    \item Store accepted project files in a separate GitHub project-storage repository.
+    \item Maintain a clean folder structure for batches, semesters, subjects, and teams.
+    \item Generate starter README files from upload form data.
+    \item Support project reports, Google Drive report links, and working video links.
+    \item Enable automated merge and pull workflow after configured checks pass.
+    \item Provide admin-only frontend and backend status checks.
+    \item Avoid exposing tokens, private keys, backend endpoints, or secrets in public pages.
+\end{itemize}
+
+\section{System Overview}
+
+The project follows a full-stack architecture. The frontend is responsible for the user interface and form submission experience. The backend handles validation, file processing, GitHub API operations, and repository access. GitHub Actions can be used for automated repository workflow tasks such as merge and pull after checks.
+
+\subsection{High-Level Architecture}
+
+\begin{center}
+\begin{tabular}{>{\bfseries}p{0.26\linewidth} p{0.64\linewidth}}
+\toprule
+Layer & Responsibility \\
+\midrule
+Frontend & React/Vite website, navigation, upload form, repository browser, admin pane, status pages, dark/light mode. \\
+Backend & Express API, upload validation, GitHub integration, branch creation, pull request creation, repository file listing. \\
+GitHub Storage Repository & Stores accepted student project files separately from website source code. \\
+GitHub Actions & Runs automated workflow checks, merge behavior, and pull/update tasks where configured. \\
+Deployment Services & Frontend and backend are deployed separately and connected through environment variables. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Repository Separation}
+
+The platform uses two separate repositories:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Website source repository:} contains the frontend, backend, Docker configuration, and documentation.
+    \item \textbf{Project-storage repository:} contains student uploaded project files after they are accepted by the workflow.
+\end{itemize}
+
+This separation prevents student uploads from mixing with website source code. It also keeps deployment code, documentation, and project submissions easier to manage.
+
+\section{Technology Stack}
+
+\begin{longtable}{p{0.28\linewidth} p{0.62\linewidth}}
+\toprule
+\textbf{Technology} & \textbf{Purpose} \\
+\midrule
+React & Builds the frontend interface. \\
+Vite & Provides fast development server and production build tooling. \\
+Tailwind CSS & Provides utility-first styling for responsive UI. \\
+Lucide React & Provides icons used in navigation, buttons, and status panels. \\
+Node.js & Runs the backend application. \\
+Express.js & Defines API routes and middleware. \\
+Multer & Handles uploaded project files and report PDFs. \\
+Octokit & Communicates with the GitHub REST API. \\
+Docker Compose & Supports local frontend/backend testing. \\
+Vercel & Intended frontend hosting platform. \\
+Node Web Service & Intended backend hosting environment. \\
+\bottomrule
+\end{longtable}
+
+\section{Main Website Pages}
+
+\subsection{Home Page}
+
+The Home page introduces the platform workflow. It explains that student uploads are handled through the website and that automated merge and pull behavior is enabled after checks pass. It also tells users to contact the admin for failed uploads, duplicate submissions, incorrect folders, or other concerns.
+
+\subsection{Upload Project Page}
+
+The Upload Project page is the main submission interface. It collects:
+
+\begin{itemize}[leftmargin=*]
+    \item Batch year
+    \item Semester
+    \item Subject
+    \item Team number, from \texttt{team-01} through \texttt{team-100}
+    \item Project name
+    \item Project type
+    \item Team members
+    \item Project description
+    \item Tools used
+    \item Technologies used
+    \item Sources or references used
+    \item Project files
+    \item Optional report PDF
+    \item Optional Google Drive report link
+    \item Optional working video link
+    \item Optional additional comments for the generated README.md file
+\end{itemize}
+
+After successful upload, the page displays the created branch, pull request, project path, and merge status. A Git command window is also shown for users familiar with Git.
+
+\subsection{Repository Files Page}
+
+The Repository Files page allows users to browse accepted project files directly inside the website. It retrieves folder and file information from the backend service, which reads the configured GitHub project-storage repository. The frontend does not expose GitHub credentials.
+
+\subsection{Guidelines Page}
+
+The Guidelines page explains how students should submit projects. It clarifies that normal uploads are handled by the automated workflow after checks pass and that students do not need manual Git commands for ordinary submissions.
+
+\subsection{Repository Structure Page}
+
+The Repository page explains the expected folder organization. A typical project folder follows this pattern:
+
+\begin{lstlisting}
+batches/batch-2027/semester-5/dbms/team-01-library-management/
+\end{lstlisting}
+
+The purpose of this structure is to keep project files easy to browse, compare, and archive.
+
+\subsection{README Requirements Page}
+
+Each project should include useful documentation. The platform can generate a starter README from upload form data, but students should still provide clear project details, setup steps, screenshots, testing steps, and references.
+Students can also provide optional additional README comments for known issues, setup warnings, hardware notes, or extra project context.
+
+\subsection{Hardware Guidance Page}
+
+The Hardware page provides guidance for electronics, electrical, embedded systems, IoT, robotics, and hardware projects. It encourages students to upload design files, source code, reports, circuit diagrams, test material, and working evidence.
+
+\subsection{Rules Page}
+
+The Rules page defines submission restrictions and safety requirements. Students must not upload secrets, tokens, passwords, private keys, executable malware, unrelated files, or private personal data. Students should also avoid editing deployment or system settings through submissions.
+
+\subsection{Templates and Resources Page}
+
+The Templates and Resources page is reserved for course materials, seminar templates, report templates, lab templates, and review checklists. This section is currently under construction and testing.
+
+\subsection{Know More Page}
+
+The Know More page includes version information, workflow status, operational notes, and future plans. It confirms that the platform is in nightly testing and that server details are kept out of public pages.
+
+\section{Admin Pane}
+
+The Admin Pane is available from the lower section of the Home page. It is protected by an admin passkey configured through frontend environment variables.
+
+\subsection{Admin Functions}
+
+\begin{itemize}[leftmargin=*]
+    \item Frontend status check.
+    \item Backend/project service status check.
+    \item Runtime configuration check.
+    \item Repository connection check.
+    \item Expandable command/process log for status events.
+\end{itemize}
+
+The Admin Pane is intended for deployment testing and troubleshooting. It should not reveal secrets or deployment endpoints on public pages.
+
+\section{Upload Workflow}
+
+The upload workflow is as follows:
+
+\begin{enumerate}[leftmargin=*]
+    \item Student fills the upload form and selects project files.
+    \item Frontend sends the data to the configured backend service.
+    \item Backend validates fields, filenames, and file safety rules.
+    \item Backend reads the latest base branch from the project-storage repository.
+    \item Backend creates a new upload branch.
+    \item Backend uploads project files into the correct folder structure.
+    \item Backend generates or places README and report-related files.
+    \item Backend opens a pull request.
+    \item Automated checks run.
+    \item If checks pass, the configured workflow can merge and pull accepted changes.
+    \item The website file browser can display accepted project files.
+\end{enumerate}
+
+\section{Environment Configuration}
+
+\subsection{Frontend Environment Variables}
+
+\begin{lstlisting}
+VITE_API_BASE_URL=<configured-project-service-url>
+VITE_ADMIN_PASSKEY=<admin-passkey>
+VITE_STORAGE_REPOSITORY_URL=<project-storage-repository-url>
+\end{lstlisting}
+
+\textbf{Important:} The deployed backend endpoint should be set in Vercel or the local frontend environment. It should not be hardcoded in committed source files.
+
+\subsection{Backend Environment Variables}
+
+\begin{lstlisting}
+GITHUB_OWNER=<owner-or-org>
+GITHUB_REPO=<project-storage-repository>
+GITHUB_BASE_BRANCH=main
+GITHUB_TOKEN=<server-side-token>
+FRONTEND_URL=<frontend-origin>
+CORS_ORIGIN=<frontend-origin>
+NODE_ENV=production
+PORT=10000
+\end{lstlisting}
+
+\textbf{Important:} The GitHub token must stay only in the backend environment. It must never be added to frontend code, screenshots, documentation, or Git history.
+
+\section{Deployment Notes}
+
+\subsection{Frontend Deployment}
+
+The frontend can be deployed on Vercel. During deployment, set the frontend environment variables in the Vercel dashboard. The build command should use the normal Vite production build.
+
+\begin{lstlisting}
+npm install
+npm run build
+\end{lstlisting}
+
+\subsection{Backend Deployment}
+
+The backend should be deployed as a Node web service. The service should install dependencies and start the Express server.
+
+\begin{lstlisting}
+npm install
+npm start
+\end{lstlisting}
+
+\subsection{Health Check}
+
+The backend health check path is:
+
+\begin{lstlisting}
+/api/health
+\end{lstlisting}
+
+Root routes such as \texttt{/} or \texttt{/api} may return \texttt{Cannot GET} if those routes are not defined. That does not indicate a deployment failure when \texttt{/api/health} works correctly.
+
+\section{Security Considerations}
+
+\begin{itemize}[leftmargin=*]
+    \item Keep all GitHub tokens and private keys in backend-only environment variables.
+    \item Never commit \texttt{.env} files.
+    \item Rotate any token that was exposed in a screenshot, chat, terminal, or browser page.
+    \item Reject files that appear to contain secrets, private keys, executable payloads, or unrelated sensitive data.
+    \item Use the minimum GitHub permissions required for repository contents and pull requests.
+    \item Prefer a department bot account or GitHub App for long-term operation.
+    \item Keep public pages free of backend deployment endpoints.
+\end{itemize}
+
+\section{Testing Checklist}
+
+\begin{longtable}{p{0.08\linewidth} p{0.72\linewidth} p{0.12\linewidth}}
+\toprule
+\textbf{No.} & \textbf{Test Item} & \textbf{Status} \\
+\midrule
+1 & Frontend loads successfully. & Pending \\
+2 & Dark mode and light mode work correctly. & Pending \\
+3 & Upload form validates required fields. & Pending \\
+4 & Project files upload to the backend service. & Pending \\
+5 & Backend creates a branch in the project-storage repository. & Pending \\
+6 & Pull request is created successfully. & Pending \\
+7 & Automated merge and pull workflow completes after checks pass. & Pending \\
+8 & Repository browser shows accepted project files. & Pending \\
+9 & Admin Pane login works with configured passkey. & Pending \\
+10 & Backend and frontend status checks work in Admin Pane. & Pending \\
+\bottomrule
+\end{longtable}
+
+\section{Future Scope}
+
+\begin{itemize}[leftmargin=*]
+    \item Student login and team submission history.
+    \item Admin dashboard for accepted and rejected submissions.
+    \item Search and filters by batch, semester, subject, team, and technology.
+    \item Course material, seminar, lab, report, and presentation templates.
+    \item More detailed GitHub Actions status display.
+    \item Better analytics for department project tracking.
+\end{itemize}
+
+\section{Conclusion}
+
+The Electrical \& Computer Project Repository Hub simplifies student project submission by replacing manual Git steps with a guided website workflow. It keeps source code and student project storage separate, supports automated GitHub pull request handling, includes status checks for admins, and provides a structured browsing experience for accepted project files. With version 1.2.0 nightly build, the platform is ready for continued deployment testing and frontend hosting preparation.
+
+\end{document}

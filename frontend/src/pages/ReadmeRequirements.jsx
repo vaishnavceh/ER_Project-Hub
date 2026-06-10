@@ -17,6 +17,7 @@ const requirements = [
   "Screenshots/photos/demo output",
   "Project report PDF, if available",
   "Google Drive report link if the report PDF is too large",
+  "Additional README comments, if any",
   "Presentation details, if available",
   "Future improvements, if any"
 ];

@@ -29,6 +29,7 @@ const initialForm = {
   toolsUsed: "",
   technologiesUsed: "",
   sourcesUsed: "",
+  additionalReadmeComments: "",
   projectType: "Software Project",
   googleDriveReportLink: "",
   workingVideoLink: "",
@@ -212,7 +213,10 @@ export default function UploadProject() {
               name="teamNumber"
               value={form.teamNumber}
               onChange={handleChange}
-              placeholder="team-01"
+              placeholder="team-01 to team-100"
+              pattern="team-(0[1-9]|[1-9][0-9]|100)"
+              title="Use team-01 through team-100"
+              maxLength={8}
               required
             />
             <TextInput
@@ -275,6 +279,15 @@ export default function UploadProject() {
             onChange={handleChange}
             placeholder="Documentation, tutorials, books, sample circuits, papers, or learning references"
             required
+          />
+
+          <TextArea
+            label="Additional README comments"
+            name="additionalReadmeComments"
+            value={form.additionalReadmeComments}
+            onChange={handleChange}
+            placeholder="Optional notes to include in the generated README.md, such as known issues, setup warnings, hardware notes, or extra project context"
+            rows={3}
           />
 
           <div className="grid gap-4 md:grid-cols-2">

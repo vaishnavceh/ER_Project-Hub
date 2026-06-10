@@ -65,8 +65,8 @@ export function validateProjectSubmission(body, files = {}) {
     errors.push("Subject must be lowercase and URL-safe, for example dbms or web-development.");
   }
 
-  if (data.teamNumber && !/^team-\d{2}$/.test(data.teamNumber)) {
-    errors.push("Team number must match team-01, team-02, etc.");
+  if (data.teamNumber && !/^team-(0[1-9]|[1-9][0-9]|100)$/.test(data.teamNumber)) {
+    errors.push("Team number must be between team-01 and team-100.");
   }
 
   if (data.projectName && !isUrlSafeLowercase(data.projectName)) {

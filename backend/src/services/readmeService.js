@@ -10,6 +10,10 @@ function optionalLink(label, value) {
   return value ? `- ${label}: ${value}` : `- ${label}: Not provided`;
 }
 
+function optionalSection(title, value) {
+  return value ? `\n## ${title}\n${value}\n` : "";
+}
+
 export function generateProjectReadme(data, { hasReportPdf }) {
   const projectTitle = titleFromSlug(data.projectName);
 
@@ -58,6 +62,7 @@ ${optionalLink("Google Drive report link", data.googleDriveReportLink)}
 
 ## Working Video
 ${optionalLink("Working video link", data.workingVideoLink)}
+${optionalSection("Additional Comments", data.additionalReadmeComments)}
 
 ## Presentation Details
 Add presentation details if available.
@@ -141,9 +146,10 @@ export function generatePullRequestBody(data, { hasReportPdf }) {
 - Report PDF uploaded: ${hasReportPdf ? "yes" : "no"}
 - Google Drive report link: ${data.googleDriveReportLink ? "yes" : "no"}
 - Working video link: ${data.workingVideoLink ? "yes" : "no"}
+- Additional README comments: ${data.additionalReadmeComments ? "yes" : "no"}
 - Confirmation: The submitter confirmed that no passwords, API keys, tokens, or private data were intentionally uploaded.
 
-Maintainers should review the generated README and uploaded files before merging.
+Automated checks should verify the generated README and uploaded files before the merge workflow completes.
 `;
 }
 

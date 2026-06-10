@@ -41,7 +41,7 @@ For testing, `GITHUB_TOKEN` can be your own fine-grained personal access token. 
 - Batch must match `batch-YYYY`.
 - Semester must match `semester-N`.
 - Subject and project name must be lowercase URL-safe slugs.
-- Team number must match `team-01`, `team-02`, etc.
+- Team number must be between `team-01` and `team-100`.
 - Dangerous executable and private-key extensions are blocked.
 - Filenames that look like `.env`, secrets, tokens, passwords, credentials, or private keys are blocked.
 - A PDF report is optional.
