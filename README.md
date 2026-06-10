@@ -1,6 +1,6 @@
 # Electrical & Computer Project Repository Hub
 
-Version: `1.2.0 nightly build`
+Version: `1.3.0 nightly build`
 
 A full-stack project submission hub for Electrical and Computer course work. Students upload project files through the website, the backend creates a GitHub branch and pull request, and the automated workflow can merge and pull accepted submissions after checks pass.
 
@@ -12,10 +12,26 @@ A full-stack project submission hub for Electrical and Computer course work. Stu
 - Git users can use the upload page Git window to clone, fetch, and pull accepted projects.
 - Contact the admin for failed uploads, duplicate submissions, incorrect folders, or access concerns.
 
+## 1.3.0 Nightly Update
+
+### Issues Solved
+
+- Team number validation now supports `team-01` through `team-100`.
+- Optional README comments can be entered during upload and are added to generated `README.md` files.
+- Storage repository configuration has been updated for the official Electrical and Computer project repository.
+- Auto-merge workflow setup is documented for upload pull requests.
+
+### New Updates
+
+- Version bumped to `1.3.0 nightly build`.
+- Upload form now gives immediate team-number guidance.
+- Know More and documentation pages now show solved issues and current workflow notes.
+- Git command window uses the configured official storage repository URL.
+
 ## Repositories
 
 - `ER_Project-Hub`: website source code.
-- `Test_Department-Projecthub`: accepted student project files.
+- `ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL`: accepted student project files.
 
 The website source repo and project-storage repo are intentionally separate. Do not upload student project folders into the website source repo.
 
@@ -99,6 +115,8 @@ The GitHub token must never be placed in the frontend or committed to Git.
 - Keep reports as PDFs when possible.
 - Use Google Drive links only for large reports or demo videos.
 - Contact the admin when an upload succeeds but the project does not appear after the automated workflow finishes.
+- Team numbers must use `team-01` through `team-100`.
+- Use the optional additional README comments field for known issues, setup warnings, hardware notes, or extra project context.
 
 ## Local Testing
 

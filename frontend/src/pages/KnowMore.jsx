@@ -5,7 +5,7 @@ import PageHeader from "../components/PageHeader.jsx";
 import { appVersion } from "../config/platform.js";
 
 const upcomingFeatures = [
-  "Admin dashboard for review, merge, and rejection notes",
+  "Admin dashboard for workflow logs, accepted uploads, and rejection notes",
   "Student login and team submission history",
   "Search and filters by batch, semester, subject, team, and technology",
   "Frontend production deployment after testing is stable",
@@ -20,11 +20,25 @@ const testChecklist = [
   "Admin Pane can check system status when needed"
 ];
 
+const solvedIssues = [
+  "Team number validation now supports team-01 through team-100.",
+  "Optional README comments now appear in generated README.md files when provided.",
+  "Storage repository configuration now targets the official Electrical and Computer project repository.",
+  "Auto-merge workflow guidance is documented for upload branches."
+];
+
+const latestUpdates = [
+  "Version bumped to 1.3.0 nightly build.",
+  "Upload form now gives immediate team-number guidance.",
+  "README and documentation were refreshed with solved issues and deployment notes.",
+  "Git command window uses the configured official storage repository URL."
+];
+
 export default function KnowMore() {
   return (
     <div>
       <PageHeader eyebrow="Know More" title="About this platform">
-        This project is in nightly testing for Electrical and Computer project submissions, with automated GitHub upload and merge support enabled.
+        This project is in 1.3.0 nightly testing for Electrical and Computer project submissions, with automated GitHub upload and merge support enabled.
       </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -67,6 +81,27 @@ export default function KnowMore() {
               <dd>Use the Git window after upload if you need pull commands.</dd>
             </div>
           </dl>
+        </InfoCard>
+      </section>
+
+      <section className="mt-6 grid gap-4 lg:grid-cols-2">
+        <InfoCard icon={Rocket} title="1.3.0 Nightly Updates" accent="teal">
+          <ul className="grid gap-2">
+            {latestUpdates.map((item) => (
+              <li key={item} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </InfoCard>
+        <InfoCard icon={GitPullRequest} title="Issues Solved" accent="emerald">
+          <ul className="grid gap-2">
+            {solvedIssues.map((item) => (
+              <li key={item} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">
+                {item}
+              </li>
+            ))}
+          </ul>
         </InfoCard>
       </section>
 

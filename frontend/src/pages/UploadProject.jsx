@@ -15,7 +15,8 @@ import PageHeader from "../components/PageHeader.jsx";
 import { buildApiUrl } from "../config/platform.js";
 
 const storageRepositoryUrl =
-  import.meta.env.VITE_STORAGE_REPOSITORY_URL || "https://github.com/vaishnavceh/Test_Department-Projecthub.git";
+  import.meta.env.VITE_STORAGE_REPOSITORY_URL ||
+  "https://github.com/ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL.git";
 const storageRepositoryName = repositoryNameFromUrl(storageRepositoryUrl);
 
 const initialForm = {

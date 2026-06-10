@@ -1,13 +1,13 @@
-export const appVersion = "1.2.0 nightly build";
+export const appVersion = "1.3.0 nightly build";
 
 export const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 export const backendHealthPath = "/api/health";
 export const sourceRepository = "vaishnavceh/ER_Project-Hub";
-export const storageRepository = "vaishnavceh/Test_Department-Projecthub";
+export const storageRepository = "ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL";
 
 export const deploymentNotes = [
   "Website source code is maintained in ER_Project-Hub.",
-  "Student project files are stored in Test_Department-Projecthub.",
+  "Student project files are stored in the official Electrical and Computer project repository.",
   "The frontend connects to the configured project service.",
   "System health and deployment checks are available through the Admin Pane."
 ];

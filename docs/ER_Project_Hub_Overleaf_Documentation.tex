@@ -68,7 +68,7 @@
     \vspace{0.4cm}
     {\Large Website Documentation\par}
     \vspace{0.8cm}
-    {\large Version 1.2.0 Nightly Build\par}
+    {\large Version 1.3.0 Nightly Build\par}
     \vfill
     \begin{tabular}{rl}
         \textbf{Project Type:} & Full-stack project submission and repository browsing platform \\
@@ -94,7 +94,16 @@ The platform is designed for department-level use, where project files must rema
 
 \subsection{Current Build Status}
 
-This documentation describes version \textbf{1.2.0 nightly build}. The platform is in deployment and testing, with the frontend intended for Vercel deployment and the backend intended for a Node web service deployment. Public pages do not display backend deployment endpoints. Runtime service URLs are configured through environment variables.
+This documentation describes version \textbf{1.3.0 nightly build}. The platform is in deployment and testing, with the frontend intended for Vercel deployment and the backend intended for a Node web service deployment. Public pages do not display backend deployment endpoints. Runtime service URLs are configured through environment variables.
+
+\subsection{Version 1.3.0 Nightly Update}
+
+\begin{itemize}[leftmargin=*]
+    \item Team number validation now supports \texttt{team-01} through \texttt{team-100}.
+    \item Optional README comments can be entered during upload and added to generated \texttt{README.md} files.
+    \item Storage repository configuration now targets the official Electrical and Computer project repository.
+    \item Auto-merge workflow setup is documented for upload pull requests.
+\end{itemize}
 
 \section{Project Objectives}
 
@@ -365,6 +374,6 @@ Root routes such as \texttt{/} or \texttt{/api} may return \texttt{Cannot GET} i
 
 \section{Conclusion}
 
-The Electrical \& Computer Project Repository Hub simplifies student project submission by replacing manual Git steps with a guided website workflow. It keeps source code and student project storage separate, supports automated GitHub pull request handling, includes status checks for admins, and provides a structured browsing experience for accepted project files. With version 1.2.0 nightly build, the platform is ready for continued deployment testing and frontend hosting preparation.
+The Electrical \& Computer Project Repository Hub simplifies student project submission by replacing manual Git steps with a guided website workflow. It keeps source code and student project storage separate, supports automated GitHub pull request handling, includes status checks for admins, and provides a structured browsing experience for accepted project files. With version 1.3.0 nightly build, the platform is ready for continued deployment testing and frontend hosting preparation.
 
 \end{document}
