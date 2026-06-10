@@ -446,6 +446,12 @@ function StatusPanel({ status }) {
             <dt className="font-medium">Project path</dt>
             <dd className="break-words">{status.data.projectPath}</dd>
           </div>
+          {status.data.overwrittenExistingProject ? (
+            <div>
+              <dt className="font-medium">Overwrite</dt>
+              <dd className="break-words">Replaced {status.data.replacedFileCount || 0} existing file(s) in this project folder.</dd>
+            </div>
+          ) : null}
         </dl>
         {status.data.pullRequestUrl ? (
           <a

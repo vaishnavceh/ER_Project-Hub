@@ -22,10 +22,14 @@ export async function createProjectPullRequest({ data, projectFiles, reportFile,
   const projectPath = buildProjectPath(data);
 
   const baseSha = await getBaseBranchSha(octokit, config);
-  await ensureProjectFolderDoesNotExist(octokit, config, projectPath);
+  const existingProjectFiles = await listExistingProjectFiles(octokit, config, projectPath);
 
   let branchName = createBranchName(data);
   branchName = await createUploadBranch(octokit, config, branchName, baseSha);
+
+  if (existingProjectFiles.length > 0) {
+    await deleteExistingProjectFiles(octokit, config, branchName, data, existingProjectFiles);
+  }
 
   await uploadProjectFiles(octokit, config, branchName, projectPath, {
     data,
@@ -35,14 +39,18 @@ export async function createProjectPullRequest({ data, projectFiles, reportFile,
   });
 
   const pullRequest = await openPullRequest(octokit, config, branchName, data, {
-    hasReportPdf: Boolean(reportFile)
+    hasReportPdf: Boolean(reportFile),
+    overwrittenExistingProject: existingProjectFiles.length > 0,
+    replacedFileCount: existingProjectFiles.length
   });
 
   return {
     branchName,
     pullRequestNumber: pullRequest.number,
     pullRequestUrl: pullRequest.html_url,
-    projectPath
+    projectPath,
+    overwrittenExistingProject: existingProjectFiles.length > 0,
+    replacedFileCount: existingProjectFiles.length
   };
 }
 
@@ -63,7 +71,7 @@ export async function getPullRequestStatus(pullRequestNumber) {
     });
 
     let status = "pending";
-    let message = "Pull request is waiting for GitHub Actions or maintainer review.";
+    let message = "Pull request is waiting for GitHub Actions or automated merge checks.";
 
     if (data.merged) {
       status = "accepted";
@@ -223,26 +231,72 @@ async function getBaseBranchSha(octokit, config) {
   }
 }
 
-async function ensureProjectFolderDoesNotExist(octokit, config, projectPath) {
+async function listExistingProjectFiles(octokit, config, projectPath) {
+  const rootPath = projectPath.replace(/\/$/, "");
+
   try {
-    await octokit.repos.getContent({
+    const { data } = await octokit.repos.getContent({
       owner: config.owner,
       repo: config.repo,
-      path: projectPath.replace(/\/$/, ""),
+      path: rootPath,
       ref: config.baseBranch
     });
 
-    throw new HttpError(409, "Duplicate project folder already exists in the GitHub repository.");
+    return collectContentFiles(octokit, config, data);
   } catch (error) {
-    if (error instanceof HttpError) {
-      throw error;
-    }
-
     if (error.status === 404) {
-      return;
+      return [];
     }
 
-    throw new HttpError(502, `GitHub API error while checking for duplicate project folder: ${githubErrorMessage(error)}`);
+    throw new HttpError(502, `GitHub API error while checking existing project folder: ${githubErrorMessage(error)}`);
+  }
+}
+
+async function collectContentFiles(octokit, config, content) {
+  const items = Array.isArray(content) ? content : [content];
+  const files = [];
+
+  for (const item of items) {
+    if (item.type === "dir") {
+      const { data } = await octokit.repos.getContent({
+        owner: config.owner,
+        repo: config.repo,
+        path: item.path,
+        ref: config.baseBranch
+      });
+
+      files.push(...(await collectContentFiles(octokit, config, data)));
+      continue;
+    }
+
+    if (item.path && item.sha) {
+      files.push({ path: item.path, sha: item.sha });
+    }
+  }
+
+  return files;
+}
+
+async function deleteExistingProjectFiles(octokit, config, branchName, data, files) {
+  const sortedFiles = [...files].sort((a, b) => b.path.localeCompare(a.path));
+
+  for (const file of sortedFiles) {
+    try {
+      await octokit.repos.deleteFile({
+        owner: config.owner,
+        repo: config.repo,
+        path: file.path,
+        message: `Replace ${data.teamNumber}-${data.projectName}`,
+        sha: file.sha,
+        branch: branchName
+      });
+    } catch (error) {
+      if (error.status === 404) {
+        continue;
+      }
+
+      throw new HttpError(502, `GitHub API error while replacing existing project files: ${githubErrorMessage(error)}`);
+    }
   }
 }
 

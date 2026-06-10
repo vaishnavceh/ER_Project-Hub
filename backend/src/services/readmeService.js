@@ -295,7 +295,7 @@ Next level: team project folders.
   ];
 }
 
-export function generatePullRequestBody(data, { hasReportPdf }) {
+export function generatePullRequestBody(data, { hasReportPdf, overwrittenExistingProject = false, replacedFileCount = 0 }) {
   return `## Project Upload Summary
 
 - Batch: ${data.batch}
@@ -314,6 +314,7 @@ export function generatePullRequestBody(data, { hasReportPdf }) {
 - Run/test steps: ${data.runTestSteps ? "provided" : "not available"}
 - Demo output details: ${data.demoOutput ? "provided" : "not available"}
 - Additional README comments: ${data.additionalReadmeComments ? "yes" : "no"}
+- Existing project folder replaced: ${overwrittenExistingProject ? `yes (${replacedFileCount} file${replacedFileCount === 1 ? "" : "s"})` : "no"}
 - Confirmation: The submitter confirmed that no passwords, API keys, tokens, or private data were intentionally uploaded.
 
 Automated checks should verify the generated README and uploaded files before the merge workflow completes.
