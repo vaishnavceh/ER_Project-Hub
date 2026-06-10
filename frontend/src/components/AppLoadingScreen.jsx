@@ -5,14 +5,14 @@ import { appVersion, backendHealthPath } from "../config/platform.js";
 
 const statusMessages = [
   "Preparing frontend workspace...",
-  "Checking Render backend...",
+  "Checking project service...",
   "Connecting GitHub storage repository...",
   "Loading project hub..."
 ];
 
 const terminalLines = [
   `GET ${backendHealthPath}`,
-  "Render backend ready",
+  "Project service ready",
   "Repository workflow loaded"
 ];
 

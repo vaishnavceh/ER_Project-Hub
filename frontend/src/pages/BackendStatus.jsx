@@ -5,7 +5,6 @@ import {
   ChevronRight,
   Clock3,
   Database,
-  ExternalLink,
   GitBranch,
   Loader2,
   RefreshCcw,
@@ -15,15 +14,13 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import PageHeader from "../components/PageHeader.jsx";
-
-const renderBackendUrl = "https://er-project-hub-backend.onrender.com";
-const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || renderBackendUrl).replace(/\/$/, "");
+import { apiBaseUrl, buildApiUrl } from "../config/platform.js";
 
 const checkTemplate = [
   {
     id: "target",
-    title: "Render target",
-    description: "Configured backend URL",
+    title: "Project service",
+    description: "Runtime API target",
     status: "idle"
   },
   {
@@ -49,8 +46,8 @@ export default function BackendStatus({ showHeader = true }) {
   const [isCommandOpen, setIsCommandOpen] = useState(true);
   const requestIdRef = useRef(0);
 
-  const healthUrl = useMemo(() => `${apiBaseUrl}/api/health`, []);
-  const repositoryUrl = useMemo(() => `${apiBaseUrl}/api/repository/files`, []);
+  const healthUrl = useMemo(() => buildApiUrl("/api/health"), []);
+  const repositoryUrl = useMemo(() => buildApiUrl("/api/repository/files"), []);
   const isChecking = overallStatus.type === "checking";
 
   useEffect(() => {
@@ -64,17 +61,17 @@ export default function BackendStatus({ showHeader = true }) {
 
     setSummary(null);
     setLastCheckedAt(null);
-    setOverallStatus({ type: "checking", message: "Checking the Render backend now." });
+    setOverallStatus({ type: "checking", message: "Checking the project service now." });
     setChecks(
       checkTemplate.map((check) => ({
         ...check,
-        status: check.id === "target" ? "success" : check.id === "health" ? "running" : "idle",
-        detail: check.id === "target" ? apiBaseUrl : undefined
+        status: check.id === "target" ? (apiBaseUrl ? "success" : "warning") : check.id === "health" ? "running" : "idle",
+        detail: check.id === "target" ? (apiBaseUrl ? "Project service configured" : "Project service target missing") : undefined
       }))
     );
     setEvents([
-      createEvent("info", `Target backend: ${apiBaseUrl}`),
-      createEvent("info", `Command: GET ${healthUrl}`)
+      createEvent("info", "Target backend: configured project service"),
+      createEvent("info", "Command: GET /api/health")
     ]);
 
     try {
@@ -100,7 +97,7 @@ export default function BackendStatus({ showHeader = true }) {
         detail: `Status ok in ${healthDuration} ms`
       });
       appendEvent("success", `Health response: ${formatJson(healthPayload)}`);
-      appendEvent("info", `Command: GET ${repositoryUrl}`);
+      appendEvent("info", "Command: GET /api/repository/files");
       updateCheck("repository", { status: "running", detail: "Checking GitHub storage access..." });
     } catch (error) {
       if (!isCurrentRequest(requestId)) {
@@ -111,7 +108,7 @@ export default function BackendStatus({ showHeader = true }) {
       updateCheck("health", { status: "error", detail: message });
       updateCheck("repository", { status: "idle", detail: "Skipped because the health check failed." });
       appendEvent("error", message);
-      setOverallStatus({ type: "error", message: "Render backend is not reachable from this frontend." });
+      setOverallStatus({ type: "error", message: "Project service is not reachable from this frontend." });
       setLastCheckedAt(new Date());
       return;
     }
@@ -146,7 +143,7 @@ export default function BackendStatus({ showHeader = true }) {
         itemCount,
         duration: Math.round(performance.now() - startedAt)
       });
-      setOverallStatus({ type: "success", message: "Render backend is online and can read the GitHub storage repository." });
+      setOverallStatus({ type: "success", message: "Project service is online and can read the GitHub storage repository." });
       setLastCheckedAt(new Date());
     } catch (error) {
       if (!isCurrentRequest(requestId)) {
@@ -156,7 +153,7 @@ export default function BackendStatus({ showHeader = true }) {
       const message = error.message || "Repository check failed.";
       updateCheck("repository", { status: "warning", detail: message });
       appendEvent("warning", message);
-      setOverallStatus({ type: "warning", message: "Render backend is online, but the GitHub storage check needs attention." });
+      setOverallStatus({ type: "warning", message: "Project service is online, but the GitHub storage check needs attention." });
       setLastCheckedAt(new Date());
     }
   }
@@ -177,7 +174,7 @@ export default function BackendStatus({ showHeader = true }) {
     <div className="space-y-6">
       {showHeader ? (
         <PageHeader eyebrow="Backend Status" title="Backend working status">
-          Check whether the Render backend is reachable and whether it can read the GitHub project storage repository.
+          Check whether the project service is reachable and whether it can read the GitHub project storage repository.
         </PageHeader>
       ) : null}
 
@@ -190,20 +187,13 @@ export default function BackendStatus({ showHeader = true }) {
             <div className="min-w-0">
               <h2 className="text-xl font-semibold">{getOverallTitle(overallStatus.type)}</h2>
               <p className="mt-2 text-sm leading-6">{overallStatus.message}</p>
-              <p className="mt-3 break-all rounded-lg bg-white/70 px-3 py-2 text-sm font-medium">{apiBaseUrl}</p>
+              <p className="mt-3 rounded-lg bg-white/70 px-3 py-2 text-sm font-medium">
+                {apiBaseUrl ? "Project service configured" : "Project service target missing"}
+              </p>
             </div>
           </div>
 
           <div className="flex shrink-0 flex-wrap gap-2">
-            <a
-              href={healthUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-current bg-white/70 px-3 py-2 text-sm font-semibold hover:bg-white"
-            >
-              <ExternalLink size={16} aria-hidden="true" />
-              Open health
-            </a>
             <button
               type="button"
               onClick={() => void runBackendCheck()}
@@ -233,8 +223,8 @@ export default function BackendStatus({ showHeader = true }) {
                 <Server size={20} aria-hidden="true" />
               </span>
               <div>
-                <h2 className="font-semibold text-slate-950">Render service</h2>
-                <p className="text-sm text-slate-500">Production Node backend</p>
+                <h2 className="font-semibold text-slate-950">Project service</h2>
+                <p className="text-sm text-slate-500">Production API connection</p>
               </div>
             </div>
             <dl className="mt-4 space-y-3 text-sm">
@@ -473,7 +463,7 @@ function formatJson(payload) {
 
 function getConnectionMessage(error) {
   if (error instanceof TypeError) {
-    return "Connection blocked or failed. Check Render status, the backend URL, and the backend CORS origin setting.";
+    return "Connection blocked or failed. Check service status and the backend CORS origin setting.";
   }
 
   return error.message || "Backend health check failed.";

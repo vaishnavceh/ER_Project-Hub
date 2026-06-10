@@ -1,39 +1,30 @@
-import { CalendarClock, Code2, Rocket, UserRound } from "lucide-react";
+import { CalendarClock, Code2, GitPullRequest, Rocket, UserRound } from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
-import {
-  appVersion,
-  backendHealthPath,
-  deployedBackendUrl,
-  deploymentNotes,
-  localFrontendUrl,
-  sourceRepository,
-  storageRepository
-} from "../config/platform.js";
+import { appVersion } from "../config/platform.js";
 
 const upcomingFeatures = [
   "Admin dashboard for review, merge, and rejection notes",
   "Student login and team submission history",
   "Search and filters by batch, semester, subject, team, and technology",
-  "Vercel frontend deployment after local testing is stable",
+  "Frontend production deployment after testing is stable",
   "Template/resource workflow after construction testing is complete"
 ];
 
 const testChecklist = [
-  "Local frontend runs on port 5174",
-  "Frontend calls the Render backend",
-  "Render health path responds at /api/health",
-  "Uploads create a branch and pull request",
+  "Frontend loads the project hub correctly",
+  "Upload form creates a GitHub branch and pull request",
+  "Auto-merge and auto-pull workflow completes after checks pass",
   "Merged projects appear in the repository browser",
-  "Admin Pane can check frontend and backend status"
+  "Admin Pane can check system status when needed"
 ];
 
 export default function KnowMore() {
   return (
     <div>
-      <PageHeader eyebrow="Know More" title="About & deployment">
-        This project is now in nightly deployment testing for Electrical and Computer project submissions, with the deployment details kept here in one place.
+      <PageHeader eyebrow="Know More" title="About this platform">
+        This project is in nightly testing for Electrical and Computer project submissions, with automated GitHub upload and merge support enabled.
       </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -44,36 +35,36 @@ export default function KnowMore() {
           <p>Created for the Electrical and Computer project repository workflow by Vaishnav Ceh.</p>
         </InfoCard>
         <InfoCard icon={CalendarClock} title="Deployment Plan" accent="emerald">
-          <p>Backend is deployed on Render. Frontend is being tested locally on {localFrontendUrl} before Vercel deployment.</p>
+          <p>The production frontend connects to the configured project service. Server details are kept out of public pages.</p>
         </InfoCard>
       </div>
 
       <section className="mt-6 grid gap-4 lg:grid-cols-2">
-        <InfoCard icon={Rocket} title="Deployment Status" accent="emerald">
+        <InfoCard icon={GitPullRequest} title="Workflow Status" accent="emerald">
           <dl className="space-y-2">
             <div>
-              <dt className="font-medium text-slate-800">Backend</dt>
-              <dd className="break-words">{deployedBackendUrl}</dd>
+              <dt className="font-medium text-slate-800">Upload mode</dt>
+              <dd>Website form to GitHub pull request</dd>
             </div>
             <div>
-              <dt className="font-medium text-slate-800">Health path</dt>
-              <dd>{backendHealthPath}</dd>
+              <dt className="font-medium text-slate-800">Merge mode</dt>
+              <dd>Auto-merge enabled after checks pass</dd>
             </div>
             <div>
-              <dt className="font-medium text-slate-800">Frontend test URL</dt>
-              <dd>{localFrontendUrl}</dd>
+              <dt className="font-medium text-slate-800">Support</dt>
+              <dd>Contact the admin for concerns, failed uploads, or incorrect submissions.</dd>
             </div>
           </dl>
         </InfoCard>
-        <InfoCard icon={Code2} title="GitHub Repositories" accent="sky">
+        <InfoCard icon={Code2} title="Repository Access" accent="sky">
           <dl className="space-y-2">
             <div>
-              <dt className="font-medium text-slate-800">Website source</dt>
-              <dd className="break-words">{sourceRepository}</dd>
+              <dt className="font-medium text-slate-800">Students</dt>
+              <dd>Use the website to submit and browse project files.</dd>
             </div>
             <div>
-              <dt className="font-medium text-slate-800">Student project storage</dt>
-              <dd className="break-words">{storageRepository}</dd>
+              <dt className="font-medium text-slate-800">Git users</dt>
+              <dd>Use the Git window after upload if you need pull commands.</dd>
             </div>
           </dl>
         </InfoCard>
@@ -89,9 +80,14 @@ export default function KnowMore() {
             ))}
           </ul>
         </InfoCard>
-        <InfoCard icon={Rocket} title="Deployment Notes" accent="teal">
+        <InfoCard icon={Rocket} title="Operational Notes" accent="teal">
           <ul className="grid gap-2">
-            {deploymentNotes.map((note) => (
+            {[
+              "Normal student uploads are handled by the automated workflow after checks pass.",
+              "Auto-merge and auto-pull are enabled after the configured checks pass.",
+              "Incorrect folders, failed uploads, or duplicate submissions should be reported to the admin.",
+              "Do not share tokens, passwords, or private files in project uploads."
+            ].map((note) => (
               <li key={note} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">
                 {note}
               </li>

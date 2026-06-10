@@ -2,9 +2,7 @@ import { AlertCircle, ChevronRight, ExternalLink, File, Folder, Loader2, Refresh
 import { useEffect, useMemo, useState } from "react";
 
 import PageHeader from "../components/PageHeader.jsx";
-import { deployedBackendUrl, storageRepository } from "../config/platform.js";
-
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || deployedBackendUrl;
+import { buildApiUrl } from "../config/platform.js";
 
 export default function RepositoryFiles() {
   const [currentPath, setCurrentPath] = useState("");
@@ -26,7 +24,7 @@ export default function RepositoryFiles() {
           params.set("path", currentPath);
         }
 
-        const response = await fetch(`${apiBaseUrl}/api/repository/files?${params.toString()}`);
+        const response = await fetch(buildApiUrl(`/api/repository/files?${params.toString()}`));
         const payload = await response.json().catch(() => ({}));
 
         if (!response.ok) {
@@ -41,7 +39,7 @@ export default function RepositoryFiles() {
         if (!ignore) {
           const message =
             error instanceof TypeError
-              ? `Backend connection error. Check the configured backend at ${apiBaseUrl}.`
+              ? "Connection error. Please refresh, then contact the admin if files still do not load."
               : error.message;
 
           setStatus({ type: "error", message });
@@ -59,7 +57,7 @@ export default function RepositoryFiles() {
   return (
     <div>
       <PageHeader eyebrow="Repository Files" title="Browse GitHub files inside the website">
-        View uploaded project folders from {storageRepository} through the deployed backend without opening GitHub separately.
+        View accepted project folders inside the website without opening GitHub separately.
       </PageHeader>
 
       <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">

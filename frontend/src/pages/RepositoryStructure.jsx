@@ -2,7 +2,6 @@ import { FolderTree } from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
-import { sourceRepository, storageRepository } from "../config/platform.js";
 
 export default function RepositoryStructure() {
   return (
@@ -28,7 +27,7 @@ export default function RepositoryStructure() {
             Batch identifies the graduating group, semester identifies the academic term, subject groups the course or area, and the team project folder contains files, README, reports, and links.
           </p>
           <p className="mt-3">
-            Source repo: {sourceRepository}. Storage repo: {storageRepository}.
+            The website keeps project files organized so students can browse accepted uploads without needing Git commands.
           </p>
         </InfoCard>
       </div>

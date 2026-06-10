@@ -1,8 +1,7 @@
 import { AlertCircle, CheckCircle2, Clock3, Loader2, Monitor, RefreshCcw, Settings } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
-const renderBackendUrl = "https://er-project-hub-backend.onrender.com";
-const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || renderBackendUrl).replace(/\/$/, "");
+import { apiBaseUrl } from "../config/platform.js";
 
 const checkTemplate = [
   {
@@ -20,7 +19,7 @@ const checkTemplate = [
   {
     id: "config",
     title: "Runtime config",
-    description: "API base URL",
+    description: "Project service target",
     status: "idle"
   }
 ];
@@ -52,7 +51,7 @@ export default function FrontendStatus() {
     setLastCheckedAt(null);
     setEvents([
       createEvent("info", `Frontend URL: ${currentUrl}`),
-      createEvent("info", `API target: ${apiBaseUrl}`)
+      createEvent("info", "API target: configured project service")
     ]);
     setChecks(
       checkTemplate.map((check) => ({
@@ -90,16 +89,16 @@ export default function FrontendStatus() {
     if (apiBaseUrl) {
       updateCheck("config", {
         status: "success",
-        detail: apiBaseUrl
+        detail: "Project service configured"
       });
-      appendEvent("success", "Runtime config has an API base URL.");
+      appendEvent("success", "Runtime config has a project service target.");
       setOverallStatus({ type: "success", message: "Frontend is online and configured with an API target." });
     } else {
       updateCheck("config", {
         status: "warning",
-        detail: "Missing API base URL."
+        detail: "Missing project service target."
       });
-      appendEvent("warning", "Runtime config is missing the API base URL.");
+      appendEvent("warning", "Runtime config is missing the project service target.");
       setOverallStatus({ type: "warning", message: "Frontend is online, but API config needs attention." });
     }
 
@@ -180,8 +179,10 @@ export default function FrontendStatus() {
           </div>
           <dl className="mt-4 space-y-3 text-sm">
             <div>
-              <dt className="font-medium text-slate-700">API base URL</dt>
-              <dd className="mt-1 break-all rounded-lg bg-slate-100 px-3 py-2 text-slate-700">{apiBaseUrl}</dd>
+              <dt className="font-medium text-slate-700">Project service</dt>
+              <dd className="mt-1 rounded-lg bg-slate-100 px-3 py-2 text-slate-700">
+                {apiBaseUrl ? "Project service configured" : "Project service target missing"}
+              </dd>
             </div>
             <div>
               <dt className="font-medium text-slate-700">Last checked</dt>

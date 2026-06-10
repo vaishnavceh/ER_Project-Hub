@@ -2,7 +2,6 @@ import { ShieldCheck } from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
-import { deployedBackendUrl, storageRepository } from "../config/platform.js";
 
 const rules = [
   "Upload only under correct batch folder",
@@ -16,14 +15,15 @@ const rules = [
   "Mention tools used",
   "Mention sources/references used",
   "Follow academic honesty rules",
-  "Do not edit deployment or backend settings from student submissions"
+  "Do not edit deployment or system settings from student submissions",
+  "Contact the admin for wrong uploads, duplicate folders, or merge concerns"
 ];
 
 export default function Rules() {
   return (
     <div>
       <PageHeader eyebrow="Rules" title="Keep the repository clean and safe">
-        These rules protect other teams' work, keep {storageRepository} clean, and make review faster through the deployed backend.
+        These rules protect other teams' work and keep the project repository clean while the automated merge workflow runs.
       </PageHeader>
 
       <InfoCard icon={ShieldCheck} title="Submission Rules" accent="rose">
@@ -37,7 +37,7 @@ export default function Rules() {
       </InfoCard>
 
       <section className="mt-6 rounded-lg border border-slate-200 bg-white p-5 text-sm leading-6 text-slate-600 shadow-soft">
-        Current backend endpoint: {deployedBackendUrl}. Uploads must go through the website so every change arrives as a pull request.
+        Uploads must go through the website. Auto-merge and auto-pull are enabled after checks pass, and any concerns should be sent to the admin.
       </section>
     </div>
   );

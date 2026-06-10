@@ -12,9 +12,8 @@ import { useMemo, useState } from "react";
 
 import { SelectInput, TextArea, TextInput } from "../components/FormControls.jsx";
 import PageHeader from "../components/PageHeader.jsx";
-import { deployedBackendUrl } from "../config/platform.js";
+import { buildApiUrl } from "../config/platform.js";
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || deployedBackendUrl;
 const storageRepositoryUrl =
   import.meta.env.VITE_STORAGE_REPOSITORY_URL || "https://github.com/vaishnavceh/Test_Department-Projecthub.git";
 const storageRepositoryName = repositoryNameFromUrl(storageRepositoryUrl);
@@ -82,7 +81,7 @@ export default function UploadProject() {
     }
 
     try {
-      const response = await fetch(`${apiBaseUrl}/api/projects/upload`, {
+      const response = await fetch(buildApiUrl("/api/projects/upload"), {
         method: "POST",
         body
       });
@@ -99,7 +98,7 @@ export default function UploadProject() {
     } catch (error) {
       const message =
         error instanceof TypeError
-          ? `Backend connection error. Check the configured backend at ${apiBaseUrl}.`
+          ? "Connection error. Please refresh, then contact the admin if uploads still fail."
           : error.message;
 
       setStatus({ type: "error", message });
@@ -125,7 +124,7 @@ export default function UploadProject() {
       }
 
       try {
-        const response = await fetch(`${apiBaseUrl}/api/projects/pull-requests/${pullRequestNumber}/status`);
+        const response = await fetch(buildApiUrl(`/api/projects/pull-requests/${pullRequestNumber}/status`));
         const payload = await response.json().catch(() => ({}));
 
         if (!response.ok) {
@@ -176,8 +175,8 @@ export default function UploadProject() {
 
   return (
     <div>
-      <PageHeader eyebrow="Upload Project" title="Submit a team project for review">
-        The backend creates a branch, uploads the files to GitHub, and opens a pull request for the maintainer.
+      <PageHeader eyebrow="Upload Project" title="Submit a team project">
+        The system creates a branch, uploads the files to GitHub, and runs the automated pull request workflow.
       </PageHeader>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
@@ -520,7 +519,7 @@ function buildGitProcessSteps(status) {
       {
         label: prStatus === "accepted" ? "Pull request merged" : "Checking merge status",
         state: prStatus === "accepted" ? "success" : prStatus === "not_accepted" || prStatus === "unknown" ? "warning" : "active",
-        detail: status.pullRequestStatus?.message || "Waiting for GitHub Actions or maintainer review."
+        detail: status.pullRequestStatus?.message || "Waiting for GitHub Actions or automated merge checks."
       },
       {
         label: prStatus === "accepted" ? "Pull latest main" : "Pull latest main after merge",
@@ -586,7 +585,7 @@ function buildGitCommandLines(status, previewPath) {
       lines.push(command("git checkout main"));
       lines.push(command("git pull origin main"));
     } else {
-      lines.push(comment("# After GitHub Actions or maintainer merge"));
+      lines.push(comment("# After GitHub Actions or auto-merge"));
       lines.push(command("git checkout main"));
       lines.push(command("git pull origin main"));
     }

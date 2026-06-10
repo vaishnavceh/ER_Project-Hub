@@ -10,7 +10,7 @@ export default function HomePage({ onNavigate }) {
       <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
         <div>
           <PageHeader title="Electrical & Computer Project Repository Hub">
-            Upload, review, and browse Electrical and Computer student projects without using Git commands.
+            Upload, auto-merge, auto-pull, and browse Electrical and Computer student projects without using Git commands.
           </PageHeader>
           <div className="flex flex-col gap-3 sm:flex-row">
             <button
@@ -46,14 +46,14 @@ export default function HomePage({ onNavigate }) {
               <GitPullRequest size={21} aria-hidden="true" />
             </div>
             <div>
-              <h2 className="font-semibold text-slate-950">Safe GitHub workflow</h2>
-              <p className="text-sm text-slate-500">Every upload becomes a branch and pull request.</p>
+              <h2 className="font-semibold text-slate-950">Automated GitHub workflow</h2>
+              <p className="text-sm text-slate-500">Uploads become pull requests and auto-merge after checks pass.</p>
             </div>
           </div>
           <pre className="overflow-x-auto rounded-lg bg-slate-950 p-4 text-sm leading-6 text-slate-100">
 {`main
   ^
-  | maintainer review
+  | auto-merge + auto-pull after checks
 upload/batch-2027-sem5-dbms-team-01-library-management
   |
   + project files + README.md`}
@@ -68,8 +68,8 @@ upload/batch-2027-sem5-dbms-team-01-library-management
         <InfoCard icon={FolderTree} title="Organized folders" accent="sky">
           Projects are placed under batches, semesters, subjects, and team project folders in a predictable structure.
         </InfoCard>
-        <InfoCard icon={GitPullRequest} title="Maintainer review" accent="emerald">
-          The backend creates a pull request so maintainers can inspect, request fixes, and merge safely.
+        <InfoCard icon={GitPullRequest} title="Auto pull enabled" accent="emerald">
+          The system creates a pull request and completes the automated merge/pull workflow after checks pass. Contact the admin for concerns.
         </InfoCard>
       </section>
 

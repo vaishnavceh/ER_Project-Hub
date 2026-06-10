@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 
 import AppLoadingScreen from "./components/AppLoadingScreen.jsx";
 import Navigation from "./components/Navigation.jsx";
-import { appVersion, backendHealthPath, deployedBackendUrl } from "./config/platform.js";
+import { appVersion, backendHealthPath, buildApiUrl } from "./config/platform.js";
 import ElectronicsGuidance from "./pages/ElectronicsGuidance.jsx";
 import Guidelines from "./pages/Guidelines.jsx";
 import HomePage from "./pages/HomePage.jsx";
@@ -47,7 +47,6 @@ export default function App() {
   const [isAppReady, setIsAppReady] = useState(false);
   const [theme, setTheme] = useState(() => window.localStorage.getItem("project-hub-theme") || "light");
   const ActiveComponent = pages.find((page) => page.id === activePage)?.component || HomePage;
-  const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || deployedBackendUrl).replace(/\/$/, "");
 
   useEffect(() => {
     window.localStorage.setItem("project-hub-theme", theme);
@@ -62,7 +61,7 @@ export default function App() {
 
       await Promise.allSettled([
         minimumDelay,
-        fetch(`${apiBaseUrl}${backendHealthPath}`, { cache: "no-store" })
+        fetch(buildApiUrl(backendHealthPath), { cache: "no-store" })
       ]);
 
       if (!ignore) {
@@ -75,7 +74,7 @@ export default function App() {
     return () => {
       ignore = true;
     };
-  }, [apiBaseUrl]);
+  }, []);
 
   return (
     <div className={`min-h-screen text-slate-900 ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
@@ -93,7 +92,7 @@ export default function App() {
               </span>
               <span>
                 <span className="block text-lg font-semibold">Electrical & Computer Project Repository Hub</span>
-                <span className="block text-sm text-slate-500">GitHub submissions, review, and repository browsing</span>
+                <span className="block text-sm text-slate-500">GitHub submissions, auto-merge, and repository browsing</span>
               </span>
             </button>
             <div className="flex flex-wrap items-center gap-2">

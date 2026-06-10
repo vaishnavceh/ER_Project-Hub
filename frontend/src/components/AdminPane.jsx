@@ -93,7 +93,7 @@ export default function AdminPane() {
               </span>
               <div>
                 <h3 className="font-semibold text-slate-950">Backend status check</h3>
-                <p className="text-sm text-slate-500">Render API and GitHub storage connection</p>
+                <p className="text-sm text-slate-500">Project API and GitHub storage connection</p>
               </div>
             </div>
             <BackendStatus showHeader={false} />

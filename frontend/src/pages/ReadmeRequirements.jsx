@@ -2,7 +2,6 @@ import { FileText } from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
-import { storageRepository } from "../config/platform.js";
 
 const requirements = [
   "Project title",
@@ -26,7 +25,7 @@ export default function ReadmeRequirements() {
   return (
     <div>
       <PageHeader eyebrow="README Requirements" title="Every project needs a useful README">
-        The Render backend auto-generates a starter README from the upload form before placing the project into {storageRepository}.
+        The project service auto-generates a starter README from the upload form before placing the project into the accepted repository workflow.
       </PageHeader>
 
       <InfoCard icon={FileText} title="Required README Sections" accent="teal">

@@ -2,19 +2,18 @@ import { GitPullRequest, UsersRound } from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
-import { deployedBackendUrl, storageRepository } from "../config/platform.js";
 
 export default function Guidelines() {
   return (
     <div>
       <PageHeader eyebrow="Upload Guidelines" title="Students do not need Git commands">
-        Students upload through the website. The Render backend creates a GitHub branch, pushes files to the storage repository, and opens a pull request for review.
+        Students upload through the website. The system creates a GitHub branch, opens a pull request, and completes the automated merge flow after checks pass.
       </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <InfoCard icon={GitPullRequest} title="How uploads are reviewed" accent="emerald">
+        <InfoCard icon={GitPullRequest} title="How uploads are accepted" accent="emerald">
           <p>
-            Each upload is sent through {deployedBackendUrl}. The backend creates a new branch in {storageRepository} and opens a pull request against main.
+            Normal uploads are handled by the automated workflow. If the checks pass, the project can be merged and pulled into the accepted repository workflow.
           </p>
         </InfoCard>
         <InfoCard icon={UsersRound} title="Team projects only" accent="amber">
