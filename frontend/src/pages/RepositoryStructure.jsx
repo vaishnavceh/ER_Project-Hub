@@ -2,12 +2,13 @@ import { FolderTree } from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
+import { sourceRepository, storageRepository } from "../config/platform.js";
 
 export default function RepositoryStructure() {
   return (
     <div>
       <PageHeader eyebrow="Repository Structure" title="Batch to semester to subject to team project">
-        The generated project path follows this order: Batch to Semester to Subject to Team Project.
+        Uploaded student files are stored separately from the website source code, using a predictable academic folder structure.
       </PageHeader>
 
       <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
@@ -25,6 +26,9 @@ export default function RepositoryStructure() {
         <InfoCard icon={FolderTree} title="Path Meaning" accent="sky">
           <p>
             Batch identifies the graduating group, semester identifies the academic term, subject groups the course or area, and the team project folder contains files, README, reports, and links.
+          </p>
+          <p className="mt-3">
+            Source repo: {sourceRepository}. Storage repo: {storageRepository}.
           </p>
         </InfoCard>
       </div>

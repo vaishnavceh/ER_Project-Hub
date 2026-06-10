@@ -11,9 +11,11 @@ import {
   UploadCloud,
   FolderOpen
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import AppLoadingScreen from "./components/AppLoadingScreen.jsx";
 import Navigation from "./components/Navigation.jsx";
+import { appVersion, backendHealthPath, deployedBackendUrl } from "./config/platform.js";
 import ElectronicsGuidance from "./pages/ElectronicsGuidance.jsx";
 import Guidelines from "./pages/Guidelines.jsx";
 import HomePage from "./pages/HomePage.jsx";
@@ -22,6 +24,7 @@ import ReadmeRequirements from "./pages/ReadmeRequirements.jsx";
 import RepositoryFiles from "./pages/RepositoryFiles.jsx";
 import RepositoryStructure from "./pages/RepositoryStructure.jsx";
 import Rules from "./pages/Rules.jsx";
+import TemplatesResources from "./pages/TemplatesResources.jsx";
 import UploadProject from "./pages/UploadProject.jsx";
 
 const pages = [
@@ -33,15 +36,42 @@ const pages = [
   { id: "readme", label: "README", icon: FileText, component: ReadmeRequirements },
   { id: "electronics", label: "Hardware", icon: Cpu, component: ElectronicsGuidance },
   { id: "rules", label: "Rules", icon: ShieldCheck, component: Rules },
+  { id: "templates", label: "Templates", icon: BookOpen, component: TemplatesResources },
   { id: "know-more", label: "Know More", icon: Info, component: KnowMore }
 ];
 
 export default function App() {
   const [activePage, setActivePage] = useState("home");
+  const [isAppReady, setIsAppReady] = useState(false);
   const ActiveComponent = pages.find((page) => page.id === activePage)?.component || HomePage;
+  const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || deployedBackendUrl).replace(/\/$/, "");
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function prepareApp() {
+      const minimumDelay = wait(1500);
+
+      await Promise.allSettled([
+        minimumDelay,
+        fetch(`${apiBaseUrl}${backendHealthPath}`, { cache: "no-store" })
+      ]);
+
+      if (!ignore) {
+        setIsAppReady(true);
+      }
+    }
+
+    void prepareApp();
+
+    return () => {
+      ignore = true;
+    };
+  }, [apiBaseUrl]);
 
   return (
     <div className="min-h-screen text-slate-900">
+      <AppLoadingScreen ready={isAppReady} />
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -60,7 +90,7 @@ export default function App() {
             </button>
             <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-800">
               <CheckCircle2 size={17} aria-hidden="true" />
-              Pull-request only workflow
+              <span>{appVersion}</span>
             </div>
           </div>
           <Navigation pages={pages} activePage={activePage} onChange={setActivePage} />
@@ -72,4 +102,10 @@ export default function App() {
       </main>
     </div>
   );
+}
+
+function wait(milliseconds) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, milliseconds);
+  });
 }

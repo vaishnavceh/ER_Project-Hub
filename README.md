@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Electrical & Computer Project Repository Hub
 
 A local-first full-stack web application for Electrical and Computer project submissions. Students upload project files through a web form, and the backend creates a new GitHub branch and pull request for review or automatic merge. The app never uploads directly to the main branch.
@@ -212,3 +213,6 @@ Do not make the website auto-merge student uploads into `main`. Keeping pull req
 - The frontend never receives the GitHub token.
 - Filenames that look like `.env`, private keys, tokens, passwords, secrets, or executable files are rejected.
 - Student uploads always become pull requests for maintainer review.
+=======
+# ER_Project-Hub
+>>>>>>> b3d02c2b4c6d85af9607ccca2de7d4ae32296524

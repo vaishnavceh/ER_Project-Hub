@@ -2,8 +2,9 @@ import { AlertCircle, ChevronRight, ExternalLink, File, Folder, Loader2, Refresh
 import { useEffect, useMemo, useState } from "react";
 
 import PageHeader from "../components/PageHeader.jsx";
+import { deployedBackendUrl, storageRepository } from "../config/platform.js";
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || deployedBackendUrl;
 
 export default function RepositoryFiles() {
   const [currentPath, setCurrentPath] = useState("");
@@ -40,7 +41,7 @@ export default function RepositoryFiles() {
         if (!ignore) {
           const message =
             error instanceof TypeError
-              ? "Backend connection error. Make sure the backend is running at http://localhost:5000."
+              ? `Backend connection error. Check the configured backend at ${apiBaseUrl}.`
               : error.message;
 
           setStatus({ type: "error", message });
@@ -58,7 +59,7 @@ export default function RepositoryFiles() {
   return (
     <div>
       <PageHeader eyebrow="Repository Files" title="Browse GitHub files inside the website">
-        View uploaded project folders from the configured GitHub repository without opening GitHub separately.
+        View uploaded project folders from {storageRepository} through the deployed backend without opening GitHub separately.
       </PageHeader>
 
       <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">

@@ -1,5 +1,6 @@
 import { BookOpen, FolderOpen, FolderTree, GitPullRequest, UploadCloud } from "lucide-react";
 
+import AdminPane from "../components/AdminPane.jsx";
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 
@@ -71,6 +72,8 @@ upload/batch-2027-sem5-dbms-team-01-library-management
           The backend creates a pull request so maintainers can inspect, request fixes, and merge safely.
         </InfoCard>
       </section>
+
+      <AdminPane />
     </div>
   );
 }

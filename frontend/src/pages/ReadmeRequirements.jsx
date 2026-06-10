@@ -2,6 +2,7 @@ import { FileText } from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
+import { storageRepository } from "../config/platform.js";
 
 const requirements = [
   "Project title",
@@ -25,7 +26,7 @@ export default function ReadmeRequirements() {
   return (
     <div>
       <PageHeader eyebrow="README Requirements" title="Every project needs a useful README">
-        The backend auto-generates a starter README from the upload form, and teams can improve it after review if needed.
+        The Render backend auto-generates a starter README from the upload form before placing the project into {storageRepository}.
       </PageHeader>
 
       <InfoCard icon={FileText} title="Required README Sections" accent="teal">
@@ -37,6 +38,10 @@ export default function ReadmeRequirements() {
           ))}
         </ul>
       </InfoCard>
+
+      <section className="mt-6 rounded-lg border border-slate-200 bg-white p-5 text-sm leading-6 text-slate-600 shadow-soft">
+        Report, seminar, and course-material templates are being prepared in the deployment and testing area. For now, upload clean documentation and clear run/testing steps.
+      </section>
     </div>
   );
 }

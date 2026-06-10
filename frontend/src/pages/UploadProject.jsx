@@ -1,10 +1,23 @@
-import { AlertCircle, CheckCircle2, Clock3, ExternalLink, Loader2, UploadCloud } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle2,
+  Clock3,
+  Copy,
+  ExternalLink,
+  Loader2,
+  Terminal,
+  UploadCloud
+} from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { SelectInput, TextArea, TextInput } from "../components/FormControls.jsx";
 import PageHeader from "../components/PageHeader.jsx";
+import { deployedBackendUrl } from "../config/platform.js";
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || deployedBackendUrl;
+const storageRepositoryUrl =
+  import.meta.env.VITE_STORAGE_REPOSITORY_URL || "https://github.com/vaishnavceh/Test_Department-Projecthub.git";
+const storageRepositoryName = repositoryNameFromUrl(storageRepositoryUrl);
 
 const initialForm = {
   batch: "",
@@ -86,7 +99,7 @@ export default function UploadProject() {
     } catch (error) {
       const message =
         error instanceof TypeError
-          ? "Docker/backend connection error. Make sure the backend is running at http://localhost:5000."
+          ? `Backend connection error. Check the configured backend at ${apiBaseUrl}.`
           : error.message;
 
       setStatus({ type: "error", message });
@@ -338,6 +351,7 @@ export default function UploadProject() {
           </section>
 
           <StatusPanel status={status} />
+          <GitCommandWindow status={status} previewPath={previewPath} />
         </aside>
       </div>
     </div>
@@ -399,6 +413,212 @@ function StatusPanel({ status }) {
   );
 }
 
+function GitCommandWindow({ status, previewPath }) {
+  const [copied, setCopied] = useState(false);
+  const commandLines = buildGitCommandLines(status, previewPath);
+  const processSteps = buildGitProcessSteps(status);
+  const copyText = commandLines
+    .map((line) => line.text)
+    .filter((text) => text && !text.startsWith("#"))
+    .join("\n");
+
+  async function handleCopy() {
+    try {
+      await window.navigator.clipboard.writeText(copyText);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  return (
+    <section className="overflow-hidden rounded-lg border border-slate-800 bg-slate-950 shadow-soft">
+      <div className="flex items-center justify-between gap-3 border-b border-slate-800 px-4 py-3 text-slate-100">
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-slate-800 text-emerald-300">
+            <Terminal size={18} aria-hidden="true" />
+          </span>
+          <div className="min-w-0">
+            <h2 className="font-semibold">Git window</h2>
+            <p className="truncate text-xs text-slate-400">{storageRepositoryName}</p>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={handleCopy}
+          className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-700 px-2.5 py-2 text-xs font-semibold text-slate-100 hover:bg-slate-800"
+        >
+          <Copy size={14} aria-hidden="true" />
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </div>
+
+      <div className="space-y-4 p-4">
+        <div className="space-y-2">
+          {processSteps.map((step) => (
+            <div key={step.label} className="flex items-start gap-2 text-xs leading-5">
+              <StepIcon state={step.state} />
+              <div className="min-w-0">
+                <p className={step.state === "pending" ? "text-slate-500" : "text-slate-200"}>{step.label}</p>
+                {step.detail ? <p className="break-words text-slate-500">{step.detail}</p> : null}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <pre className="max-h-80 overflow-auto rounded-lg bg-black/40 p-3 text-xs leading-6 text-slate-100">
+          <code>
+            {commandLines.map((line, index) => (
+              <span key={`${line.text}-${index}`} className={`block ${line.kind === "comment" ? "text-slate-500" : "text-emerald-300"}`}>
+                {line.text}
+              </span>
+            ))}
+          </code>
+        </pre>
+      </div>
+    </section>
+  );
+}
+
+function StepIcon({ state }) {
+  if (state === "active") {
+    return <Loader2 className="mt-0.5 shrink-0 animate-spin text-sky-300" size={15} aria-hidden="true" />;
+  }
+
+  if (state === "success") {
+    return <CheckCircle2 className="mt-0.5 shrink-0 text-emerald-300" size={15} aria-hidden="true" />;
+  }
+
+  if (state === "warning") {
+    return <AlertCircle className="mt-0.5 shrink-0 text-amber-300" size={15} aria-hidden="true" />;
+  }
+
+  if (state === "error") {
+    return <AlertCircle className="mt-0.5 shrink-0 text-rose-300" size={15} aria-hidden="true" />;
+  }
+
+  return <Clock3 className="mt-0.5 shrink-0 text-slate-500" size={15} aria-hidden="true" />;
+}
+
+function buildGitProcessSteps(status) {
+  if (status.type === "loading") {
+    return [
+      { label: "Upload request sent", state: "success" },
+      { label: "Backend creating GitHub branch", state: "active" },
+      { label: "Uploading files and README", state: "pending" },
+      { label: "Opening pull request", state: "pending" }
+    ];
+  }
+
+  if (status.type === "success") {
+    const prStatus = status.pullRequestStatus?.status;
+
+    return [
+      { label: "Branch created", state: "success", detail: status.data.branchName },
+      { label: "Pull request opened", state: "success", detail: status.data.pullRequestUrl },
+      {
+        label: prStatus === "accepted" ? "Pull request merged" : "Checking merge status",
+        state: prStatus === "accepted" ? "success" : prStatus === "not_accepted" || prStatus === "unknown" ? "warning" : "active",
+        detail: status.pullRequestStatus?.message || "Waiting for GitHub Actions or maintainer review."
+      },
+      {
+        label: prStatus === "accepted" ? "Pull latest main" : "Pull latest main after merge",
+        state: prStatus === "accepted" ? "success" : "pending"
+      }
+    ];
+  }
+
+  if (status.type === "error") {
+    return [
+      { label: "Upload stopped", state: "error", detail: status.message },
+      { label: "GitHub branch not created", state: "pending" },
+      { label: "Pull request not opened", state: "pending" }
+    ];
+  }
+
+  return [
+    { label: "Ready", state: "success", detail: "Git pull commands are prepared." },
+    { label: "Waiting for upload", state: "pending" },
+    { label: "Pull latest accepted projects", state: "pending" }
+  ];
+}
+
+function buildGitCommandLines(status, previewPath) {
+  const baseCommands = [
+    comment("# Project storage repository"),
+    command(`git clone ${storageRepositoryUrl}`),
+    command(`cd ${storageRepositoryName}`),
+    command("git checkout main")
+  ];
+
+  if (status.type === "loading") {
+    return [
+      ...baseCommands,
+      comment("# Backend upload is running"),
+      command("git fetch origin"),
+      command("git pull origin main"),
+      comment("# Waiting for the new upload branch and pull request...")
+    ];
+  }
+
+  if (status.type === "success") {
+    const prStatus = status.pullRequestStatus?.status;
+    const projectPath = status.data.projectPath || previewPath;
+    const lines = [
+      ...baseCommands,
+      comment("# Backend created this upload branch"),
+      command(`git fetch origin ${status.data.branchName}`),
+      command(`git checkout ${status.data.branchName}`),
+      comment(`# Project path: ${projectPath}`)
+    ];
+
+    if (status.data.pullRequestUrl) {
+      lines.push(comment(`# Pull request: ${status.data.pullRequestUrl}`));
+    }
+
+    if (prStatus === "accepted") {
+      lines.push(comment("# Pull the accepted project from main"));
+      lines.push(command("git checkout main"));
+      lines.push(command("git pull origin main"));
+    } else if (prStatus === "not_accepted" || prStatus === "unknown") {
+      lines.push(comment("# PR needs attention before main can receive this upload"));
+      lines.push(command("git checkout main"));
+      lines.push(command("git pull origin main"));
+    } else {
+      lines.push(comment("# After GitHub Actions or maintainer merge"));
+      lines.push(command("git checkout main"));
+      lines.push(command("git pull origin main"));
+    }
+
+    return lines;
+  }
+
+  if (status.type === "error") {
+    return [
+      ...baseCommands,
+      comment("# Upload failed before a branch or pull request was created"),
+      command("git pull origin main"),
+      comment(`# Last preview path: ${previewPath}`)
+    ];
+  }
+
+  return [
+    ...baseCommands,
+    comment("# Pull accepted project uploads"),
+    command("git pull origin main"),
+    comment(`# Current form preview: ${previewPath}`)
+  ];
+}
+
+function command(text) {
+  return { kind: "command", text };
+}
+
+function comment(text) {
+  return { kind: "comment", text };
+}
+
 function PullRequestStatus({ status }) {
   if (!status) {
     return (
@@ -456,4 +676,14 @@ function toSlug(value) {
     .replace(/[^a-z0-9-]/g, "")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+function repositoryNameFromUrl(url) {
+  return url
+    .replace(/^https:\/\/github\.com\//, "")
+    .replace(/^git@github\.com:/, "")
+    .replace(/\.git$/, "")
+    .split("/")
+    .slice(-2)
+    .join("/");
 }

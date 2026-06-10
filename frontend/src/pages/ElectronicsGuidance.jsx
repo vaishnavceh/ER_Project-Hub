@@ -22,7 +22,7 @@ export default function ElectronicsGuidance() {
   return (
     <div>
       <PageHeader eyebrow="Electronics and Electrical Guidance" title="Hardware projects need clear evidence">
-        For electronics, electrical, embedded systems, IoT, robotics, or hardware-based projects, upload the available design, implementation, and testing material.
+        For electronics, electrical, embedded systems, IoT, robotics, or hardware projects, upload design, implementation, and testing material that can be reviewed after deployment.
       </PageHeader>
 
       <InfoCard icon={Cpu} title="Suggested Hardware Uploads" accent="amber">
@@ -34,6 +34,10 @@ export default function ElectronicsGuidance() {
           ))}
         </ul>
       </InfoCard>
+
+      <section className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-950 shadow-soft">
+        Course-material and seminar templates for hardware documentation are still under development. Until they are released, include clear diagrams, component details, and test evidence.
+      </section>
     </div>
   );
 }
