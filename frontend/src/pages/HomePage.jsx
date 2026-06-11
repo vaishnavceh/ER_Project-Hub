@@ -1,8 +1,9 @@
-import { BookOpen, FolderOpen, FolderTree, GitPullRequest, UploadCloud } from "lucide-react";
+import { BookOpen, ExternalLink, FileText, FolderOpen, FolderTree, GitPullRequest, UploadCloud } from "lucide-react";
 
 import AdminPane from "../components/AdminPane.jsx";
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
+import { documentationPdfUrl } from "../config/platform.js";
 
 export default function HomePage({ onNavigate }) {
   return (
@@ -71,6 +72,38 @@ upload/batch-2027-sem5-dbms-team-01-library-management
         <InfoCard icon={GitPullRequest} title="Auto pull enabled" accent="emerald">
           The system creates a pull request and completes the automated merge/pull workflow after checks pass. Contact the admin for concerns.
         </InfoCard>
+      </section>
+
+      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
+        <div className="flex flex-col gap-4 border-b border-slate-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-start gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-sky-100 text-sky-800">
+              <FileText size={21} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 className="text-lg font-semibold text-slate-950">Documentation</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                Read the latest compiled project documentation inside the website without downloading it first.
+              </p>
+            </div>
+          </div>
+          <a
+            href={documentationPdfUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex w-fit items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Open PDF
+            <ExternalLink size={15} aria-hidden="true" />
+          </a>
+        </div>
+        <div className="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-slate-100">
+          <iframe
+            title="Electrical and Computer Project Repository Hub Documentation"
+            src={`${documentationPdfUrl}#toolbar=1&navpanes=0&view=FitH`}
+            className="h-[72vh] min-h-[520px] w-full bg-white"
+          />
+        </div>
       </section>
 
       <AdminPane />

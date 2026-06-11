@@ -1,4 +1,4 @@
-export const appVersion = "1.6.0 stable build";
+export const appVersion = "2.0.0 stable build";
 
 export const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 export const backendHealthPath = "/api/health";
@@ -6,6 +6,8 @@ export const sourceRepository = "vaishnavceh/ER_Project-Hub";
 export const storageRepository = "ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL";
 export const storageRepositoryUrl = `https://github.com/${storageRepository}`;
 export const creatorProfileUrl = "https://github.com/vaishnavceh";
+export const documentationPdfUrl =
+  "https://raw.githubusercontent.com/vaishnavceh/ER_Project-Hub/main/docs/ER_Project_Hub_Overleaf_Documentation.pdf";
 export const templatesFolderUrl =
   `${storageRepositoryUrl}/tree/main/TEMPLATES`;
 

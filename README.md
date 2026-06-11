@@ -1,6 +1,6 @@
 # Electrical & Computer Project Repository Hub
 
-Version: `1.6.0 stable build`
+Version: `2.0.0 stable build`
 
 A full-stack project submission hub for Electrical and Computer course work. Students upload project files through the website, the backend creates a GitHub branch and pull request, and the automated workflow can merge and pull accepted submissions after checks pass.
 
@@ -15,7 +15,7 @@ Creator GitHub profile: [vaishnavceh](https://github.com/vaishnavceh)
 - Students can download official templates from the storage repository `TEMPLATES` folder.
 - Contact the admin for failed uploads, duplicate submissions, incorrect folders, or access concerns.
 
-## 1.6.0 Stable Update
+## 2.0.0 Stable Update
 
 ### Issues Solved
 
@@ -29,7 +29,8 @@ Creator GitHub profile: [vaishnavceh](https://github.com/vaishnavceh)
 
 ### New Updates
 
-- Version bumped to `1.6.0 stable build`.
+- Version bumped to `2.0.0 stable build`.
+- Home page now includes an embedded Documentation section for reading the compiled PDF inside the website.
 - Templates page now lists the actual files and folders inside the official `TEMPLATES` directory.
 - Creator GitHub profile is linked in public project information.
 - Existing project uploads now replace previous folder contents through a new pull request.
@@ -57,6 +58,8 @@ The Overleaf-style LaTeX documentation is stored in:
 
 GitHub Actions builds the latest PDF whenever the LaTeX file changes. After the workflow finishes, the latest PDF is available at:
 [ER_Project_Hub_Overleaf_Documentation.pdf](https://github.com/vaishnavceh/ER_Project-Hub/raw/main/docs/ER_Project_Hub_Overleaf_Documentation.pdf)
+
+The Home page embeds the latest compiled PDF so users can read the documentation inside the website without downloading it first.
 
 The build workflow is:
 [Build Documentation PDF](https://github.com/vaishnavceh/ER_Project-Hub/actions/workflows/documentation-pdf.yml)
@@ -123,7 +126,7 @@ The GitHub token must never be placed in the frontend or committed to Git.
 
 ## Pages
 
-- Home: current workflow, auto-merge/auto-pull status, admin contact guidance.
+- Home: current workflow, auto-merge/auto-pull status, embedded documentation PDF, and admin contact guidance.
 - Upload Project: student form, success panel, and Git command window.
 - Files: browse accepted project files inside the website.
 - Guidelines: upload rules and acceptance workflow.
