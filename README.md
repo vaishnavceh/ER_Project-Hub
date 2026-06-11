@@ -30,7 +30,7 @@ Creator GitHub profile: [vaishnavceh](https://github.com/vaishnavceh)
 ### New Updates
 
 - Version bumped to `2.0.0 stable build`.
-- Documentation now has its own tab with a click-to-load PDF preview inside the website.
+- Documentation now has its own tab with a click-to-load PDF.js preview inside the website.
 - Templates page now lists the actual files and folders inside the official `TEMPLATES` directory.
 - Creator GitHub profile is linked in public project information.
 - Existing project uploads now replace previous folder contents through a new pull request.
@@ -59,7 +59,7 @@ The Overleaf-style LaTeX documentation is stored in:
 GitHub Actions builds the latest PDF whenever the LaTeX file changes. After the workflow finishes, the latest PDF is available at:
 [ER_Project_Hub_Overleaf_Documentation.pdf](https://github.com/vaishnavceh/ER_Project-Hub/raw/main/docs/ER_Project_Hub_Overleaf_Documentation.pdf)
 
-The Documentation tab can preview the latest compiled PDF inside the website without downloading it first.
+The Documentation tab previews the latest compiled PDF with an in-app PDF.js viewer, so it does not depend on Google Docs embedding or force a download first.
 
 The build workflow is:
 [Build Documentation PDF](https://github.com/vaishnavceh/ER_Project-Hub/actions/workflows/documentation-pdf.yml)
@@ -135,7 +135,7 @@ The GitHub token must never be placed in the frontend or committed to Git.
 - Hardware: electronics and electrical project guidance.
 - Rules: security, folder, file, and submission rules.
 - Templates: browse actual files and folders from the official repository `TEMPLATES` directory.
-- Documentation: read the latest compiled project documentation PDF inside the website.
+- Documentation: read the latest compiled project documentation PDF inside the website with a click-to-load PDF.js viewer.
 - Know More: version, operational notes, and upcoming work.
 
 ## Upload Rules
