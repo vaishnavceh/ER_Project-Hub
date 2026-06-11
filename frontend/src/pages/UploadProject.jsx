@@ -37,7 +37,6 @@ const initialForm = {
   subject: "",
   teamNumber: "",
   projectName: "",
-  githubRepositoryLink: "",
   teamMembers: "",
   guideName: "",
   guideDesignation: "",
@@ -273,16 +272,6 @@ export default function UploadProject() {
               ))}
             </SelectInput>
             </div>
-            <TextInput
-              label="GitHub repository link"
-              name="githubRepositoryLink"
-              value={form.githubRepositoryLink}
-              onChange={handleChange}
-              placeholder="https://github.com/owner/project-repository"
-              helperText="Use the project source repository URL."
-              type="url"
-              required
-            />
           </FormSection>
 
           <FormSection
@@ -868,13 +857,6 @@ function validateClientForm(form, projectFiles) {
     return "Guide name is required.";
   }
 
-  if (!form.githubRepositoryLink.trim()) {
-    return "GitHub repository link is required.";
-  }
-
-  if (!isGitHubRepositoryUrl(form.githubRepositoryLink)) {
-    return "Enter a valid GitHub repository URL, for example https://github.com/owner/project.";
-  }
 
   if (!toSlug(form.subject)) {
     return "Subject or course area is required.";
@@ -936,17 +918,6 @@ function toSlug(value) {
     .replace(/^-|-$/g, "");
 }
 
-function isGitHubRepositoryUrl(value) {
-  try {
-    const url = new URL(value.trim());
-    const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
-    const pathParts = url.pathname.replace(/\.git$/, "").split("/").filter(Boolean);
-
-    return (url.protocol === "https:" || url.protocol === "http:") && hostname === "github.com" && pathParts.length >= 2;
-  } catch {
-    return false;
-  }
-}
 
 function repositoryNameFromUrl(url) {
   return url
