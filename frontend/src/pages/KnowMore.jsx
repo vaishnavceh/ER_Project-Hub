@@ -53,9 +53,14 @@ export default function KnowMore() {
       </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <InfoCard icon={Code2} title="Version" accent="sky">
-          <p>Version {appVersion}.</p>
-        </InfoCard>
+        <<InfoCard icon={Code2} title="Version" accent="sky">
+  <p className="font-semibold">Version {appVersion} Nightly Build</p>
+
+  <p className="mt-2 text-sm text-slate-600">
+    Stable for regular use. Minor issues may still occur as new features are
+    being tested. Please contact the administrator if you encounter any errors.
+  </p>
+</InfoCard>
 <InfoCard icon={UserRound} title="Project Creator" accent="teal">
   <p>
     Created for Electrical and Computer students to upload, organize, and preserve
