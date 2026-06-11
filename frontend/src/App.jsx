@@ -2,13 +2,11 @@ import {
   BookOpen,
   CheckCircle2,
   ClipboardList,
-  Cpu,
   FileText,
   FolderTree,
   Home,
   Info,
   Moon,
-  ShieldCheck,
   Sun,
   UploadCloud,
   FolderOpen
@@ -19,14 +17,12 @@ import AppLoadingScreen from "./components/AppLoadingScreen.jsx";
 import Navigation from "./components/Navigation.jsx";
 import { appVersion, backendHealthPath, buildApiUrl } from "./config/platform.js";
 import Documentation from "./pages/Documentation.jsx";
-import ElectronicsGuidance from "./pages/ElectronicsGuidance.jsx";
 import Guidelines from "./pages/Guidelines.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import KnowMore from "./pages/KnowMore.jsx";
-import ReadmeRequirements from "./pages/ReadmeRequirements.jsx";
 import RepositoryFiles from "./pages/RepositoryFiles.jsx";
 import RepositoryStructure from "./pages/RepositoryStructure.jsx";
-import Rules from "./pages/Rules.jsx";
+import SubmissionGuide from "./pages/SubmissionGuide.jsx";
 import TemplatesResources from "./pages/TemplatesResources.jsx";
 import UploadProject from "./pages/UploadProject.jsx";
 
@@ -36,9 +32,7 @@ const pages = [
   { id: "files", label: "Files", icon: FolderOpen, component: RepositoryFiles },
   { id: "guidelines", label: "Guidelines", icon: BookOpen, component: Guidelines },
   { id: "structure", label: "Repository", icon: FolderTree, component: RepositoryStructure },
-  { id: "readme", label: "README", icon: FileText, component: ReadmeRequirements },
-  { id: "electronics", label: "Hardware", icon: Cpu, component: ElectronicsGuidance },
-  { id: "rules", label: "Rules", icon: ShieldCheck, component: Rules },
+  { id: "submission-guide", label: "Submission Guide", icon: ClipboardList, component: SubmissionGuide },
   { id: "templates", label: "Templates", icon: BookOpen, component: TemplatesResources },
   { id: "documentation", label: "Documentation", icon: FileText, component: Documentation },
   { id: "know-more", label: "Know More", icon: Info, component: KnowMore }

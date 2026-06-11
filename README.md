@@ -35,7 +35,8 @@ Creator GitHub profile: [vaishnavceh](https://github.com/vaishnavceh)
 - Creator GitHub profile is linked in public project information.
 - Existing project uploads now replace previous folder contents through a new pull request.
 - Generated README files use form input, readable report PDF sections, and clean fallback text.
-- README, documentation, repository, and guidelines pages were refreshed for the stable build.
+- README, Hardware, and Rules were combined into one minimal Submission Guide page.
+- Documentation, repository, and guidelines pages were refreshed for the stable build.
 
 ## Repositories
 
@@ -131,9 +132,7 @@ The GitHub token must never be placed in the frontend or committed to Git.
 - Files: browse accepted project files inside the website.
 - Guidelines: upload rules and acceptance workflow.
 - Repository: expected folder structure.
-- README: required project documentation fields.
-- Hardware: electronics and electrical project guidance.
-- Rules: security, folder, file, and submission rules.
+- Submission Guide: README content, hardware evidence, and safety rules in one minimal page.
 - Templates: browse actual files and folders from the official repository `TEMPLATES` directory.
 - Documentation: read the latest compiled project documentation PDF inside the website with a click-to-load PDF.js viewer.
 - Know More: version, operational notes, and upcoming work.

@@ -37,7 +37,8 @@ const latestUpdates = [
   "Creator GitHub profile is linked in public project information.",
   "Existing project uploads now replace previous folder contents through a new pull request.",
   "Generated README files use form input, readable report PDF sections, and clean fallback text.",
-  "Documentation, README, repository, and guidelines pages were refreshed for the stable build."
+  "README, Hardware, and Rules were combined into one minimal Submission Guide page.",
+  "Documentation, repository, and guidelines pages were refreshed for the stable build."
 ];
 
 export default function KnowMore() {
