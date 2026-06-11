@@ -49,79 +49,87 @@ export default function KnowMore() {
   return (
     <div>
       <PageHeader eyebrow="Know More" title="About this platform">
-        This project is in 2.5.0 nightly build for department project submissions, with guided metadata collection, automated GitHub upload, merge support, live template browsing, and in-site documentation reading enabled.
+        This project is in 2.5.0 nightly build for department project submissions,
+        with guided metadata collection, automated GitHub upload, merge support,
+        live template browsing, and in-site documentation reading enabled.
       </PageHeader>
 
-<div className="grid gap-4 lg:grid-cols-3">
-  <InfoCard icon={Code2} title="Version" accent="sky">
-    <p className="font-semibold">Version {appVersion} </p>
-<p className="mt-2 text-sm text-slate-600">
-  Stable for regular use based on completed testing. Minor issues may still
-  occur while new features are being tested. If this build is tagged as Nightly
-  and you encounter any errors, please contact the administrator. Builds tagged
-  as Stable are fully tested for normal use. If no suffix is shown, consider it
-  a stable build.
-</p>
+      <div className="grid gap-4 lg:grid-cols-3">
+        <InfoCard icon={Code2} title="Version" accent="sky">
+          <p className="font-semibold">Version {appVersion}</p>
 
-<p className="mt-2 text-sm text-slate-600">
-  For suggestions or improvements, contact the admin or creator from the left
-  sidebar GitHub profile link.
-</p>
-  </InfoCard>
-<InfoCard icon={UserRound} title="Project Creator" accent="teal">
-  <p>
-    Created for Electrical and Computer students to upload, organize, and preserve
-    their academic projects.
-  </p>
+          <p className="mt-2 text-sm text-slate-600">
+            Stable for regular use based on completed testing. Minor issues may
+            still occur while new features are being tested. If this build is
+            tagged as Nightly and you encounter any errors, please contact the
+            administrator.
+          </p>
 
-  <div className="mt-4 flex items-center gap-4 rounded-xl border border-[var(--poster-line)] bg-[linear-gradient(135deg,var(--poster-paper),var(--poster-cream))] p-4 shadow-sm">
-    <img
-      src="https://github.com/vaishnavceh.png"
-      alt="Vaishnav Venugopal GitHub profile"
-      className="h-16 w-16 rounded-full border-2 border-[var(--poster-gold-soft)] object-cover shadow-sm ring-2 ring-[var(--poster-gold)]"
-    />
+          <p className="mt-2 text-sm text-slate-600">
+            Builds tagged as Stable are fully tested for normal use. If no suffix
+            is shown, consider it a stable build.
+          </p>
 
-    <div className="min-w-0 flex-1">
-      <h3 className="truncate font-bold text-[var(--poster-navy)]">
-        Vaishnav Venugopal
-      </h3>
+          <p className="mt-2 text-sm text-slate-600">
+            For suggestions or improvements, contact the admin or creator from
+            the left sidebar GitHub profile link.
+          </p>
+        </InfoCard>
 
-      <p className="text-sm text-[var(--poster-muted)]">
-        Creator • ER Project Hub
-      </p>
+        <InfoCard icon={UserRound} title="Project Creator" accent="teal">
+          <p>
+            Created for Electrical and Computer students to upload, organize, and
+            preserve their academic projects.
+          </p>
 
-      <p className="mt-1 text-xs font-medium text-[var(--poster-gold-2)]">
-        @vaishnavceh
-      </p>
+          <div className="mt-4 flex items-center gap-4 rounded-xl border border-[var(--poster-line)] bg-[linear-gradient(135deg,var(--poster-paper),var(--poster-cream))] p-4 shadow-sm">
+            <img
+              src="https://github.com/vaishnavceh.png"
+              alt="Vaishnav Venugopal GitHub profile"
+              className="h-16 w-16 rounded-full border-2 border-[var(--poster-gold-soft)] object-cover shadow-sm ring-2 ring-[var(--poster-gold)]"
+            />
 
-      <div className="mt-3 flex flex-wrap gap-2">
-        {["React", "GitHub", "Vercel"].map((tag) => (
-          <span
-            key={tag}
-            className="rounded-full border border-[var(--poster-gold)] bg-[var(--poster-gold-soft)] px-2.5 py-1 text-xs font-semibold text-[var(--poster-navy)]"
+            <div className="min-w-0 flex-1">
+              <h3 className="truncate font-bold text-[var(--poster-navy)]">
+                Vaishnav Venugopal
+              </h3>
+
+              <p className="text-sm text-[var(--poster-muted)]">
+                Creator • ER Project Hub
+              </p>
+
+              <p className="mt-1 text-xs font-medium text-[var(--poster-gold-2)]">
+                @vaishnavceh
+              </p>
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                {["React", "GitHub", "Vercel"].map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-[var(--poster-gold)] bg-[var(--poster-gold-soft)] px-2.5 py-1 text-xs font-semibold text-[var(--poster-navy)]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <a
+            href={creatorProfileUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--poster-gold-2)] hover:text-[var(--poster-navy)]"
           >
-            {tag}
-          </span>
-        ))}
-      </div>
-    </div>
-  </div>
-
-  <a
-    href={creatorProfileUrl}
-    target="_blank"
-    rel="noreferrer"
-    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--poster-gold-2)] hover:text-[var(--poster-navy)]"
-  >
-    Visit GitHub Profile
-    <ExternalLink size={15} aria-hidden="true" />
-  </a>
-</InfoCard>
+            Visit GitHub Profile
+            <ExternalLink size={15} aria-hidden="true" />
+          </a>
+        </InfoCard>
 
         <InfoCard icon={CalendarClock} title="Deployment Plan" accent="emerald">
           <p>
-            The production frontend connects to the configured project service, and
-            templates are served from the official repository.
+            The production frontend connects to the configured project service,
+            and templates are served from the official repository.
           </p>
         </InfoCard>
       </div>
@@ -175,11 +183,39 @@ export default function KnowMore() {
         </InfoCard>
       </section>
 
+      <section className="mt-6">
+        <InfoCard icon={Code2} title="Access to Development Repository" accent="sky">
+          <p>
+            Access to the website source and development repository is locked and
+            kept private to avoid unnecessary forking, accidental file deletion,
+            confusion, or misunderstanding by other users.
+          </p>
+
+          <p className="mt-2 text-sm text-slate-600">
+            If you need access to the website build repository, contact the
+            creator through the GitHub profile provided in the creator section.
+          </p>
+
+          <a
+            href={creatorProfileUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4 inline-flex items-center gap-2 rounded-lg border border-[var(--poster-gold)] bg-[var(--poster-gold-soft)] px-3 py-2 text-sm font-semibold text-[var(--poster-navy)] hover:bg-[var(--poster-cream)]"
+          >
+            Request access from creator
+            <ExternalLink size={15} aria-hidden="true" />
+          </a>
+        </InfoCard>
+      </section>
+
       <section className="mt-6 grid gap-4 lg:grid-cols-2">
         <InfoCard icon={Rocket} title="2.5.0 Nightly Updates" accent="teal">
           <ul className="grid gap-2">
             {latestUpdates.map((item) => (
-              <li key={item} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">
+              <li
+                key={item}
+                className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700"
+              >
                 {item}
               </li>
             ))}
@@ -189,7 +225,10 @@ export default function KnowMore() {
         <InfoCard icon={GitPullRequest} title="Issues Solved" accent="emerald">
           <ul className="grid gap-2">
             {solvedIssues.map((item) => (
-              <li key={item} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">
+              <li
+                key={item}
+                className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700"
+              >
                 {item}
               </li>
             ))}
@@ -201,7 +240,10 @@ export default function KnowMore() {
         <InfoCard icon={CalendarClock} title="Testing Checklist" accent="emerald">
           <ul className="grid gap-2">
             {testChecklist.map((item) => (
-              <li key={item} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">
+              <li
+                key={item}
+                className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700"
+              >
                 {item}
               </li>
             ))}
@@ -216,7 +258,10 @@ export default function KnowMore() {
               "Incorrect folders, failed uploads, or duplicate submissions should be reported to the admin.",
               "Do not share tokens, passwords, or private files in project uploads."
             ].map((note) => (
-              <li key={note} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">
+              <li
+                key={note}
+                className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700"
+              >
                 {note}
               </li>
             ))}
