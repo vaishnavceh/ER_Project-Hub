@@ -31,19 +31,19 @@ const solvedIssues = [
 ];
 
 const latestUpdates = [
-  "Version bumped to 1.5.4 nightly build.",
-  "Templates and Resources now displays the official GitHub repository and live TEMPLATES folder.",
+  "Version bumped to 1.6.0 stable build.",
+  "Templates page now lists the actual files and folders inside the official TEMPLATES directory.",
   "Creator GitHub profile is linked in public project information.",
   "Existing project uploads now replace previous folder contents through a new pull request.",
   "Generated README files use form input, readable report PDF sections, and clean fallback text.",
-  "Documentation, README, repository, and guidelines pages were refreshed for the nightly build."
+  "Documentation, README, repository, and guidelines pages were refreshed for the stable build."
 ];
 
 export default function KnowMore() {
   return (
     <div>
       <PageHeader eyebrow="Know More" title="About this platform">
-        This project is in 1.5.4 nightly build for Electrical and Computer project submissions, with automated GitHub upload, merge support, and live template resources enabled.
+        This project is in 1.6.0 stable build for Electrical and Computer project submissions, with automated GitHub upload, merge support, and live template file browsing enabled.
       </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -108,7 +108,7 @@ export default function KnowMore() {
       </section>
 
       <section className="mt-6 grid gap-4 lg:grid-cols-2">
-        <InfoCard icon={Rocket} title="1.5.4 Nightly Updates" accent="teal">
+        <InfoCard icon={Rocket} title="1.6.0 Stable Updates" accent="teal">
           <ul className="grid gap-2">
             {latestUpdates.map((item) => (
               <li key={item} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">

@@ -1,4 +1,4 @@
-export const appVersion = "1.5.4 nightly build";
+export const appVersion = "1.6.0 stable build";
 
 export const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 export const backendHealthPath = "/api/health";

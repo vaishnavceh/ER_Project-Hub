@@ -1,6 +1,6 @@
 {
   "name": "department-project-hub-frontend",
-  "version": "1.5.4-nightly",
+  "version": "1.6.0",
   "private": true,
   "type": "module",
   "scripts": {

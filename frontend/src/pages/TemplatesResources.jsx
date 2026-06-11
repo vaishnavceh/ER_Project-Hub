@@ -1,191 +1,203 @@
-import { BookOpen, CheckCircle2, ExternalLink, FileText, FolderOpen, Moon, Sun } from "lucide-react";
-import { useState } from "react";
+import { AlertCircle, ChevronRight, Download, ExternalLink, File, Folder, Loader2, RefreshCcw } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 
-import { appVersion, storageRepository, storageRepositoryUrl, templatesFolderUrl } from "../config/platform.js";
+import PageHeader from "../components/PageHeader.jsx";
+import { appVersion, buildApiUrl, storageRepository, templatesFolderUrl } from "../config/platform.js";
 
-const templateAreas = [
-  "Course material templates",
-  "Seminar report templates",
-  "Seminar presentation templates",
-  "Lab record and experiment documentation templates",
-  "Project review and evaluation templates",
-  "Department announcement and circular templates"
-];
-
-const resourceAreas = [
-  "Reference README examples",
-  "Report structure examples",
-  "Presentation structure examples",
-  "Hardware documentation checklist",
-  "Software testing checklist",
-  "Submission review checklist"
-];
+const templatesRoot = "TEMPLATES";
 
 export default function TemplatesResources() {
-  const [mode, setMode] = useState("light");
-  const isDark = mode === "dark";
+  const [currentPath, setCurrentPath] = useState(templatesRoot);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [result, setResult] = useState(null);
+  const [status, setStatus] = useState({ type: "loading" });
+
+  const breadcrumbs = useMemo(() => buildTemplateBreadcrumbs(currentPath), [currentPath]);
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadTemplates() {
+      setStatus({ type: "loading" });
+
+      try {
+        const params = new URLSearchParams({ path: currentPath });
+        const response = await fetch(buildApiUrl(`/api/repository/files?${params.toString()}`), { cache: "no-store" });
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(payload.error || "Could not load template files.");
+        }
+
+        if (!ignore) {
+          setResult(payload);
+          setStatus({ type: "success" });
+        }
+      } catch (error) {
+        if (!ignore) {
+          const message =
+            error instanceof TypeError
+              ? "Connection error. Refresh the page, then contact the admin if template files still do not load."
+              : error.message;
+
+          setStatus({ type: "error", message });
+        }
+      }
+    }
+
+    loadTemplates();
+
+    return () => {
+      ignore = true;
+    };
+  }, [currentPath, refreshKey]);
 
   return (
-    <div className={isDark ? "rounded-lg bg-slate-950 p-5 text-slate-100 shadow-soft" : "rounded-lg bg-white p-5 text-slate-950 shadow-soft"}>
-      <div className="flex flex-col gap-4 border-b border-current/10 pb-5 lg:flex-row lg:items-start lg:justify-between">
-        <div className="max-w-3xl">
-          <p className={isDark ? "mb-2 text-sm font-semibold uppercase text-teal-300" : "mb-2 text-sm font-semibold uppercase text-teal-700"}>
-            Templates & Resources
-          </p>
-          <h1 className="text-3xl font-bold sm:text-4xl">Course resources workspace</h1>
-          <p className={isDark ? "mt-3 text-base leading-7 text-slate-300" : "mt-3 text-base leading-7 text-slate-600"}>
-            Official templates for course materials, seminars, labs, and project reviews are now available in the storage repository.
-          </p>
-          <p className={isDark ? "mt-2 text-sm font-semibold text-slate-400" : "mt-2 text-sm font-semibold text-slate-500"}>
-            Build {appVersion}
-          </p>
-        </div>
+    <div>
+      <PageHeader eyebrow="Templates" title="Browse official template files">
+        Files are loaded directly from the official repository directory named TEMPLATES.
+      </PageHeader>
 
-        <div className={isDark ? "flex rounded-lg border border-slate-700 bg-slate-900 p-1" : "flex rounded-lg border border-slate-200 bg-slate-50 p-1"}>
-          <button
-            type="button"
-            onClick={() => setMode("light")}
-            className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold ${
-              !isDark ? "bg-white text-slate-950 shadow-sm" : "text-slate-400 hover:text-slate-100"
-            }`}
-          >
-            <Sun size={16} aria-hidden="true" />
-            Light
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("dark")}
-            className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold ${
-              isDark ? "bg-slate-700 text-white shadow-sm" : "text-slate-500 hover:text-slate-950"
-            }`}
-          >
-            <Moon size={16} aria-hidden="true" />
-            Dark
-          </button>
-        </div>
-      </div>
-
-      <section className={isDark ? "mt-6 rounded-lg border border-emerald-400/30 bg-emerald-300/10 p-5 text-emerald-100" : "mt-6 rounded-lg border border-emerald-200 bg-emerald-50 p-5 text-emerald-950"}>
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-start gap-3">
-            <span className={isDark ? "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-emerald-300/20 text-emerald-200" : "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white text-emerald-800"}>
-              <CheckCircle2 size={21} aria-hidden="true" />
-            </span>
-            <div>
-              <h2 className="text-lg font-semibold">Templates folder is live</h2>
-              <p className="mt-2 text-sm leading-6">
-                Students can download official templates directly from the repository folder named <span className="font-semibold">TEMPLATES</span>.
-              </p>
-              <p className="mt-2 break-words text-sm font-semibold">
-                GitHub repository: {storageRepository}
-              </p>
-            </div>
-          </div>
-          <a
-            href={templatesFolderUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={isDark ? "inline-flex w-fit items-center gap-2 rounded-lg bg-emerald-300 px-3 py-2 text-sm font-semibold text-emerald-950 hover:bg-emerald-200" : "inline-flex w-fit items-center gap-2 rounded-lg bg-emerald-700 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-800"}
-          >
-            <FolderOpen size={16} aria-hidden="true" />
-            Open templates
-            <ExternalLink size={15} aria-hidden="true" />
-          </a>
-        </div>
-      </section>
-
-      <section className={isDark ? "mt-6 rounded-lg border border-slate-800 bg-slate-900 p-5" : "mt-6 rounded-lg border border-slate-200 bg-slate-50 p-5"}>
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-start gap-3">
-            <span className={isDark ? "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-violet-300/15 text-violet-200" : "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-violet-100 text-violet-800"}>
-              <FolderOpen size={21} aria-hidden="true" />
-            </span>
-            <div>
-              <h2 className="text-lg font-semibold">GitHub template repository</h2>
-              <p className={isDark ? "mt-2 break-words text-sm leading-6 text-slate-300" : "mt-2 break-words text-sm leading-6 text-slate-600"}>
-                {storageRepository}
-              </p>
-              <p className={isDark ? "mt-1 break-words text-xs font-semibold uppercase text-slate-500" : "mt-1 break-words text-xs font-semibold uppercase text-slate-500"}>
-                Repository path: {storageRepository}/TEMPLATES
-              </p>
-            </div>
+      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
+        <div className="flex flex-col gap-4 border-b border-slate-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0">
+            <h2 className="break-words text-lg font-semibold text-slate-950">{storageRepository}/TEMPLATES</h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Branch: {result?.branch || "main"} · Build {appVersion}
+            </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <a
-              href={storageRepositoryUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={isDark ? "inline-flex w-fit items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm font-semibold text-slate-100 hover:bg-slate-800" : "inline-flex w-fit items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100"}
+            <button
+              type="button"
+              onClick={() => setRefreshKey((key) => key + 1)}
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
             >
-              Open repository
-              <ExternalLink size={15} aria-hidden="true" />
-            </a>
+              <RefreshCcw size={16} aria-hidden="true" />
+              Refresh
+            </button>
             <a
               href={templatesFolderUrl}
               target="_blank"
               rel="noreferrer"
-              className={isDark ? "inline-flex w-fit items-center gap-2 rounded-lg bg-violet-300 px-3 py-2 text-sm font-semibold text-violet-950 hover:bg-violet-200" : "inline-flex w-fit items-center gap-2 rounded-lg bg-violet-700 px-3 py-2 text-sm font-semibold text-white hover:bg-violet-800"}
+              className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800"
             >
-              Open TEMPLATES
+              GitHub
               <ExternalLink size={15} aria-hidden="true" />
             </a>
           </div>
         </div>
-      </section>
 
-      <section className={isDark ? "mt-6 rounded-lg border border-slate-800 bg-slate-900 p-5" : "mt-6 rounded-lg border border-slate-200 bg-slate-50 p-5"}>
-        <div className="flex items-start gap-3">
-          <span className={isDark ? "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-sky-300/15 text-sky-200" : "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-sky-100 text-sky-800"}>
-            <BookOpen size={21} aria-hidden="true" />
-          </span>
-          <div>
-            <h2 className="text-lg font-semibold">How to use templates</h2>
-            <p className="mt-2 text-sm leading-6">
-              Download the required file, complete it for your course or seminar, and upload the finished project report or supporting files through the Upload Project page.
-            </p>
-          </div>
-        </div>
-      </section>
+        <nav className="mt-4 flex flex-wrap items-center gap-2 text-sm" aria-label="Templates path">
+          {breadcrumbs.map((crumb, index) => (
+            <span key={crumb.path} className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setCurrentPath(crumb.path)}
+                className={`rounded-lg px-2 py-1 font-medium ${
+                  index === breadcrumbs.length - 1 ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                }`}
+              >
+                {crumb.label}
+              </button>
+              {index < breadcrumbs.length - 1 ? <ChevronRight size={15} className="text-slate-400" aria-hidden="true" /> : null}
+            </span>
+          ))}
+        </nav>
 
-      <section className="mt-6 grid gap-5 lg:grid-cols-2">
-        <ResourcePanel
-          isDark={isDark}
-          icon={FileText}
-          title="Available Template Areas"
-          description="Structured files available for students and faculty."
-          items={templateAreas}
-        />
-        <ResourcePanel
-          isDark={isDark}
-          icon={BookOpen}
-          title="Reference Resource Areas"
-          description="Reference material for improving submission quality."
-          items={resourceAreas}
-        />
+        <TemplateFileList status={status} result={result} onOpenFolder={setCurrentPath} />
       </section>
     </div>
   );
 }
 
-function ResourcePanel({ isDark, icon: Icon, title, description, items }) {
-  return (
-    <article className={isDark ? "rounded-lg border border-slate-800 bg-slate-900 p-5" : "rounded-lg border border-slate-200 bg-slate-50 p-5"}>
-      <div className="flex items-center gap-3">
-        <span className={isDark ? "grid h-10 w-10 place-items-center rounded-lg bg-teal-300/15 text-teal-200" : "grid h-10 w-10 place-items-center rounded-lg bg-teal-100 text-teal-800"}>
-          <Icon size={21} aria-hidden="true" />
-        </span>
-        <div>
-          <h2 className="font-semibold">{title}</h2>
-          <p className={isDark ? "text-sm text-slate-400" : "text-sm text-slate-500"}>{description}</p>
-        </div>
+function TemplateFileList({ status, result, onOpenFolder }) {
+  if (status.type === "loading") {
+    return (
+      <div className="mt-6 flex items-center gap-3 rounded-lg bg-slate-50 p-4 text-sm text-slate-600">
+        <Loader2 className="animate-spin" size={18} aria-hidden="true" />
+        Loading template files...
       </div>
-      <ul className="mt-4 grid gap-2">
-        {items.map((item) => (
-          <li key={item} className={isDark ? "rounded-lg bg-slate-800 px-3 py-2 text-sm text-slate-200" : "rounded-lg bg-white px-3 py-2 text-sm text-slate-700"}>
-            {item}
-          </li>
-        ))}
-      </ul>
-    </article>
+    );
+  }
+
+  if (status.type === "error") {
+    return (
+      <div className="mt-6 flex items-start gap-3 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-950">
+        <AlertCircle className="mt-0.5 shrink-0" size={18} aria-hidden="true" />
+        <p>{status.message}</p>
+      </div>
+    );
+  }
+
+  if (!result?.items?.length) {
+    return <p className="mt-6 rounded-lg bg-slate-50 p-4 text-sm text-slate-600">No files found inside the TEMPLATES directory.</p>;
+  }
+
+  return (
+    <div className="mt-6 overflow-hidden rounded-lg border border-slate-200">
+      {result.items.map((item) => {
+        const isDirectory = item.type === "dir";
+        const Icon = isDirectory ? Folder : File;
+
+        return (
+          <div key={item.path} className="flex flex-col gap-3 border-b border-slate-200 p-4 last:border-b-0 sm:flex-row sm:items-center sm:justify-between">
+            <button
+              type="button"
+              disabled={!isDirectory}
+              onClick={() => isDirectory && onOpenFolder(item.path)}
+              className={`flex min-w-0 items-center gap-3 text-left ${isDirectory ? "text-sky-800 hover:text-sky-950" : "cursor-default text-slate-700"}`}
+            >
+              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg ${isDirectory ? "bg-sky-100 text-sky-800" : "bg-slate-100 text-slate-600"}`}>
+                <Icon size={18} aria-hidden="true" />
+              </span>
+              <span className="min-w-0">
+                <span className="block break-words text-sm font-semibold">{item.name}</span>
+                <span className="block break-words text-xs text-slate-500">{item.path}</span>
+              </span>
+            </button>
+
+            <div className="flex shrink-0 flex-wrap gap-2">
+              {item.downloadUrl ? (
+                <a
+                  href={item.downloadUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg border border-emerald-300 px-3 py-2 text-sm font-semibold text-emerald-800 hover:bg-emerald-50"
+                >
+                  Download
+                  <Download size={15} aria-hidden="true" />
+                </a>
+              ) : null}
+              {item.htmlUrl ? (
+                <a
+                  href={item.htmlUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  GitHub
+                  <ExternalLink size={15} aria-hidden="true" />
+                </a>
+              ) : null}
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
+}
+
+function buildTemplateBreadcrumbs(path) {
+  const normalizedPath = path && path.startsWith(templatesRoot) ? path : templatesRoot;
+  const parts = normalizedPath.split("/").filter(Boolean).slice(1);
+  const crumbs = [{ label: templatesRoot, path: templatesRoot }];
+
+  parts.forEach((part, index) => {
+    crumbs.push({
+      label: part,
+      path: [templatesRoot, ...parts.slice(0, index + 1)].join("/")
+    });
+  });
+
+  return crumbs;
 }
