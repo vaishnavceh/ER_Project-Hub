@@ -1,8 +1,10 @@
-import { BookOpen, FileText, Moon, Sun, Wrench } from "lucide-react";
+import { BookOpen, CheckCircle2, ExternalLink, FileText, FolderOpen, Moon, Sun } from "lucide-react";
 import { useState } from "react";
 
+import { templatesFolderUrl } from "../config/platform.js";
+
 const templateAreas = [
-  "Course-material upload templates",
+  "Course material templates",
   "Seminar report templates",
   "Seminar presentation templates",
   "Lab record and experiment documentation templates",
@@ -32,7 +34,7 @@ export default function TemplatesResources() {
           </p>
           <h1 className="text-3xl font-bold sm:text-4xl">Course resources workspace</h1>
           <p className={isDark ? "mt-3 text-base leading-7 text-slate-300" : "mt-3 text-base leading-7 text-slate-600"}>
-            Templates for course materials, seminars, labs, and project reviews are under construction and testing.
+            Official templates for course materials, seminars, labs, and project reviews are now available in the storage repository.
           </p>
         </div>
 
@@ -60,15 +62,41 @@ export default function TemplatesResources() {
         </div>
       </div>
 
-      <section className={isDark ? "mt-6 rounded-lg border border-amber-400/30 bg-amber-300/10 p-5 text-amber-100" : "mt-6 rounded-lg border border-amber-200 bg-amber-50 p-5 text-amber-950"}>
+      <section className={isDark ? "mt-6 rounded-lg border border-emerald-400/30 bg-emerald-300/10 p-5 text-emerald-100" : "mt-6 rounded-lg border border-emerald-200 bg-emerald-50 p-5 text-emerald-950"}>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-start gap-3">
+            <span className={isDark ? "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-emerald-300/20 text-emerald-200" : "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white text-emerald-800"}>
+              <CheckCircle2 size={21} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 className="text-lg font-semibold">Templates folder is live</h2>
+              <p className="mt-2 text-sm leading-6">
+                Students can download official templates directly from the repository folder named <span className="font-semibold">TEMPLATES</span>.
+              </p>
+            </div>
+          </div>
+          <a
+            href={templatesFolderUrl}
+            target="_blank"
+            rel="noreferrer"
+            className={isDark ? "inline-flex w-fit items-center gap-2 rounded-lg bg-emerald-300 px-3 py-2 text-sm font-semibold text-emerald-950 hover:bg-emerald-200" : "inline-flex w-fit items-center gap-2 rounded-lg bg-emerald-700 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-800"}
+          >
+            <FolderOpen size={16} aria-hidden="true" />
+            Open templates
+            <ExternalLink size={15} aria-hidden="true" />
+          </a>
+        </div>
+      </section>
+
+      <section className={isDark ? "mt-6 rounded-lg border border-slate-800 bg-slate-900 p-5" : "mt-6 rounded-lg border border-slate-200 bg-slate-50 p-5"}>
         <div className="flex items-start gap-3">
-          <span className={isDark ? "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-amber-300/20 text-amber-200" : "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white text-amber-800"}>
-            <Wrench size={21} aria-hidden="true" />
+          <span className={isDark ? "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-sky-300/15 text-sky-200" : "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-sky-100 text-sky-800"}>
+            <BookOpen size={21} aria-hidden="true" />
           </span>
           <div>
-            <h2 className="text-lg font-semibold">Under construction and testing</h2>
+            <h2 className="text-lg font-semibold">How to use templates</h2>
             <p className="mt-2 text-sm leading-6">
-              This area is planned for reusable academic templates and department resources. Files shown here are roadmap items until the template workflow is verified.
+              Download the required file, complete it for your course or seminar, and upload the finished project report or supporting files through the Upload Project page.
             </p>
           </div>
         </div>
@@ -78,15 +106,15 @@ export default function TemplatesResources() {
         <ResourcePanel
           isDark={isDark}
           icon={FileText}
-          title="Template Roadmap"
-          description="Structured files planned for students and faculty."
+          title="Available Template Areas"
+          description="Structured files available for students and faculty."
           items={templateAreas}
         />
         <ResourcePanel
           isDark={isDark}
           icon={BookOpen}
-          title="Resource Roadmap"
-          description="Reference material planned for submission quality."
+          title="Reference Resource Areas"
+          description="Reference material for improving submission quality."
           items={resourceAreas}
         />
       </section>

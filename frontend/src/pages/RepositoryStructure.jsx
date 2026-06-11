@@ -1,7 +1,8 @@
-import { FolderTree } from "lucide-react";
+import { ExternalLink, FolderTree } from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
+import { templatesFolderUrl } from "../config/platform.js";
 
 export default function RepositoryStructure() {
   return (
@@ -20,7 +21,12 @@ export default function RepositoryStructure() {
       web-development/
       electronics-projects/
     semester-6/
-      final-year-projects/`}
+      final-year-projects/
+TEMPLATES/
+  reports/
+  seminars/
+  presentations/
+  lab-records/`}
         </pre>
         <InfoCard icon={FolderTree} title="Path Meaning" accent="sky">
           <p>
@@ -29,6 +35,15 @@ export default function RepositoryStructure() {
           <p className="mt-3">
             The website keeps project files organized so students can browse accepted uploads without needing Git commands.
           </p>
+          <a
+            href={templatesFolderUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-sky-700 hover:text-sky-900"
+          >
+            Open official TEMPLATES folder
+            <ExternalLink size={15} aria-hidden="true" />
+          </a>
         </InfoCard>
       </div>
     </div>

@@ -1,8 +1,10 @@
 # Electrical & Computer Project Repository Hub
 
-Version: `1.4.0 nightly build`
+Version: `1.5.0 stable build`
 
 A full-stack project submission hub for Electrical and Computer course work. Students upload project files through the website, the backend creates a GitHub branch and pull request, and the automated workflow can merge and pull accepted submissions after checks pass.
+
+Creator GitHub profile: [vaishnavceh](https://github.com/vaishnavceh)
 
 ## Current Workflow
 
@@ -10,9 +12,10 @@ A full-stack project submission hub for Electrical and Computer course work. Stu
 - Auto-merge and auto-pull are enabled after the configured checks pass.
 - Students should use the website for uploads and the repository browser for accepted files.
 - Git users can use the upload page Git window to clone, fetch, and pull accepted projects.
+- Students can download official templates from the storage repository `TEMPLATES` folder.
 - Contact the admin for failed uploads, duplicate submissions, incorrect folders, or access concerns.
 
-## 1.4.0 Nightly Update
+## 1.5.0 Stable Update
 
 ### Issues Solved
 
@@ -22,22 +25,27 @@ A full-stack project submission hub for Electrical and Computer course work. Stu
 - Existing project folders can now be replaced through a new upload pull request.
 - Storage repository configuration has been updated for the official Electrical and Computer project repository.
 - Auto-merge workflow setup is documented for upload pull requests.
+- Templates are now live in the official repository `TEMPLATES` folder.
 
 ### New Updates
 
-- Version bumped to `1.4.0 nightly build`.
+- Version bumped to `1.5.0 stable build`.
+- Templates and Resources now links to the live official `TEMPLATES` folder.
+- Creator GitHub profile is linked in public project information.
 - Existing project uploads now replace previous folder contents through a new pull request.
 - Generated README files use form input, readable report PDF sections, and clean fallback text.
-- Upload success status reports when an existing project folder was overwritten.
-- Know More and documentation pages now show overwrite, README fallback, and deployment notes.
-- Git command window uses the configured official storage repository URL.
+- README, documentation, repository, and guidelines pages were refreshed for the stable build.
 
 ## Repositories
 
 - `ER_Project-Hub`: website source code.
 - `ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL`: accepted student project files.
+- `ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL/TEMPLATES`: official course, seminar, lab, and review templates.
 
 The website source repo and project-storage repo are intentionally separate. Do not upload student project folders into the website source repo.
+
+Official templates folder:
+[TEMPLATES](https://github.com/ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL/tree/main/TEMPLATES)
 
 ## Tech Stack
 
@@ -109,7 +117,7 @@ The GitHub token must never be placed in the frontend or committed to Git.
 - README: required project documentation fields.
 - Hardware: electronics and electrical project guidance.
 - Rules: security, folder, file, and submission rules.
-- Templates: course material, seminar, and report resources under construction and testing.
+- Templates: live course material, seminar, lab, presentation, and review templates from the official repository.
 - Know More: version, operational notes, and upcoming work.
 
 ## Upload Rules
@@ -123,6 +131,7 @@ The GitHub token must never be placed in the frontend or committed to Git.
 - Use optional README detail fields for problem statement, setup steps, run/test steps, demo evidence, presentation notes, future improvements, and extra comments.
 - Missing optional README details are read from matching report PDF sections when possible, then written as `Not available.` instead of unfinished placeholder text.
 - Reuploading the same batch/semester/subject/team/project path replaces the existing project folder through a pull request.
+- Use official templates from the `TEMPLATES` folder for reports, seminars, presentations, lab records, and review material.
 
 ## Local Testing
 

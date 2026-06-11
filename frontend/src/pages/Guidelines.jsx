@@ -1,7 +1,8 @@
-import { GitPullRequest, UsersRound } from "lucide-react";
+import { BookOpen, ExternalLink, GitPullRequest, UsersRound } from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
+import { templatesFolderUrl } from "../config/platform.js";
 
 export default function Guidelines() {
   return (
@@ -18,6 +19,18 @@ export default function Guidelines() {
         </InfoCard>
         <InfoCard icon={UsersRound} title="Team projects only" accent="amber">
           <p>Only team projects are supported. Individual project uploads should not be submitted through this hub.</p>
+        </InfoCard>
+        <InfoCard icon={BookOpen} title="Use official templates" accent="sky">
+          <p>Course, seminar, lab, and review templates are available in the official storage repository.</p>
+          <a
+            href={templatesFolderUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-sky-700 hover:text-sky-900"
+          >
+            Open TEMPLATES folder
+            <ExternalLink size={15} aria-hidden="true" />
+          </a>
         </InfoCard>
       </div>
 

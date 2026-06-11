@@ -1,15 +1,15 @@
-import { CalendarClock, Code2, GitPullRequest, Rocket, UserRound } from "lucide-react";
+import { CalendarClock, Code2, ExternalLink, GitPullRequest, Rocket, UserRound } from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
-import { appVersion } from "../config/platform.js";
+import { appVersion, creatorProfileUrl, templatesFolderUrl } from "../config/platform.js";
 
 const upcomingFeatures = [
   "Admin dashboard for workflow logs, accepted uploads, and rejection notes",
   "Student login and team submission history",
   "Search and filters by batch, semester, subject, team, and technology",
-  "Frontend production deployment after testing is stable",
-  "Template/resource workflow after construction testing is complete"
+  "More detailed template previews inside the website",
+  "Template download status checks from the Admin Pane"
 ];
 
 const testChecklist = [
@@ -26,23 +26,24 @@ const solvedIssues = [
   "Generated README files no longer contain unfinished placeholder instructions.",
   "Existing project folders can now be replaced through a new upload PR.",
   "Storage repository configuration now targets the official Electrical and Computer project repository.",
-  "Auto-merge workflow guidance is documented for upload branches."
+  "Auto-merge workflow guidance is documented for upload branches.",
+  "Templates are now live in the official storage repository TEMPLATES folder."
 ];
 
 const latestUpdates = [
-  "Version bumped to 1.4.0 nightly build.",
+  "Version bumped to 1.5.0 stable build.",
+  "Templates and Resources now links to the live official TEMPLATES folder.",
+  "Creator GitHub profile is linked in public project information.",
   "Existing project uploads now replace previous folder contents through a new pull request.",
   "Generated README files use form input, readable report PDF sections, and clean fallback text.",
-  "Successful upload status reports when an existing project folder was overwritten.",
-  "Documentation was refreshed with overwrite, README fallback, and deployment notes.",
-  "Git command window uses the configured official storage repository URL."
+  "Documentation, README, repository, and guidelines pages were refreshed for the stable build."
 ];
 
 export default function KnowMore() {
   return (
     <div>
       <PageHeader eyebrow="Know More" title="About this platform">
-        This project is in 1.4.0 nightly testing for Electrical and Computer project submissions, with automated GitHub upload and merge support enabled.
+        This project is in 1.5.0 stable build for Electrical and Computer project submissions, with automated GitHub upload, merge support, and live template resources enabled.
       </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -51,9 +52,18 @@ export default function KnowMore() {
         </InfoCard>
         <InfoCard icon={UserRound} title="Project Creator" accent="teal">
           <p>Created for the Electrical and Computer project repository workflow by Vaishnav Ceh.</p>
+          <a
+            href={creatorProfileUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-teal-700 hover:text-teal-900"
+          >
+            GitHub profile
+            <ExternalLink size={15} aria-hidden="true" />
+          </a>
         </InfoCard>
         <InfoCard icon={CalendarClock} title="Deployment Plan" accent="emerald">
-          <p>The production frontend connects to the configured project service. Server details are kept out of public pages.</p>
+          <p>The production frontend connects to the configured project service, and templates are served from the official repository.</p>
         </InfoCard>
       </div>
 
@@ -84,12 +94,21 @@ export default function KnowMore() {
               <dt className="font-medium text-slate-800">Git users</dt>
               <dd>Use the Git window after upload if you need pull commands.</dd>
             </div>
+            <div>
+              <dt className="font-medium text-slate-800">Templates</dt>
+              <dd>
+                <a href={templatesFolderUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 font-semibold text-sky-700 hover:text-sky-900">
+                  Open official TEMPLATES folder
+                  <ExternalLink size={14} aria-hidden="true" />
+                </a>
+              </dd>
+            </div>
           </dl>
         </InfoCard>
       </section>
 
       <section className="mt-6 grid gap-4 lg:grid-cols-2">
-        <InfoCard icon={Rocket} title="1.4.0 Nightly Updates" accent="teal">
+        <InfoCard icon={Rocket} title="1.5.0 Stable Updates" accent="teal">
           <ul className="grid gap-2">
             {latestUpdates.map((item) => (
               <li key={item} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">
@@ -142,7 +161,7 @@ export default function KnowMore() {
           </div>
           <div>
             <h2 className="text-lg font-semibold text-slate-950">Upcoming Features</h2>
-            <p className="text-sm text-slate-500">Planned additions after the nightly deployment test is stable.</p>
+            <p className="text-sm text-slate-500">Planned additions for the next stable deployment cycle.</p>
           </div>
         </div>
         <ul className="grid gap-2 md:grid-cols-2">
