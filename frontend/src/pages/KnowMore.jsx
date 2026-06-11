@@ -56,59 +56,55 @@ export default function KnowMore() {
         <InfoCard icon={Code2} title="Version" accent="sky">
           <p>Version {appVersion}.</p>
         </InfoCard>
+<InfoCard icon={UserRound} title="Project Creator" accent="teal">
+  <p>
+    Created for Electrical and Computer students to upload, organize, and preserve
+    their academic projects.
+  </p>
 
-        <InfoCard icon={UserRound} title="Project Creator" accent="teal">
-          <p>
-            Created for Electrical and Computer students to upload, organize, and preserve
-            their academic projects.
-          </p>
+  <div className="mt-4 flex items-center gap-4 rounded-xl border border-[var(--poster-line)] bg-[linear-gradient(135deg,var(--poster-paper),var(--poster-cream))] p-4 shadow-sm">
+    <img
+      src="https://github.com/vaishnavceh.png"
+      alt="Vaishnav Venugopal GitHub profile"
+      className="h-16 w-16 rounded-full border-2 border-[var(--poster-gold-soft)] object-cover shadow-sm ring-2 ring-[var(--poster-gold)]"
+    />
 
-          <div className="mt-4 flex items-center gap-4 rounded-xl border border-slate-200 bg-gradient-to-r from-slate-50 to-teal-50 p-4">
-            <img
-              src="https://github.com/vaishnavceh.png"
-              alt="Vaishnav Venugopal GitHub profile"
-              className="h-16 w-16 rounded-full border border-white object-cover shadow-sm ring-2 ring-teal-200"
-            />
+    <div className="min-w-0 flex-1">
+      <h3 className="truncate font-bold text-[var(--poster-navy)]">
+        Vaishnav Venugopal
+      </h3>
 
-            <div className="min-w-0 flex-1">
-              <h3 className="truncate font-bold text-slate-900">
-                Vaishnav Venugopal
-              </h3>
+      <p className="text-sm text-[var(--poster-muted)]">
+        Creator • ER Project Hub
+      </p>
 
-              <p className="text-sm text-slate-500">
-                Creator • ER Project Hub
-              </p>
+      <p className="mt-1 text-xs font-medium text-[var(--poster-gold-2)]">
+        @vaishnavceh
+      </p>
 
-              <p className="mt-1 text-xs font-medium text-slate-400">
-                @vaishnavceh
-              </p>
-
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="rounded-full bg-teal-100 px-2.5 py-1 text-xs font-semibold text-teal-700">
-                  React
-                </span>
-
-                <span className="rounded-full bg-sky-100 px-2.5 py-1 text-xs font-semibold text-sky-700">
-                  GitHub
-                </span>
-
-                <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-                  Vercel
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <a
-            href={creatorProfileUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-teal-700 hover:text-teal-900"
+      <div className="mt-3 flex flex-wrap gap-2">
+        {["React", "GitHub", "Vercel"].map((tag) => (
+          <span
+            key={tag}
+            className="rounded-full border border-[var(--poster-gold)] bg-[var(--poster-gold-soft)] px-2.5 py-1 text-xs font-semibold text-[var(--poster-navy)]"
           >
-            Visit GitHub Profile
-            <ExternalLink size={15} aria-hidden="true" />
-          </a>
-        </InfoCard>
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <a
+    href={creatorProfileUrl}
+    target="_blank"
+    rel="noreferrer"
+    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--poster-gold-2)] hover:text-[var(--poster-navy)]"
+  >
+    Visit GitHub Profile
+    <ExternalLink size={15} aria-hidden="true" />
+  </a>
+</InfoCard>
 
         <InfoCard icon={CalendarClock} title="Deployment Plan" accent="emerald">
           <p>
