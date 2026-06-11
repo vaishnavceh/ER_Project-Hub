@@ -1,4 +1,11 @@
-import { CalendarClock, Code2, ExternalLink, GitPullRequest, Rocket, UserRound } from "lucide-react";
+import {
+  CalendarClock,
+  Code2,
+  ExternalLink,
+  GitPullRequest,
+  Rocket,
+  UserRound
+} from "lucide-react";
 
 import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
@@ -49,20 +56,65 @@ export default function KnowMore() {
         <InfoCard icon={Code2} title="Version" accent="sky">
           <p>Version {appVersion}.</p>
         </InfoCard>
+
         <InfoCard icon={UserRound} title="Project Creator" accent="teal">
-          <p>Created for the Electrical and Computer Students to upload their project by Vaishnav Venugopal.</p>
+          <p>
+            Created for Electrical and Computer students to upload, organize, and preserve
+            their academic projects.
+          </p>
+
+          <div className="mt-4 flex items-center gap-4 rounded-xl border border-slate-200 bg-gradient-to-r from-slate-50 to-teal-50 p-4">
+            <img
+              src="https://github.com/vaishnavceh.png"
+              alt="Vaishnav Venugopal GitHub profile"
+              className="h-16 w-16 rounded-full border border-white object-cover shadow-sm ring-2 ring-teal-200"
+            />
+
+            <div className="min-w-0 flex-1">
+              <h3 className="truncate font-bold text-slate-900">
+                Vaishnav Venugopal
+              </h3>
+
+              <p className="text-sm text-slate-500">
+                Creator • ER Project Hub
+              </p>
+
+              <p className="mt-1 text-xs font-medium text-slate-400">
+                @vaishnavceh
+              </p>
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                <span className="rounded-full bg-teal-100 px-2.5 py-1 text-xs font-semibold text-teal-700">
+                  React
+                </span>
+
+                <span className="rounded-full bg-sky-100 px-2.5 py-1 text-xs font-semibold text-sky-700">
+                  GitHub
+                </span>
+
+                <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+                  Vercel
+                </span>
+              </div>
+            </div>
+          </div>
+
           <a
             href={creatorProfileUrl}
             target="_blank"
             rel="noreferrer"
-            className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-teal-700 hover:text-teal-900"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-teal-700 hover:text-teal-900"
           >
-            GitHub profile
+            Visit GitHub Profile
             <ExternalLink size={15} aria-hidden="true" />
           </a>
         </InfoCard>
+
         <InfoCard icon={CalendarClock} title="Deployment Plan" accent="emerald">
-          <p>The production frontend connects to the configured project service, and templates are served from the official repository.</p>
+          <p>
+            The production frontend connects to the configured project service, and
+            templates are served from the official repository.
+          </p>
         </InfoCard>
       </div>
 
@@ -79,10 +131,14 @@ export default function KnowMore() {
             </div>
             <div>
               <dt className="font-medium text-slate-800">Support</dt>
-              <dd>Contact the admin for concerns, failed uploads, or incorrect submissions.</dd>
+              <dd>
+                Contact the admin for concerns, failed uploads, or incorrect
+                submissions.
+              </dd>
             </div>
           </dl>
         </InfoCard>
+
         <InfoCard icon={Code2} title="Repository Access" accent="sky">
           <dl className="space-y-2">
             <div>
@@ -96,7 +152,12 @@ export default function KnowMore() {
             <div>
               <dt className="font-medium text-slate-800">Templates</dt>
               <dd>
-                <a href={templatesFolderUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 font-semibold text-sky-700 hover:text-sky-900">
+                <a
+                  href={templatesFolderUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 font-semibold text-sky-700 hover:text-sky-900"
+                >
                   Open official TEMPLATES folder
                   <ExternalLink size={14} aria-hidden="true" />
                 </a>
@@ -116,6 +177,7 @@ export default function KnowMore() {
             ))}
           </ul>
         </InfoCard>
+
         <InfoCard icon={GitPullRequest} title="Issues Solved" accent="emerald">
           <ul className="grid gap-2">
             {solvedIssues.map((item) => (
@@ -137,6 +199,7 @@ export default function KnowMore() {
             ))}
           </ul>
         </InfoCard>
+
         <InfoCard icon={Rocket} title="Operational Notes" accent="teal">
           <ul className="grid gap-2">
             {[
@@ -159,13 +222,21 @@ export default function KnowMore() {
             <Rocket size={21} aria-hidden="true" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-slate-950">Upcoming Features</h2>
-            <p className="text-sm text-slate-500">Planned additions for the next deployment cycle.</p>
+            <h2 className="text-lg font-semibold text-slate-950">
+              Upcoming Features
+            </h2>
+            <p className="text-sm text-slate-500">
+              Planned additions for the next deployment cycle.
+            </p>
           </div>
         </div>
+
         <ul className="grid gap-2 md:grid-cols-2">
           {upcomingFeatures.map((feature) => (
-            <li key={feature} className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700">
+            <li
+              key={feature}
+              className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700"
+            >
               {feature}
             </li>
           ))}
