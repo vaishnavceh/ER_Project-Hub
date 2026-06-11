@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import AppLoadingScreen from "./components/AppLoadingScreen.jsx";
 import Navigation from "./components/Navigation.jsx";
 import { appVersion, backendHealthPath, buildApiUrl } from "./config/platform.js";
+import Documentation from "./pages/Documentation.jsx";
 import ElectronicsGuidance from "./pages/ElectronicsGuidance.jsx";
 import Guidelines from "./pages/Guidelines.jsx";
 import HomePage from "./pages/HomePage.jsx";
@@ -39,6 +40,7 @@ const pages = [
   { id: "electronics", label: "Hardware", icon: Cpu, component: ElectronicsGuidance },
   { id: "rules", label: "Rules", icon: ShieldCheck, component: Rules },
   { id: "templates", label: "Templates", icon: BookOpen, component: TemplatesResources },
+  { id: "documentation", label: "Documentation", icon: FileText, component: Documentation },
   { id: "know-more", label: "Know More", icon: Info, component: KnowMore }
 ];
 

@@ -8,6 +8,10 @@ export const storageRepositoryUrl = `https://github.com/${storageRepository}`;
 export const creatorProfileUrl = "https://github.com/vaishnavceh";
 export const documentationPdfUrl =
   "https://raw.githubusercontent.com/vaishnavceh/ER_Project-Hub/main/docs/ER_Project_Hub_Overleaf_Documentation.pdf";
+export const documentationPdfGitHubUrl =
+  "https://github.com/vaishnavceh/ER_Project-Hub/blob/main/docs/ER_Project_Hub_Overleaf_Documentation.pdf";
+export const documentationPreviewUrl =
+  `https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(documentationPdfUrl)}`;
 export const templatesFolderUrl =
   `${storageRepositoryUrl}/tree/main/TEMPLATES`;
 

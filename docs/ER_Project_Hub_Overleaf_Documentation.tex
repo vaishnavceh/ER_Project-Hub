@@ -118,7 +118,7 @@ This document describes \textbf{version 2.0.0 stable build}. This version keeps 
 
 \begin{itemize}[leftmargin=*]
     \item Application version updated to \texttt{2.0.0 stable build}.
-    \item Home page now includes an embedded Documentation section for reading the compiled PDF inside the website.
+    \item Documentation now has its own tab with a click-to-load PDF preview inside the website.
     \item Templates page now lists the actual files and folders inside the official \texttt{TEMPLATES} directory.
     \item Creator GitHub profile is included in project information.
     \item Existing project uploads can replace previous folder contents through a new pull request.
@@ -226,7 +226,11 @@ Node Web Service & Intended backend deployment environment. \\
 
 \subsection{Home}
 
-The Home page summarizes the platform workflow. It tells users that project uploads are handled by the website, that auto-merge and auto-pull are enabled after checks pass, and that concerns should be reported to the admin. It also includes an embedded Documentation section so users can read the latest compiled PDF documentation inside the website without downloading it from GitHub first.
+The Home page summarizes the platform workflow. It tells users that project uploads are handled by the website, that auto-merge and auto-pull are enabled after checks pass, and that concerns should be reported to the admin. Documentation is available from its own navigation tab so the Home page does not automatically load the PDF.
+
+\subsection{Documentation}
+
+The Documentation page provides a click-to-load preview of the latest compiled PDF documentation. The PDF is loaded only after the user requests the preview, which prevents the Home page from triggering an automatic browser download.
 
 \subsection{Upload Project}
 

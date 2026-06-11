@@ -32,7 +32,7 @@ const solvedIssues = [
 
 const latestUpdates = [
   "Version bumped to 2.0.0 stable build.",
-  "Home page now includes an embedded Documentation section for reading the compiled PDF inside the website.",
+  "Documentation now has its own tab with a click-to-load PDF preview inside the website.",
   "Templates page now lists the actual files and folders inside the official TEMPLATES directory.",
   "Creator GitHub profile is linked in public project information.",
   "Existing project uploads now replace previous folder contents through a new pull request.",
