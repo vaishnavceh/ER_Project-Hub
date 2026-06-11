@@ -52,15 +52,15 @@ export default function KnowMore() {
         This project is in 2.5.0 nightly build for department project submissions, with guided metadata collection, automated GitHub upload, merge support, live template browsing, and in-site documentation reading enabled.
       </PageHeader>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <<InfoCard icon={Code2} title="Version" accent="sky">
-  <p className="font-semibold">Version {appVersion} Nightly Build</p>
+<div className="grid gap-4 lg:grid-cols-3">
+  <InfoCard icon={Code2} title="Version" accent="sky">
+    <p className="font-semibold">Version {appVersion} Nightly Build</p>
 
-  <p className="mt-2 text-sm text-slate-600">
-    Stable for regular use. Minor issues may still occur as new features are
-    being tested. Please contact the administrator if you encounter any errors.
-  </p>
-</InfoCard>
+    <p className="mt-2 text-sm text-slate-600">
+      Stable for regular use. Minor issues may still occur as new features are
+      being tested. Please contact the administrator if you encounter any errors.
+    </p>
+  </InfoCard>
 <InfoCard icon={UserRound} title="Project Creator" accent="teal">
   <p>
     Created for Electrical and Computer students to upload, organize, and preserve
