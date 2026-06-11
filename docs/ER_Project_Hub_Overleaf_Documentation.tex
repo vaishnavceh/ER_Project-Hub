@@ -53,7 +53,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \lhead{\textcolor{hubgray}{Electrical \& Computer Project Repository Hub}}
-\rhead{\textcolor{hubgray}{Version 2.0.0 Stable}}
+\rhead{\textcolor{hubgray}{Version 2.5.0 Nightly}}
 \cfoot{\thepage}
 
 \setstretch{1.18}
@@ -69,10 +69,10 @@
     \vspace{0.35cm}
     {\Large Technical Documentation and Deployment Guide\par}
     \vspace{0.8cm}
-    {\large Version 2.0.0 Stable Build\par}
+    {\large Version 2.5.0 Nightly Build\par}
     \vfill
     \begin{tabular}{rl}
-        \textbf{Domain:} & Electrical and Computer project submissions \\
+        \textbf{Domain:} & Electrical \& Electronics Engineering project submissions \\
         \textbf{Frontend:} & React, Vite, Tailwind CSS \\
         \textbf{Backend:} & Node.js, Express.js \\
         \textbf{Storage:} & Official GitHub project repository \\
@@ -95,40 +95,31 @@ The system is designed for department-level use. It separates website source cod
 
 \subsection{Current Version}
 
-This document describes \textbf{version 2.0.0 stable build}. This version keeps the current deployment workflow ready for use, with in-site PDF documentation reading, live template file browsing, official storage repository operation, safe project overwrites, and cleaner generated README files.
+This document describes \textbf{version 2.5.0 nightly build}. This version improves the student submission workflow with searchable batch and semester dropdowns, automatic repository path formatting, guide and faculty metadata, default Electrical \& Electronics Engineering department storage, stricter GitHub URL validation, and updated documentation.
 
-\section{Version 2.0.0 Stable Update}
+\section{Version 2.5.0 Nightly Update}
 
 \subsection{Issues Solved}
 
 \begin{itemize}[leftmargin=*]
-    \item Team number validation now accepts \texttt{team-01} through \texttt{team-100}.
-    \item Invalid team numbers such as \texttt{team-00}, \texttt{team-101}, \texttt{team-1}, and \texttt{team-001} are rejected.
-    \item Students can now add optional additional comments to the generated \texttt{README.md}.
-    \item Generated README files no longer contain unfinished placeholder instructions.
-    \item README generation now attempts form input first, readable report PDF sections second, and safe fallback text after that.
-    \item Existing project folders can now be replaced through a new upload pull request.
-    \item Public pages no longer display the deployed backend server address.
-    \item The project now supports the official Electrical and Computer GitHub storage repository.
-    \item The Auto Merge GitHub Actions workflow is documented for the storage repository.
-    \item Templates are now live in the official repository \texttt{TEMPLATES} folder.
+    \item Students select batch and semester instead of typing repository folder names.
+    \item Batch values such as \texttt{2027} are stored as \texttt{batch-2027}.
+    \item Semester values such as \texttt{Semester 6} are stored as \texttt{semester-6}.
+    \item Guide name is required and guide designation is optional.
+    \item Faculty name and faculty designation are optional.
+    \item Guide and faculty departments default to \texttt{Electrical \& Electronics Engineering (EEE)}.
+    \item GitHub repository links are validated before upload.
+    \item Project title and subject values are converted into repository-safe folder names automatically.
 \end{itemize}
 
 \subsection{New Updates}
 
 \begin{itemize}[leftmargin=*]
-    \item Application version updated to \texttt{2.0.0 stable build}.
-    \item Documentation now has its own tab with a click-to-load PDF.js preview inside the website.
-    \item Templates page now lists the actual files and folders inside the official \texttt{TEMPLATES} directory.
-    \item Creator GitHub profile is included in project information.
-    \item Existing project uploads can replace previous folder contents through a new pull request.
-    \item Generated README files use form input, readable report PDF sections, and safe fallback text.
-    \item README, Hardware, and Rules pages are combined into one minimal Submission Guide page.
-    \item Know More page includes solved issues and stable build update notes.
-    \item Upload page includes a Git command window for users familiar with Git.
-    \item Admin Pane includes frontend and backend status checks behind a passkey.
-    \item Templates page browses the official GitHub repository \texttt{TEMPLATES} directory inside the website.
-    \item Light and dark mode are available in the frontend interface.
+    \item Application version updated to \texttt{2.5.0 nightly build}.
+    \item Upload form includes searchable batch and semester dropdowns.
+    \item Generated README files include project guide, faculty, department, and GitHub repository metadata.
+    \item Documentation now includes the updated submission workflow, wiki page, user manual, and repository structure guidance.
+    \item Validation messages are clearer for missing metadata, invalid GitHub URLs, and malformed repository paths.
 \end{itemize}
 
 \section{Purpose and Scope}
@@ -143,7 +134,11 @@ The platform supports:
 
 \begin{itemize}[leftmargin=*]
     \item Team-based project submissions.
+    \item Searchable batch and semester selection.
     \item Project files and optional report PDF uploads.
+    \item Required project guide metadata.
+    \item Optional faculty attribution metadata.
+    \item Default Electrical \& Electronics Engineering department metadata.
     \item Official course, seminar, lab, presentation, and review template access.
     \item Optional report and working-video links.
     \item Optional README comments.
@@ -238,12 +233,17 @@ The Documentation page provides a click-to-load PDF.js preview of the latest com
 The Upload Project page is the main student submission page. It collects:
 
 \begin{itemize}[leftmargin=*]
-    \item Batch year, for example \texttt{batch-2027}.
-    \item Semester, for example \texttt{semester-5}.
-    \item Subject, for example \texttt{dbms}.
+    \item Batch selected from a searchable dropdown, for example \texttt{2027}, stored as \texttt{batch-2027}.
+    \item Semester selected from a searchable dropdown, for example \texttt{Semester 6}, stored as \texttt{semester-6}.
+    \item Subject or course area, stored as a repository-safe slug such as \texttt{dbms}.
     \item Team number from \texttt{team-01} through \texttt{team-100}.
-    \item Project name, for example \texttt{library-management}.
-    \item Team members.
+    \item Project title, stored as a repository-safe slug such as \texttt{library-management}.
+    \item Student information.
+    \item GitHub repository link.
+    \item Guide name, required.
+    \item Guide designation, optional.
+    \item Faculty name and designation, optional.
+    \item Department, stored internally as \texttt{Electrical \& Electronics Engineering (EEE)}.
     \item Project description.
     \item Tools used.
     \item Technologies used.
@@ -280,10 +280,24 @@ The Repository page explains the required storage folder structure:
 batches/{batch}/{semester}/{subject}/{team-number}-{project-name}/
 \end{lstlisting}
 
+Standard batch layout example:
+
+\begin{lstlisting}
+batch-2027/
+|-- semester-1/
+|-- semester-2/
+|-- semester-3/
+|-- semester-4/
+|-- semester-5/
+|-- semester-6/
+|-- semester-7/
+`-- semester-8/
+\end{lstlisting}
+
 Example:
 
 \begin{lstlisting}
-batches/batch-2027/semester-5/dbms/team-01-library-management/
+batches/batch-2027/semester-6/dbms/team-01-library-management/
 \end{lstlisting}
 
 \subsection{Submission Guide}
@@ -348,12 +362,14 @@ VITE_ADMIN_PASSKEYS=<passkey-one>,<passkey-two>
 \subsection{Required Fields}
 
 \begin{itemize}[leftmargin=*]
-    \item Batch year.
+    \item Project title.
+    \item Batch.
     \item Semester.
     \item Subject.
     \item Team number.
-    \item Project name.
-    \item Team members.
+    \item Student information.
+    \item GitHub repository link.
+    \item Guide name.
     \item Project description.
     \item Tools used.
     \item Technologies used.
@@ -363,6 +379,10 @@ VITE_ADMIN_PASSKEYS=<passkey-one>,<passkey-two>
 \end{itemize}
 
 \subsection{Team Number Rule}
+
+Batch values are selected as years such as \texttt{2027} and stored as \texttt{batch-2027}. Semester values are selected as \texttt{Semester 1} through \texttt{Semester 8} and stored as \texttt{semester-1} through \texttt{semester-8}.
+
+The GitHub repository link must use a valid \texttt{github.com/\{owner\}/\{repo\}} URL. Guide and faculty department metadata is stored as \texttt{Electrical \& Electronics Engineering (EEE)} for version 2.5.0.
 
 Valid examples:
 
@@ -393,8 +413,11 @@ For each project, the backend creates a starter \texttt{README.md}. It includes:
 
 \begin{itemize}[leftmargin=*]
     \item Project title.
-    \item Team members.
+    \item Student information.
     \item Batch, semester, subject, project type, and team folder.
+    \item GitHub repository link.
+    \item Guide name, guide designation, and guide department.
+    \item Faculty name, faculty designation, and faculty department.
     \item Project description.
     \item Tools used.
     \item Technologies used.
@@ -532,13 +555,16 @@ Routes such as \texttt{/} or \texttt{/api} may return \texttt{Cannot GET} if not
 2 & Light mode and dark mode work correctly. & Pending \\
 3 & Admin Pane login works with configured passkey. & Pending \\
 4 & Backend health status check works from Admin Pane. & Pending \\
-5 & Upload form accepts \texttt{team-01} through \texttt{team-100}. & Pending \\
-6 & Upload form rejects invalid team numbers. & Pending \\
-7 & Optional README comments appear in generated \texttt{README.md}. & Pending \\
-8 & Backend creates an upload branch in the official storage repository. & Pending \\
-9 & Backend opens a pull request against \texttt{main}. & Pending \\
-10 & GitHub Actions auto-merge workflow runs for \texttt{upload/} branches. & Pending \\
-11 & Accepted project files appear in the repository browser. & Pending \\
+5 & Batch dropdown stores \texttt{2027} as \texttt{batch-2027}. & Pending \\
+6 & Semester dropdown stores \texttt{Semester 6} as \texttt{semester-6}. & Pending \\
+7 & Guide name and GitHub repository link are required. & Pending \\
+8 & Upload form accepts \texttt{team-01} through \texttt{team-100}. & Pending \\
+9 & Upload form rejects invalid team numbers. & Pending \\
+10 & Generated \texttt{README.md} includes guide, faculty, department, and GitHub repository metadata. & Pending \\
+11 & Backend creates an upload branch in the official storage repository. & Pending \\
+12 & Backend opens a pull request against \texttt{main}. & Pending \\
+13 & GitHub Actions auto-merge workflow runs for \texttt{upload/} branches. & Pending \\
+14 & Accepted project files appear in the repository browser. & Pending \\
 \bottomrule
 \end{longtable}
 
@@ -577,10 +603,11 @@ Admin Pane login fails & Confirm \texttt{VITE\_ADMIN\_PASSKEY} or \texttt{VITE\_
     \item More detailed GitHub Actions status inside the website.
     \item Course material templates, seminar templates, report templates, and lab resources.
     \item Department-level project analytics.
+    \item Additional department options such as Computer Engineering, Electronics \& Communication Engineering, Mechanical Engineering, and Civil Engineering.
 \end{itemize}
 
 \section{Conclusion}
 
-The Electrical \& Computer Project Repository Hub provides a structured and safer workflow for collecting department project submissions. Version 2.0.0 stable build improves validation, documentation, official repository configuration, in-site PDF documentation reading, visible template directory browsing, generated README flexibility, overwrite handling, and deployment readiness. The system is prepared for frontend hosting, backend production use, and official storage repository testing.
+The Electrical \& Computer Project Repository Hub provides a structured and safer workflow for collecting department project submissions. Version 2.5.0 nightly build simplifies student submissions through batch and semester dropdowns, automatic repository path formatting, required guide metadata, optional faculty metadata, default Electrical \& Electronics Engineering department storage, stronger validation, and updated documentation. The system is prepared for frontend hosting, backend production use, and official storage repository testing.
 
 \end{document}

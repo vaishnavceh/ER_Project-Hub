@@ -9,6 +9,11 @@ const allowedProjectTypes = new Set([
   "Final Year Project"
 ]);
 
+const defaultDepartmentId = "eee";
+const departments = new Map([
+  [defaultDepartmentId, "Electrical & Electronics Engineering (EEE)"]
+]);
+
 const blockedExtensions = new Set([
   ".bat",
   ".cmd",
@@ -30,12 +35,14 @@ const secretNamePattern =
   /(^|[.\-_\s])(env|secret|secrets|token|tokens|password|passwords|credential|credentials|private-key|private_key|id_rsa|id_dsa|id_ed25519|aws_credentials)([.\-_\s]|$)/i;
 
 const requiredFields = [
-  ["batch", "Batch year is required."],
+  ["projectName", "Project title is required."],
+  ["batch", "Batch is required."],
   ["semester", "Semester is required."],
   ["subject", "Subject is required."],
   ["teamNumber", "Team number is required."],
-  ["projectName", "Project name is required."],
-  ["teamMembers", "Team members are required."],
+  ["teamMembers", "Student information is required."],
+  ["githubRepositoryLink", "GitHub repository link is required."],
+  ["guideName", "Guide name is required."],
   ["projectDescription", "Project description is required."],
   ["toolsUsed", "Tools used are required."],
   ["technologiesUsed", "Technologies used are required."],
@@ -53,16 +60,16 @@ export function validateProjectSubmission(body, files = {}) {
     }
   }
 
-  if (data.batch && !/^batch-\d{4}$/.test(data.batch)) {
-    errors.push("Invalid batch format. Use batch-YYYY, for example batch-2027.");
+  if (data.batch && !/^batch-20\d{2}$/.test(data.batch)) {
+    errors.push("Invalid batch selection. Choose a valid batch year, for example 2027.");
   }
 
-  if (data.semester && !/^semester-[1-9][0-9]?$/.test(data.semester)) {
-    errors.push("Invalid semester format. Use semester-N, for example semester-5.");
+  if (data.semester && !/^semester-[1-8]$/.test(data.semester)) {
+    errors.push("Invalid semester selection. Choose Semester 1 through Semester 8.");
   }
 
   if (data.subject && !isUrlSafeLowercase(data.subject)) {
-    errors.push("Subject must be lowercase and URL-safe, for example dbms or web-development.");
+    errors.push("Subject could not be converted into a repository-safe folder name.");
   }
 
   if (data.teamNumber && !/^team-(0[1-9]|[1-9][0-9]|100)$/.test(data.teamNumber)) {
@@ -70,11 +77,15 @@ export function validateProjectSubmission(body, files = {}) {
   }
 
   if (data.projectName && !isUrlSafeLowercase(data.projectName)) {
-    errors.push("Project name must be lowercase and URL-safe, for example library-management.");
+    errors.push("Project title could not be converted into a repository-safe folder name.");
   }
 
   if (data.projectType && !allowedProjectTypes.has(data.projectType)) {
     errors.push("Invalid project type selected.");
+  }
+
+  if (data.githubRepositoryLink && !isGitHubRepositoryUrl(data.githubRepositoryLink)) {
+    errors.push("Enter a valid GitHub repository URL, for example https://github.com/owner/project.");
   }
 
   if (data.confirmation !== "true" && data.confirmation !== "on") {
@@ -172,11 +183,76 @@ export function uniqueGitHubFilePath(projectPath, folder, originalName, usedName
 }
 
 function normalizeBody(body) {
-  return Object.fromEntries(
+  const data = Object.fromEntries(
     Object.entries(body || {}).map(([key, value]) => [key, typeof value === "string" ? value.trim() : value])
   );
+  const rawProjectTitle = data.projectTitle || data.projectName || "";
+  const departmentId = normalizeDepartmentId(data.departmentId);
+  const department = departments.get(departmentId);
+
+  return {
+    ...data,
+    batch: normalizeBatchValue(data.batch || ""),
+    semester: normalizeSemesterValue(data.semester || ""),
+    subject: toSlug(data.subject || ""),
+    projectName: toSlug(rawProjectTitle),
+    projectTitle: rawProjectTitle.trim(),
+    departmentId,
+    department,
+    guideDepartment: department,
+    facultyDepartment: department
+  };
 }
 
 function isUrlSafeLowercase(value) {
   return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+}
+
+function normalizeBatchValue(value) {
+  const normalized = String(value || "").trim();
+
+  if (/^batch-\d{4}$/.test(normalized)) {
+    return normalized;
+  }
+
+  if (/^\d{4}$/.test(normalized)) {
+    return `batch-${normalized}`;
+  }
+
+  return "";
+}
+
+function normalizeSemesterValue(value) {
+  const normalized = String(value || "").trim().toLowerCase().replace(/\s+/g, "-");
+  const semesterMatch = /^(?:semester-?|sem-?)?([1-8])$/.exec(normalized);
+
+  return semesterMatch ? `semester-${semesterMatch[1]}` : "";
+}
+
+function normalizeDepartmentId(value) {
+  const candidate = String(value || defaultDepartmentId).trim().toLowerCase();
+
+  return departments.has(candidate) ? candidate : defaultDepartmentId;
+}
+
+function toSlug(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function isGitHubRepositoryUrl(value) {
+  try {
+    const url = new URL(String(value || "").trim());
+    const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
+    const pathParts = url.pathname.replace(/\.git$/, "").split("/").filter(Boolean);
+
+    return (url.protocol === "https:" || url.protocol === "http:") && hostname === "github.com" && pathParts.length >= 2;
+  } catch {
+    return false;
+  }
 }

@@ -35,12 +35,14 @@ export default function Guidelines() {
       </div>
 
       <section className="mt-6 rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
-        <h2 className="text-lg font-semibold text-slate-950">Team Folder Format</h2>
-        <p className="mt-2 text-sm text-slate-600">Use lowercase names with hyphens so folders remain readable in GitHub and inside the website file browser.</p>
+        <h2 className="text-lg font-semibold text-slate-950">Automatic Folder Format</h2>
+        <p className="mt-2 text-sm text-slate-600">
+          Select Batch and Semester from the dropdowns. The platform stores values like batch-2027 and semester-6, then generates the final team folder from the project title.
+        </p>
         <div className="mt-4 grid gap-3 text-sm text-slate-700 sm:grid-cols-3">
+          <code className="rounded-lg bg-slate-100 px-3 py-2">batch-2027</code>
+          <code className="rounded-lg bg-slate-100 px-3 py-2">semester-6</code>
           <code className="rounded-lg bg-slate-100 px-3 py-2">team-01-project-name</code>
-          <code className="rounded-lg bg-slate-100 px-3 py-2">team-02-project-name</code>
-          <code className="rounded-lg bg-slate-100 px-3 py-2">team-100-project-name</code>
         </div>
       </section>
     </div>

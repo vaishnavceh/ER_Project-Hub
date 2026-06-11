@@ -1,4 +1,4 @@
-export const appVersion = "2.0.0 stable build";
+export const appVersion = "2.5.0 nightly build";
 
 export const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 export const backendHealthPath = "/api/health";
@@ -15,7 +15,7 @@ export const templatesFolderUrl =
 
 export const deploymentNotes = [
   "Website source code is maintained in ER_Project-Hub.",
-  "Student project files are stored in the official Electrical and Computer project repository.",
+  "Student project files are stored in the official department project repository.",
   "Course templates are available in the official repository TEMPLATES folder.",
   "The frontend connects to the configured project service.",
   "System health and deployment checks are available through the Admin Pane."

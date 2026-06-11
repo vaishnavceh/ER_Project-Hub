@@ -44,7 +44,7 @@ function derivedProblemStatement(data) {
 }
 
 export function generateProjectReadme(data, { hasReportPdf, reportText = "" }) {
-  const projectTitle = titleFromSlug(data.projectName);
+  const projectTitle = data.projectTitle || titleFromSlug(data.projectName);
   const reportSections = extractReportSections(reportText);
   const problemStatement = firstAvailable(data.problemStatement, reportSections.problemStatement) || derivedProblemStatement(data);
   const setupInstructions = valueOrNotAvailable(firstAvailable(data.setupInstructions, reportSections.setupInstructions));
@@ -64,6 +64,15 @@ ${data.teamMembers}
 - Subject: ${data.subject}
 - Project type: ${data.projectType}
 - Team folder: ${data.teamNumber}-${data.projectName}
+- GitHub repository: ${data.githubRepositoryLink}
+
+## Academic Supervision
+- Guide name: ${data.guideName}
+- Guide designation: ${data.guideDesignation || "Not provided"}
+- Guide department: ${data.guideDepartment || data.department}
+- Faculty name: ${data.facultyName || "Not provided"}
+- Faculty designation: ${data.facultyDesignation || "Not provided"}
+- Faculty department: ${data.facultyDepartment || data.department}
 
 ## Project Description
 ${data.projectDescription}
@@ -240,7 +249,7 @@ export function generateReportLinkMarkdown(data) {
 
 The project report is stored externally because it may be too large for this repository.
 
-- Project: ${titleFromSlug(data.projectName)}
+- Project: ${data.projectTitle || titleFromSlug(data.projectName)}
 - Team: ${data.teamNumber}
 - Report link: ${data.googleDriveReportLink}
 `;
@@ -302,7 +311,14 @@ export function generatePullRequestBody(data, { hasReportPdf, overwrittenExistin
 - Semester: ${data.semester}
 - Subject: ${data.subject}
 - Team: ${data.teamNumber}
-- Project title: ${titleFromSlug(data.projectName)}
+- Project title: ${data.projectTitle || titleFromSlug(data.projectName)}
+- GitHub repository: ${data.githubRepositoryLink}
+- Guide: ${data.guideName}
+- Guide designation: ${data.guideDesignation || "not provided"}
+- Guide department: ${data.guideDepartment || data.department}
+- Faculty: ${data.facultyName || "not provided"}
+- Faculty designation: ${data.facultyDesignation || "not provided"}
+- Faculty department: ${data.facultyDepartment || data.department}
 - Tools used: ${data.toolsUsed}
 - Technologies used: ${data.technologiesUsed}
 - Sources/references used: ${data.sourcesUsed}

@@ -10,7 +10,7 @@ export default function HomePage({ onNavigate }) {
       <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
         <div>
           <PageHeader title="Electrical & Computer Project Repository Hub">
-            Upload, auto-merge, auto-pull, and browse Electrical and Computer student projects without using Git commands.
+            Upload, auto-merge, auto-pull, and browse department student projects without using Git commands or repository naming rules.
           </PageHeader>
           <div className="flex flex-col gap-3 sm:flex-row">
             <button
@@ -62,7 +62,7 @@ export default function HomePage({ onNavigate }) {
 {`main
   ^
   | auto-merge + auto-pull after checks
-upload/batch-2027-sem5-dbms-team-01-library-management
+upload/batch-2027-sem6-dbms-team-01-library-management
   |
   + project files + README.md`}
           </pre>
@@ -71,7 +71,7 @@ upload/batch-2027-sem5-dbms-team-01-library-management
 
       <section className="grid gap-4 md:grid-cols-3">
         <InfoCard icon={UploadCloud} title="Student friendly" accent="teal">
-          Students submit batch, semester, subject, team details, project files, and report links through one form.
+          Students select batch and semester, then add project, guide, faculty, file, and report details through one form.
         </InfoCard>
         <InfoCard icon={FolderTree} title="Organized folders" accent="sky">
           Projects are placed under batches, semesters, subjects, and team project folders in a predictable structure.

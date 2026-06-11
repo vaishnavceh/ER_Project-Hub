@@ -4,7 +4,8 @@ import InfoCard from "../components/InfoCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 
 const readmeItems = [
-  "Project title, team members, batch, semester, and subject",
+  "Project title, student information, batch, semester, subject, and GitHub repository link",
+  "Guide name, guide designation, faculty attribution, and default EEE department metadata",
   "Project description and problem statement",
   "Tools, technologies, sources, and references used",
   "Setup steps, run/test steps, demo evidence, and future improvements",
@@ -18,7 +19,8 @@ const hardwareItems = [
 ];
 
 const safetyRules = [
-  "Use the correct batch, semester, subject, team, and project folder details",
+  "Select the correct batch and semester from the dropdowns",
+  "Use a valid GitHub repository URL for the project source link",
   "Do not upload passwords, API keys, tokens, private keys, or private data",
   "Avoid unnecessary large files and use Drive links for large reports or videos",
   "Follow academic honesty rules and contact the admin for wrong uploads or merge concerns"
@@ -28,7 +30,7 @@ export default function SubmissionGuide() {
   return (
     <div>
       <PageHeader eyebrow="Submission Guide" title="One checklist before upload">
-        A compact guide for README content, hardware evidence, and repository safety rules.
+        A compact guide for project metadata, README content, hardware evidence, and repository safety rules.
       </PageHeader>
 
       <section className="grid gap-4 lg:grid-cols-3">
@@ -44,7 +46,7 @@ export default function SubmissionGuide() {
       </section>
 
       <section className="mt-6 rounded-lg border border-slate-200 bg-white p-5 text-sm leading-6 text-slate-600 shadow-soft">
-        Use official templates when available, keep filenames readable, and contact the admin if an accepted project does not appear after the workflow finishes.
+        Select Batch 2027 to store the project under batch-2027, select Semester 6 to store it under semester-6, and let the platform create the final repository path automatically.
       </section>
     </div>
   );

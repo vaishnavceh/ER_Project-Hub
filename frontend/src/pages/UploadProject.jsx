@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { SelectInput, TextArea, TextInput } from "../components/FormControls.jsx";
+import { SearchableSelectInput, SelectInput, TextArea, TextInput } from "../components/FormControls.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 import { buildApiUrl } from "../config/platform.js";
 
@@ -18,6 +18,18 @@ const storageRepositoryUrl =
   import.meta.env.VITE_STORAGE_REPOSITORY_URL ||
   "https://github.com/ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL.git";
 const storageRepositoryName = repositoryNameFromUrl(storageRepositoryUrl);
+const defaultDepartment = {
+  id: "eee",
+  name: "Electrical & Electronics Engineering (EEE)"
+};
+const batchOptions = Array.from({ length: 8 }, (_, index) => String(2023 + index));
+const semesterOptions = Array.from({ length: 8 }, (_, index) => {
+  const semester = String(index + 1);
+  return {
+    label: `Semester ${semester}`,
+    value: semester
+  };
+});
 
 const initialForm = {
   batch: "",
@@ -25,7 +37,12 @@ const initialForm = {
   subject: "",
   teamNumber: "",
   projectName: "",
+  githubRepositoryLink: "",
   teamMembers: "",
+  guideName: "",
+  guideDesignation: "",
+  facultyName: "",
+  facultyDesignation: "",
   projectDescription: "",
   problemStatement: "",
   toolsUsed: "",
@@ -67,19 +84,20 @@ export default function UploadProject() {
     }));
   }
 
-  function normalizeSlugField(field) {
-    setForm((current) => ({
-      ...current,
-      [field]: toSlug(current[field])
-    }));
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
+    const validationMessage = validateClientForm(form, projectFiles);
+
+    if (validationMessage) {
+      setStatus({ type: "error", message: validationMessage });
+      return;
+    }
+
     setStatus({ type: "loading" });
 
     const body = new FormData();
-    Object.entries(form).forEach(([key, value]) => {
+    const submissionPayload = buildSubmissionPayload(form);
+    Object.entries(submissionPayload).forEach(([key, value]) => {
       body.append(key, key === "confirmation" ? String(value) : value);
     });
 
@@ -189,30 +207,40 @@ export default function UploadProject() {
 
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <form onSubmit={handleSubmit} className="space-y-6 rounded-lg border border-slate-200 bg-white p-5 shadow-soft">
-          <div className="grid gap-4 md:grid-cols-2">
+          <FormSection
+            title="Academic placement"
+            description="Choose the visible academic values. The repository folder names are generated automatically."
+          >
+            <div className="grid gap-4 md:grid-cols-2">
+              <SearchableSelectInput
+                label="Batch"
+                name="batch"
+                value={form.batch}
+                onChange={handleChange}
+                options={batchOptions}
+                placeholder="Select batch"
+                helperText="Example: 2027 is stored as batch-2027."
+                required
+              />
+              <SearchableSelectInput
+                label="Semester"
+                name="semester"
+                value={form.semester}
+                onChange={handleChange}
+                options={semesterOptions}
+                placeholder="Select semester"
+                helperText="Example: Semester 6 is stored as semester-6."
+                required
+              />
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
             <TextInput
-              label="Batch year"
-              name="batch"
-              value={form.batch}
-              onChange={handleChange}
-              placeholder="batch-2027"
-              required
-            />
-            <TextInput
-              label="Semester"
-              name="semester"
-              value={form.semester}
-              onChange={handleChange}
-              placeholder="semester-5"
-              required
-            />
-            <TextInput
-              label="Subject"
+              label="Subject or course area"
               name="subject"
               value={form.subject}
               onChange={handleChange}
-              onBlur={() => normalizeSlugField("subject")}
-              placeholder="dbms"
+              placeholder="DBMS"
+              helperText="The repository-safe subject folder is generated automatically."
               required
             />
             <TextInput
@@ -226,13 +254,15 @@ export default function UploadProject() {
               maxLength={8}
               required
             />
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
             <TextInput
-              label="Project name"
+              label="Project title"
               name="projectName"
               value={form.projectName}
               onChange={handleChange}
-              onBlur={() => normalizeSlugField("projectName")}
-              placeholder="library-management"
+              placeholder="Library Management"
+              helperText="The project folder slug is generated automatically."
               required
             />
             <SelectInput label="Project type" name="projectType" value={form.projectType} onChange={handleChange}>
@@ -242,11 +272,60 @@ export default function UploadProject() {
                 </option>
               ))}
             </SelectInput>
-          </div>
+            </div>
+            <TextInput
+              label="GitHub repository link"
+              name="githubRepositoryLink"
+              value={form.githubRepositoryLink}
+              onChange={handleChange}
+              placeholder="https://github.com/owner/project-repository"
+              helperText="Use the project source repository URL."
+              type="url"
+              required
+            />
+          </FormSection>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <FormSection
+            title="Academic supervision"
+            description={`Department is saved internally as ${defaultDepartment.name}.`}
+          >
+            <div className="grid gap-4 md:grid-cols-2">
+              <TextInput
+                label="Guide name"
+                name="guideName"
+                value={form.guideName}
+                onChange={handleChange}
+                placeholder="Dr. John Mathew"
+                required
+              />
+              <TextInput
+                label="Guide designation"
+                name="guideDesignation"
+                value={form.guideDesignation}
+                onChange={handleChange}
+                placeholder="Assistant Professor"
+              />
+              <TextInput
+                label="Faculty name"
+                name="facultyName"
+                value={form.facultyName}
+                onChange={handleChange}
+                placeholder="Jane Thomas"
+              />
+              <TextInput
+                label="Faculty designation"
+                name="facultyDesignation"
+                value={form.facultyDesignation}
+                onChange={handleChange}
+                placeholder="Assistant Professor"
+              />
+            </div>
+          </FormSection>
+
+          <FormSection title="Project details" description="Add enough information for the generated README and academic record.">
+            <div className="grid gap-4 md:grid-cols-2">
             <TextArea
-              label="Team members"
+              label="Student information"
               name="teamMembers"
               value={form.teamMembers}
               onChange={handleChange}
@@ -285,7 +364,7 @@ export default function UploadProject() {
               placeholder="React, Node.js, MySQL, Arduino"
               required
             />
-          </div>
+            </div>
 
           <TextArea
             label="Sources or references used"
@@ -295,8 +374,10 @@ export default function UploadProject() {
             placeholder="Documentation, tutorials, books, sample circuits, papers, or learning references"
             required
           />
+          </FormSection>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <FormSection title="Setup, evidence, and notes" description="Optional details improve the generated README for reviewers and future students.">
+            <div className="grid gap-4 md:grid-cols-2">
             <TextArea
               label="Installation or setup instructions"
               name="setupInstructions"
@@ -337,7 +418,7 @@ export default function UploadProject() {
               placeholder="Optional. Add planned improvements, limitations, or next features"
               rows={3}
             />
-          </div>
+            </div>
 
           <TextArea
             label="Additional README comments"
@@ -347,8 +428,10 @@ export default function UploadProject() {
             placeholder="Optional notes to include in the generated README.md, such as known issues, setup warnings, hardware notes, or extra project context"
             rows={3}
           />
+          </FormSection>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <FormSection title="Files" description="Upload at least one project file. PDF reports can be attached or linked separately.">
+            <div className="grid gap-4 md:grid-cols-2">
             <label className="block">
               <span className="text-sm font-medium text-slate-800">Project files upload</span>
               <input
@@ -368,9 +451,11 @@ export default function UploadProject() {
                 className="mt-2 w-full rounded-lg border border-dashed border-slate-300 bg-slate-50 px-3 py-3 text-sm text-slate-700 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-900 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white"
               />
             </label>
-          </div>
+            </div>
+          </FormSection>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <FormSection title="External links" description="Use links for large reports, videos, and supporting material when needed.">
+            <div className="grid gap-4 md:grid-cols-2">
             <TextInput
               label="Google Drive report link"
               name="googleDriveReportLink"
@@ -387,7 +472,8 @@ export default function UploadProject() {
               placeholder="Optional demo video URL"
               type="url"
             />
-          </div>
+            </div>
+          </FormSection>
 
           <label className="flex gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950">
             <input
@@ -734,24 +820,132 @@ function wait(milliseconds) {
   });
 }
 
+function FormSection({ title, description, children }) {
+  return (
+    <section className="space-y-4 border-b border-slate-200 pb-6 last:border-b-0 last:pb-0">
+      <div>
+        <h2 className="text-base font-semibold text-slate-950">{title}</h2>
+        <p className="mt-1 text-sm leading-6 text-slate-600">{description}</p>
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function buildSubmissionPayload(form) {
+  return {
+    ...form,
+    batch: toBatchSlug(form.batch),
+    semester: toSemesterSlug(form.semester),
+    subject: toSlug(form.subject),
+    projectName: toSlug(form.projectName),
+    projectTitle: form.projectName.trim(),
+    departmentId: defaultDepartment.id,
+    department: defaultDepartment.name,
+    guideDepartment: defaultDepartment.name,
+    facultyDepartment: defaultDepartment.name
+  };
+}
+
+function validateClientForm(form, projectFiles) {
+  if (!form.projectName.trim()) {
+    return "Project title is required.";
+  }
+
+  if (!toBatchSlug(form.batch)) {
+    return "Select a valid batch.";
+  }
+
+  if (!toSemesterSlug(form.semester)) {
+    return "Select a valid semester.";
+  }
+
+  if (!form.teamMembers.trim()) {
+    return "Student information is required.";
+  }
+
+  if (!form.guideName.trim()) {
+    return "Guide name is required.";
+  }
+
+  if (!form.githubRepositoryLink.trim()) {
+    return "GitHub repository link is required.";
+  }
+
+  if (!isGitHubRepositoryUrl(form.githubRepositoryLink)) {
+    return "Enter a valid GitHub repository URL, for example https://github.com/owner/project.";
+  }
+
+  if (!toSlug(form.subject)) {
+    return "Subject or course area is required.";
+  }
+
+  if (!toSlug(form.projectName)) {
+    return "Project title must include letters or numbers so a folder name can be generated.";
+  }
+
+  if (projectFiles.length === 0) {
+    return "Please upload at least one project file.";
+  }
+
+  if (!form.confirmation) {
+    return "Please confirm that the upload belongs to your team and does not contain private data.";
+  }
+
+  return "";
+}
+
 function buildPreviewPath(form) {
-  const batch = form.batch || "batch-2027";
-  const semester = form.semester || "semester-5";
-  const subject = form.subject || "dbms";
+  const batch = toBatchSlug(form.batch) || "batch-2027";
+  const semester = toSemesterSlug(form.semester) || "semester-6";
+  const subject = toSlug(form.subject) || "dbms";
   const teamNumber = form.teamNumber || "team-01";
-  const projectName = form.projectName || "library-management";
+  const projectName = toSlug(form.projectName) || "library-management";
 
   return `batches/${batch}/${semester}/${subject}/${teamNumber}-${projectName}/`;
 }
 
+function toBatchSlug(value) {
+  const normalized = String(value || "").trim();
+
+  if (/^batch-\d{4}$/.test(normalized)) {
+    return normalized;
+  }
+
+  if (/^\d{4}$/.test(normalized)) {
+    return `batch-${normalized}`;
+  }
+
+  return "";
+}
+
+function toSemesterSlug(value) {
+  const normalized = String(value || "").trim().toLowerCase();
+  const semesterMatch = /^(?:semester-?|sem-?)?([1-8])$/.exec(normalized.replace(/\s+/g, "-"));
+
+  return semesterMatch ? `semester-${semesterMatch[1]}` : "";
+}
+
 function toSlug(value) {
-  return value
+  return String(value || "")
     .trim()
     .toLowerCase()
     .replace(/\s+/g, "-")
     .replace(/[^a-z0-9-]/g, "")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+function isGitHubRepositoryUrl(value) {
+  try {
+    const url = new URL(value.trim());
+    const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
+    const pathParts = url.pathname.replace(/\.git$/, "").split("/").filter(Boolean);
+
+    return (url.protocol === "https:" || url.protocol === "http:") && hostname === "github.com" && pathParts.length >= 2;
+  } catch {
+    return false;
+  }
 }
 
 function repositoryNameFromUrl(url) {

@@ -38,9 +38,13 @@ For testing, `GITHUB_TOKEN` can be your own fine-grained personal access token. 
 
 ## Validation Rules
 
-- Batch must match `batch-YYYY`.
-- Semester must match `semester-N`.
-- Subject and project name must be lowercase URL-safe slugs.
+- Batch may be submitted as `2027` or `batch-2027`; it is stored as `batch-2027`.
+- Semester may be submitted as `Semester 6`, `6`, or `semester-6`; it is stored as `semester-6`.
+- Semester values are limited to `semester-1` through `semester-8`.
+- Project title, batch, semester, student information, guide name, GitHub repository link, project description, tools, technologies, sources, and project type are required.
+- Subject and project title values are converted into lowercase URL-safe slugs before repository paths are created.
+- GitHub repository link must be a valid `github.com/{owner}/{repo}` URL.
+- Guide and faculty department metadata defaults to `Electrical & Electronics Engineering (EEE)` with the department id `eee`.
 - Team number must be between `team-01` and `team-100`.
 - Dangerous executable and private-key extensions are blocked.
 - Filenames that look like `.env`, secrets, tokens, passwords, credentials, or private keys are blocked.

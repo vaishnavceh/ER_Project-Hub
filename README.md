@@ -1,19 +1,54 @@
 # Electrical & Computer Project Repository Hub
 
-Version: `2.0.0 stable build`
+Version: `2.5.0 nightly build`
 
-A full-stack project submission hub for Electrical and Computer course work. Students upload project files through the website, the backend creates a GitHub branch and pull request, and the automated workflow can merge and pull accepted submissions after checks pass.
+A full-stack project submission hub for Electrical & Electronics Engineering (EEE) course work. Students upload project files through the website, the backend creates a GitHub branch and pull request, and the automated workflow can merge and pull accepted submissions after checks pass.
 
 Creator GitHub profile: [vaishnavceh](https://github.com/vaishnavceh)
 
 ## Current Workflow
 
-- Normal student uploads are handled by the automated workflow after checks pass.
-- Auto-merge and auto-pull are enabled after the configured checks pass.
-- Students should use the website for uploads and the repository browser for accepted files.
-- Git users can use the upload page Git window to clone, fetch, and pull accepted projects.
-- Students can download official templates from the storage repository `TEMPLATES` folder.
-- Contact the admin for failed uploads, duplicate submissions, incorrect folders, or access concerns.
+1. Select Batch.
+2. Select Semester.
+3. Enter Project Details.
+4. Add Guide Information.
+5. Add Faculty Information when available.
+6. Submit Project.
+
+The platform converts student-facing selections into repository values automatically:
+
+| User selection | Repository value |
+| --- | --- |
+| 2027 | `batch-2027` |
+| Semester 6 | `semester-6` |
+
+Students do not manually create batch, semester, or repository path folder names. The default department stored for v2.5.0 submissions is `Electrical & Electronics Engineering (EEE)`.
+
+## v2.5.0 Nightly
+
+### Added
+
+- Batch selection dropdown.
+- Semester selection dropdown.
+- Project guide information.
+- Faculty information fields.
+- Improved validation system.
+- Default EEE department metadata stored internally for guide and faculty records.
+
+### Improved
+
+- Submission workflow.
+- User experience.
+- Repository standardization.
+- Mobile responsiveness.
+- Automatic repository path formatting for batch, semester, subject, and project title values.
+
+### Documentation
+
+- README updated.
+- Wiki documentation added.
+- User guide added.
+- Repository structure documentation updated.
 
 ## 2.0.0 Stable Update
 
@@ -128,11 +163,11 @@ The GitHub token must never be placed in the frontend or committed to Git.
 ## Pages
 
 - Home: current workflow, auto-merge/auto-pull status, and admin contact guidance.
-- Upload Project: student form, success panel, and Git command window.
+- Upload Project: searchable batch and semester dropdowns, project metadata, guide and faculty metadata, success panel, and Git command window.
 - Files: browse accepted project files inside the website.
 - Guidelines: upload rules and acceptance workflow.
-- Repository: expected folder structure.
-- Submission Guide: README content, hardware evidence, and safety rules in one minimal page.
+- Repository: standardized batch and semester folder structure.
+- Submission Guide: submission workflow, README content, hardware evidence, metadata fields, and safety rules in one minimal page.
 - Templates: browse actual files and folders from the official repository `TEMPLATES` directory.
 - Documentation: read the latest compiled project documentation PDF inside the website with a click-to-load PDF.js viewer.
 - Know More: version, operational notes, and upcoming work.
@@ -140,7 +175,10 @@ The GitHub token must never be placed in the frontend or committed to Git.
 ## Upload Rules
 
 - Do not upload passwords, API keys, tokens, private keys, or private data.
-- Use clear batch, semester, subject, team, and project names.
+- Select batch and semester from the dropdowns. The backend stores values such as `batch-2027` and `semester-6`.
+- Enter a clear project title and subject. Repository-safe folder names are generated automatically.
+- Add required guide information. Guide and faculty department metadata defaults to `Electrical & Electronics Engineering (EEE)`.
+- Add a valid GitHub repository link for the project source.
 - Keep reports as PDFs when possible.
 - Use Google Drive links only for large reports or demo videos.
 - Contact the admin when an upload succeeds but the project does not appear after the automated workflow finishes.
@@ -149,6 +187,36 @@ The GitHub token must never be placed in the frontend or committed to Git.
 - Missing optional README details are read from matching report PDF sections when possible, then written as `Not available.` instead of unfinished placeholder text.
 - Reuploading the same batch/semester/subject/team/project path replaces the existing project folder through a pull request.
 - Use official templates from the `TEMPLATES` folder for reports, seminars, presentations, lab records, and review material.
+
+## Standard Repository Structure
+
+```text
+batch-2027/
+|-- semester-1/
+|-- semester-2/
+|-- semester-3/
+|-- semester-4/
+|-- semester-5/
+|-- semester-6/
+|-- semester-7/
+`-- semester-8/
+```
+
+Example submission values:
+
+```text
+Batch: 2027
+Automatically stored as: batch-2027
+
+Semester: Semester 6
+Automatically stored as: semester-6
+
+Guide Name: Dr. John Mathew
+Department: Electrical & Electronics Engineering (EEE)
+
+Faculty Name: Jane Thomas
+Department: Electrical & Electronics Engineering (EEE)
+```
 
 ## Local Testing
 

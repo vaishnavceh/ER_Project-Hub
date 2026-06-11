@@ -21,31 +21,28 @@ const testChecklist = [
 ];
 
 const solvedIssues = [
-  "Team number validation now supports team-01 through team-100.",
-  "Optional README comments now appear in generated README.md files when provided.",
-  "Generated README files no longer contain unfinished placeholder instructions.",
-  "Existing project folders can now be replaced through a new upload PR.",
-  "Storage repository configuration now targets the official Electrical and Computer project repository.",
-  "Auto-merge workflow guidance is documented for upload branches.",
-  "Templates are now live in the official storage repository TEMPLATES folder."
+  "Students select batch and semester instead of typing repository folder names.",
+  "Project title and subject values are converted into repository-safe folder names automatically.",
+  "Guide information is required and stored with the generated project README.",
+  "Faculty attribution can be added when available.",
+  "GitHub repository links are validated before upload.",
+  "Department metadata defaults to Electrical & Electronics Engineering (EEE)."
 ];
 
 const latestUpdates = [
-  "Version bumped to 2.0.0 stable build.",
-  "Documentation now has its own tab with a click-to-load PDF.js preview inside the website.",
-  "Templates page now lists the actual files and folders inside the official TEMPLATES directory.",
-  "Creator GitHub profile is linked in public project information.",
-  "Existing project uploads now replace previous folder contents through a new pull request.",
-  "Generated README files use form input, readable report PDF sections, and clean fallback text.",
-  "README, Hardware, and Rules were combined into one minimal Submission Guide page.",
-  "Documentation, repository, and guidelines pages were refreshed for the stable build."
+  "Version bumped to 2.5.0 nightly build.",
+  "Upload form now uses searchable batch and semester dropdowns.",
+  "Batch 2027 is stored as batch-2027 and Semester 6 is stored as semester-6.",
+  "Generated README files include guide, faculty, department, and GitHub repository metadata.",
+  "Validation messages now explain missing required metadata and invalid GitHub URLs.",
+  "Repository documentation now shows the standardized batch and semester structure."
 ];
 
 export default function KnowMore() {
   return (
     <div>
       <PageHeader eyebrow="Know More" title="About this platform">
-        This project is in 2.0.0 stable build for Electrical and Computer project submissions, with automated GitHub upload, merge support, live template file browsing, and in-site documentation reading enabled.
+        This project is in 2.5.0 nightly build for department project submissions, with guided metadata collection, automated GitHub upload, merge support, live template browsing, and in-site documentation reading enabled.
       </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -110,7 +107,7 @@ export default function KnowMore() {
       </section>
 
       <section className="mt-6 grid gap-4 lg:grid-cols-2">
-        <InfoCard icon={Rocket} title="2.0.0 Stable Updates" accent="teal">
+        <InfoCard icon={Rocket} title="2.5.0 Nightly Updates" accent="teal">
           <ul className="grid gap-2">
             {latestUpdates.map((item) => (
               <li key={item} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">
