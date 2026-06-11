@@ -1,0 +1,79 @@
+name: Build Documentation PDF
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - docs/ER_Project_Hub_Overleaf_Documentation.tex
+      - .github/workflows/documentation-pdf.yml
+  pull_request:
+    branches:
+      - main
+      - master
+    paths:
+      - docs/ER_Project_Hub_Overleaf_Documentation.tex
+      - .github/workflows/documentation-pdf.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  build-documentation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Compile documentation PDF
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          compile_with_image() {
+            local image="$1"
+            docker run --rm \
+              -v "$PWD/docs:/work" \
+              -w /work \
+              "$image" \
+              sh -lc 'pdflatex -interaction=nonstopmode -halt-on-error -file-line-error ER_Project_Hub_Overleaf_Documentation.tex && pdflatex -interaction=nonstopmode -halt-on-error -file-line-error ER_Project_Hub_Overleaf_Documentation.tex'
+          }
+
+          if ! compile_with_image blang/latex:latest; then
+            echo "blang/latex failed. Retrying with danteev/texlive."
+            compile_with_image danteev/texlive:latest
+          fi
+
+          sudo chown -R "$(id -u):$(id -g)" docs
+          test -f docs/ER_Project_Hub_Overleaf_Documentation.pdf
+
+      - name: Remove LaTeX helper files
+        shell: bash
+        run: |
+          rm -f docs/*.aux docs/*.fdb_latexmk docs/*.fls docs/*.log docs/*.out docs/*.synctex.gz docs/*.toc
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ER_Project_Hub_Overleaf_Documentation
+          path: docs/ER_Project_Hub_Overleaf_Documentation.pdf
+          if-no-files-found: error
+
+      - name: Commit latest PDF
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/ER_Project_Hub_Overleaf_Documentation.pdf
+
+          if [ -n "$(git status --short docs/ER_Project_Hub_Overleaf_Documentation.pdf)" ]; then
+            git commit -m "Build documentation PDF [skip ci]"
+            git push
+          else
+            echo "Documentation PDF is already up to date."
+          fi

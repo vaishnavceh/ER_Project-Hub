@@ -50,6 +50,17 @@ Official templates folder:
 Official templates repository:
 [ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL](https://github.com/ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL)
 
+## Documentation PDF
+
+The Overleaf-style LaTeX documentation is stored in:
+`docs/ER_Project_Hub_Overleaf_Documentation.tex`
+
+GitHub Actions builds the latest PDF whenever the LaTeX file changes. After the workflow finishes, the latest PDF is available at:
+[ER_Project_Hub_Overleaf_Documentation.pdf](https://github.com/vaishnavceh/ER_Project-Hub/raw/main/docs/ER_Project_Hub_Overleaf_Documentation.pdf)
+
+The build workflow is:
+[Build Documentation PDF](https://github.com/vaishnavceh/ER_Project-Hub/actions/workflows/documentation-pdf.yml)
+
 ## Tech Stack
 
 - Frontend: React, Vite, Tailwind CSS
