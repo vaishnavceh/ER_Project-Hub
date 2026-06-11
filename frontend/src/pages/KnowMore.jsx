@@ -141,10 +141,12 @@ export default function KnowMore() {
               <dt className="font-medium text-slate-800">Upload mode</dt>
               <dd>Website form to GitHub pull request</dd>
             </div>
+
             <div>
               <dt className="font-medium text-slate-800">Merge mode</dt>
               <dd>Auto-merge enabled after checks pass</dd>
             </div>
+
             <div>
               <dt className="font-medium text-slate-800">Support</dt>
               <dd>
@@ -161,10 +163,12 @@ export default function KnowMore() {
               <dt className="font-medium text-slate-800">Students</dt>
               <dd>Use the website to submit and browse project files.</dd>
             </div>
+
             <div>
               <dt className="font-medium text-slate-800">Git users</dt>
               <dd>Use the Git window after upload if you need pull commands.</dd>
             </div>
+
             <div>
               <dt className="font-medium text-slate-800">Templates</dt>
               <dd>
@@ -184,16 +188,28 @@ export default function KnowMore() {
       </section>
 
       <section className="mt-6">
-        <InfoCard icon={Code2} title="Access to Development Repository" accent="sky">
+        <InfoCard
+          icon={GitPullRequest}
+          title="Development Repository Collaboration"
+          accent="sky"
+        >
           <p>
-            Access to the website source and development repository is locked and
-            kept private to avoid unnecessary forking, accidental file deletion,
-            confusion, or misunderstanding by other users.
+            The website source repository is public to support transparency,
+            learning, and collaboration. Students and contributors can review the
+            project structure, suggest improvements, and understand how the
+            platform is built.
           </p>
 
           <p className="mt-2 text-sm text-slate-600">
-            If you need access to the website build repository, contact the
-            creator through the GitHub profile provided in the creator section.
+            To avoid accidental changes, file deletion, duplicate work, or
+            misunderstanding, direct development changes should be discussed with
+            the admin or creator before contributing.
+          </p>
+
+          <p className="mt-2 text-sm text-slate-600">
+            If you want to collaborate, report an issue, suggest a feature, or
+            contribute to the website build repository, contact the creator
+            through the GitHub profile provided in the creator section.
           </p>
 
           <a
@@ -202,7 +218,7 @@ export default function KnowMore() {
             rel="noreferrer"
             className="mt-4 inline-flex items-center gap-2 rounded-lg border border-[var(--poster-gold)] bg-[var(--poster-gold-soft)] px-3 py-2 text-sm font-semibold text-[var(--poster-navy)] hover:bg-[var(--poster-cream)]"
           >
-            Request access from creator
+            Contact creator on GitHub
             <ExternalLink size={15} aria-hidden="true" />
           </a>
         </InfoCard>
@@ -274,10 +290,12 @@ export default function KnowMore() {
           <div className="grid h-10 w-10 place-items-center rounded-lg bg-amber-100 text-amber-800">
             <Rocket size={21} aria-hidden="true" />
           </div>
+
           <div>
             <h2 className="text-lg font-semibold text-slate-950">
               Upcoming Features
             </h2>
+
             <p className="text-sm text-slate-500">
               Planned additions for the next deployment cycle.
             </p>
