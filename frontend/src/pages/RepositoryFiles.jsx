@@ -1,4 +1,4 @@
-import { AlertCircle, ChevronRight, ExternalLink, File, Folder, Loader2, RefreshCcw } from "lucide-react";
+import { AlertCircle, ChevronRight, Download, ExternalLink, File, Folder, Loader2, RefreshCcw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import PageHeader from "../components/PageHeader.jsx";
@@ -147,6 +147,17 @@ function RepositoryFileList({ status, result, onOpenFolder }) {
               </span>
             </button>
             <div className="flex shrink-0 items-center gap-2">
+              {item.downloadUrl ? (
+                <a
+                  href={item.downloadUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg border border-emerald-300 px-3 py-2 text-sm font-semibold text-emerald-800 hover:bg-emerald-50"
+                >
+                  Download
+                  <Download size={15} aria-hidden="true" />
+                </a>
+              ) : null}
               {item.htmlUrl ? (
                 <a
                   href={item.htmlUrl}
