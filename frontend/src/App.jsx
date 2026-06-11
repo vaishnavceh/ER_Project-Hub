@@ -12,6 +12,7 @@ import {
   FolderOpen
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 import AppLoadingScreen from "./components/AppLoadingScreen.jsx";
 import Navigation from "./components/Navigation.jsx";
@@ -129,6 +130,7 @@ export default function App() {
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <ActiveComponent onNavigate={setActivePage} />
       </main>
+      <Analytics />
     </div>
   );
 }
