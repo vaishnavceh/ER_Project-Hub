@@ -50,7 +50,7 @@ export default function KnowMore() {
           <p>Version {appVersion}.</p>
         </InfoCard>
         <InfoCard icon={UserRound} title="Project Creator" accent="teal">
-          <p>Created for the Electrical and Computer project repository workflow by Vaishnav Ceh.</p>
+          <p>Created for the Electrical and Computer Students to upload their project by Vaishnav Venugopal.</p>
           <a
             href={creatorProfileUrl}
             target="_blank"
