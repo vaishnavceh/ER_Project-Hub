@@ -54,12 +54,19 @@ export default function KnowMore() {
 
 <div className="grid gap-4 lg:grid-cols-3">
   <InfoCard icon={Code2} title="Version" accent="sky">
-    <p className="font-semibold">Version {appVersion} Nightly Build</p>
+    <p className="font-semibold">Version {appVersion} </p>
+<p className="mt-2 text-sm text-slate-600">
+  Stable for regular use based on completed testing. Minor issues may still
+  occur while new features are being tested. If this build is tagged as Nightly
+  and you encounter any errors, please contact the administrator. Builds tagged
+  as Stable are fully tested for normal use. If no suffix is shown, consider it
+  a stable build.
+</p>
 
-    <p className="mt-2 text-sm text-slate-600">
-      Stable for regular use. Minor issues may still occur as new features are
-      being tested. Please contact the administrator if you encounter any errors.
-    </p>
+<p className="mt-2 text-sm text-slate-600">
+  For suggestions or improvements, contact the admin or creator from the left
+  sidebar GitHub profile link.
+</p>
   </InfoCard>
 <InfoCard icon={UserRound} title="Project Creator" accent="teal">
   <p>
