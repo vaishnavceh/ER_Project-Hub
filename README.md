@@ -1,6 +1,6 @@
 # Electrical & Computer Project Repository Hub
 
-Version: `1.5.0 stable build`
+Version: `1.5.4 nightly build`
 
 A full-stack project submission hub for Electrical and Computer course work. Students upload project files through the website, the backend creates a GitHub branch and pull request, and the automated workflow can merge and pull accepted submissions after checks pass.
 
@@ -15,7 +15,7 @@ Creator GitHub profile: [vaishnavceh](https://github.com/vaishnavceh)
 - Students can download official templates from the storage repository `TEMPLATES` folder.
 - Contact the admin for failed uploads, duplicate submissions, incorrect folders, or access concerns.
 
-## 1.5.0 Stable Update
+## 1.5.4 Nightly Update
 
 ### Issues Solved
 
@@ -29,12 +29,12 @@ Creator GitHub profile: [vaishnavceh](https://github.com/vaishnavceh)
 
 ### New Updates
 
-- Version bumped to `1.5.0 stable build`.
-- Templates and Resources now links to the live official `TEMPLATES` folder.
+- Version bumped to `1.5.4 nightly build`.
+- Templates and Resources now displays the official GitHub repository and live `TEMPLATES` folder.
 - Creator GitHub profile is linked in public project information.
 - Existing project uploads now replace previous folder contents through a new pull request.
 - Generated README files use form input, readable report PDF sections, and clean fallback text.
-- README, documentation, repository, and guidelines pages were refreshed for the stable build.
+- README, documentation, repository, and guidelines pages were refreshed for the nightly build.
 
 ## Repositories
 
@@ -46,6 +46,9 @@ The website source repo and project-storage repo are intentionally separate. Do 
 
 Official templates folder:
 [TEMPLATES](https://github.com/ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL/tree/main/TEMPLATES)
+
+Official templates repository:
+[ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL](https://github.com/ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL)
 
 ## Tech Stack
 

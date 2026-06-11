@@ -1,7 +1,7 @@
 import { BookOpen, CheckCircle2, ExternalLink, FileText, FolderOpen, Moon, Sun } from "lucide-react";
 import { useState } from "react";
 
-import { templatesFolderUrl } from "../config/platform.js";
+import { appVersion, storageRepository, storageRepositoryUrl, templatesFolderUrl } from "../config/platform.js";
 
 const templateAreas = [
   "Course material templates",
@@ -35,6 +35,9 @@ export default function TemplatesResources() {
           <h1 className="text-3xl font-bold sm:text-4xl">Course resources workspace</h1>
           <p className={isDark ? "mt-3 text-base leading-7 text-slate-300" : "mt-3 text-base leading-7 text-slate-600"}>
             Official templates for course materials, seminars, labs, and project reviews are now available in the storage repository.
+          </p>
+          <p className={isDark ? "mt-2 text-sm font-semibold text-slate-400" : "mt-2 text-sm font-semibold text-slate-500"}>
+            Build {appVersion}
           </p>
         </div>
 
@@ -73,6 +76,9 @@ export default function TemplatesResources() {
               <p className="mt-2 text-sm leading-6">
                 Students can download official templates directly from the repository folder named <span className="font-semibold">TEMPLATES</span>.
               </p>
+              <p className="mt-2 break-words text-sm font-semibold">
+                GitHub repository: {storageRepository}
+              </p>
             </div>
           </div>
           <a
@@ -85,6 +91,45 @@ export default function TemplatesResources() {
             Open templates
             <ExternalLink size={15} aria-hidden="true" />
           </a>
+        </div>
+      </section>
+
+      <section className={isDark ? "mt-6 rounded-lg border border-slate-800 bg-slate-900 p-5" : "mt-6 rounded-lg border border-slate-200 bg-slate-50 p-5"}>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-start gap-3">
+            <span className={isDark ? "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-violet-300/15 text-violet-200" : "grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-violet-100 text-violet-800"}>
+              <FolderOpen size={21} aria-hidden="true" />
+            </span>
+            <div>
+              <h2 className="text-lg font-semibold">GitHub template repository</h2>
+              <p className={isDark ? "mt-2 break-words text-sm leading-6 text-slate-300" : "mt-2 break-words text-sm leading-6 text-slate-600"}>
+                {storageRepository}
+              </p>
+              <p className={isDark ? "mt-1 break-words text-xs font-semibold uppercase text-slate-500" : "mt-1 break-words text-xs font-semibold uppercase text-slate-500"}>
+                Repository path: {storageRepository}/TEMPLATES
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <a
+              href={storageRepositoryUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={isDark ? "inline-flex w-fit items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm font-semibold text-slate-100 hover:bg-slate-800" : "inline-flex w-fit items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100"}
+            >
+              Open repository
+              <ExternalLink size={15} aria-hidden="true" />
+            </a>
+            <a
+              href={templatesFolderUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={isDark ? "inline-flex w-fit items-center gap-2 rounded-lg bg-violet-300 px-3 py-2 text-sm font-semibold text-violet-950 hover:bg-violet-200" : "inline-flex w-fit items-center gap-2 rounded-lg bg-violet-700 px-3 py-2 text-sm font-semibold text-white hover:bg-violet-800"}
+            >
+              Open TEMPLATES
+              <ExternalLink size={15} aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </section>
 

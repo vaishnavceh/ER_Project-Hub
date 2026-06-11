@@ -1,12 +1,13 @@
-export const appVersion = "1.5.0 stable build";
+export const appVersion = "1.5.4 nightly build";
 
 export const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 export const backendHealthPath = "/api/health";
 export const sourceRepository = "vaishnavceh/ER_Project-Hub";
 export const storageRepository = "ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL";
+export const storageRepositoryUrl = `https://github.com/${storageRepository}`;
 export const creatorProfileUrl = "https://github.com/vaishnavceh";
 export const templatesFolderUrl =
-  "https://github.com/ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL/tree/main/TEMPLATES";
+  `${storageRepositoryUrl}/tree/main/TEMPLATES`;
 
 export const deploymentNotes = [
   "Website source code is maintained in ER_Project-Hub.",

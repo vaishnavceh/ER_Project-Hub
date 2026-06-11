@@ -31,19 +31,19 @@ const solvedIssues = [
 ];
 
 const latestUpdates = [
-  "Version bumped to 1.5.0 stable build.",
-  "Templates and Resources now links to the live official TEMPLATES folder.",
+  "Version bumped to 1.5.4 nightly build.",
+  "Templates and Resources now displays the official GitHub repository and live TEMPLATES folder.",
   "Creator GitHub profile is linked in public project information.",
   "Existing project uploads now replace previous folder contents through a new pull request.",
   "Generated README files use form input, readable report PDF sections, and clean fallback text.",
-  "Documentation, README, repository, and guidelines pages were refreshed for the stable build."
+  "Documentation, README, repository, and guidelines pages were refreshed for the nightly build."
 ];
 
 export default function KnowMore() {
   return (
     <div>
       <PageHeader eyebrow="Know More" title="About this platform">
-        This project is in 1.5.0 stable build for Electrical and Computer project submissions, with automated GitHub upload, merge support, and live template resources enabled.
+        This project is in 1.5.4 nightly build for Electrical and Computer project submissions, with automated GitHub upload, merge support, and live template resources enabled.
       </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -108,7 +108,7 @@ export default function KnowMore() {
       </section>
 
       <section className="mt-6 grid gap-4 lg:grid-cols-2">
-        <InfoCard icon={Rocket} title="1.5.0 Stable Updates" accent="teal">
+        <InfoCard icon={Rocket} title="1.5.4 Nightly Updates" accent="teal">
           <ul className="grid gap-2">
             {latestUpdates.map((item) => (
               <li key={item} className="rounded-lg bg-slate-50 px-3 py-2 text-slate-700">
@@ -161,7 +161,7 @@ export default function KnowMore() {
           </div>
           <div>
             <h2 className="text-lg font-semibold text-slate-950">Upcoming Features</h2>
-            <p className="text-sm text-slate-500">Planned additions for the next stable deployment cycle.</p>
+            <p className="text-sm text-slate-500">Planned additions for the next deployment cycle.</p>
           </div>
         </div>
         <ul className="grid gap-2 md:grid-cols-2">

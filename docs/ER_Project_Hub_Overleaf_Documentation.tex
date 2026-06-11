@@ -53,7 +53,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \lhead{\textcolor{hubgray}{Electrical \& Computer Project Repository Hub}}
-\rhead{\textcolor{hubgray}{Version 1.5.0 Stable}}
+\rhead{\textcolor{hubgray}{Version 1.5.4 Nightly}}
 \cfoot{\thepage}
 
 \setstretch{1.18}
@@ -69,7 +69,7 @@
     \vspace{0.35cm}
     {\Large Technical Documentation and Deployment Guide\par}
     \vspace{0.8cm}
-    {\large Version 1.5.0 Stable Build\par}
+    {\large Version 1.5.4 Nightly Build\par}
     \vfill
     \begin{tabular}{rl}
         \textbf{Domain:} & Electrical and Computer project submissions \\
@@ -95,9 +95,9 @@ The system is designed for department-level use. It separates website source cod
 
 \subsection{Current Version}
 
-This document describes \textbf{version 1.5.0 stable build}. This version marks the platform as stable for the current deployment workflow, with live template resources, official storage repository operation, safe project overwrites, and cleaner generated README files.
+This document describes \textbf{version 1.5.4 nightly build}. This version keeps the current deployment workflow ready for testing, with live template resources, official storage repository operation, safe project overwrites, and cleaner generated README files.
 
-\section{Version 1.5.0 Stable Update}
+\section{Version 1.5.4 Nightly Update}
 
 \subsection{Issues Solved}
 
@@ -117,15 +117,15 @@ This document describes \textbf{version 1.5.0 stable build}. This version marks 
 \subsection{New Updates}
 
 \begin{itemize}[leftmargin=*]
-    \item Application version updated to \texttt{1.5.0 stable build}.
-    \item Templates and Resources page now links to the live official \texttt{TEMPLATES} folder.
+    \item Application version updated to \texttt{1.5.4 nightly build}.
+    \item Templates and Resources page now displays the official GitHub repository and links to the live official \texttt{TEMPLATES} folder.
     \item Creator GitHub profile is included in project information.
     \item Existing project uploads can replace previous folder contents through a new pull request.
     \item Generated README files use form input, readable report PDF sections, and safe fallback text.
-    \item Know More page includes solved issues and stable build update notes.
+    \item Know More page includes solved issues and nightly build update notes.
     \item Upload page includes a Git command window for users familiar with Git.
     \item Admin Pane includes frontend and backend status checks behind a passkey.
-    \item Templates and Resources page is available as an under-construction area.
+    \item Templates and Resources page links to the official GitHub repository and live template folder.
     \item Light and dark mode are available in the frontend interface.
 \end{itemize}
 
@@ -294,7 +294,13 @@ The Rules page defines safe submission behavior. Students must not upload secret
 
 \subsection{Templates and Resources}
 
-This page links to the live official \texttt{TEMPLATES} folder in the storage repository. Students can download course material, seminar, lab, presentation, and review templates before preparing their submissions.
+This page shows the official GitHub template repository and links to the live official \texttt{TEMPLATES} folder in the storage repository. Students can download course material, seminar, lab, presentation, and review templates before preparing their submissions.
+
+Official templates repository:
+
+\begin{lstlisting}
+https://github.com/ELECTRICAL-AND-COMPUTER-TKMCE/ELECTRICAL-AND-COMPUTER-PROJECT-REPOSITORY-OFFICIAL
+\end{lstlisting}
 
 Official templates folder:
 
@@ -577,6 +583,6 @@ Admin Pane login fails & Confirm \texttt{VITE\_ADMIN\_PASSKEY} or \texttt{VITE\_
 
 \section{Conclusion}
 
-The Electrical \& Computer Project Repository Hub provides a structured and safer workflow for collecting department project submissions. Version 1.5.0 stable build improves validation, documentation, official repository configuration, live template access, generated README flexibility, overwrite handling, and deployment readiness. The system is now prepared for stable frontend hosting, backend production use, and official storage repository testing.
+The Electrical \& Computer Project Repository Hub provides a structured and safer workflow for collecting department project submissions. Version 1.5.4 nightly build improves validation, documentation, official repository configuration, visible template repository access, generated README flexibility, overwrite handling, and deployment readiness. The system is prepared for frontend hosting, backend production use, and official storage repository testing.
 
 \end{document}
